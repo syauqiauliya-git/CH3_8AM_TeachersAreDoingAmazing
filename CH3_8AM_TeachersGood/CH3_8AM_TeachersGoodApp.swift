@@ -1,0 +1,17 @@
+//
+//  CH3_8AM_TeachersGoodApp.swift
+//  CH3_8AM_TeachersGood
+//
+//  Created by Syauqi Auliya M on 25/05/26.
+//
+
+import SwiftUI
+
+@main
+struct CH3_8AM_TeachersGoodApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
