@@ -16,7 +16,7 @@ struct MotivationInputView: View {
             
             HStack {
                 Spacer()
-                Text("3 of 4")
+                Text("4 of 4")
                     .font(.system(size: 14))
                     .foregroundColor(.appTextSecondary)
             }

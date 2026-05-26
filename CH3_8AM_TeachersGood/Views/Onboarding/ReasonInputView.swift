@@ -38,6 +38,8 @@ struct ReasonInputView: View {
             //RECORD
             RecordView(isRecording: $isRecording, audioLevels: $audioLevels)
             
+            
+            //PLACEHOLDER CONTINUE BUTTON WHILE WAITING FOR THE COMPLETE SCREEN DESIGNS
             NavigationLink {
                 MotivationInputView()
             } label: {
