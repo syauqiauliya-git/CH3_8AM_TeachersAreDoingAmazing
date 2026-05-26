@@ -10,8 +10,8 @@ import SwiftUI
 struct WelcomeView: View {
     
     var body: some View {
-        Image("Thingy")
-        Text("Welcome!")
+        MascotView()
+        SpeechBubbleView(text: "Welcome", tail: .topRight)
     }
    
 }

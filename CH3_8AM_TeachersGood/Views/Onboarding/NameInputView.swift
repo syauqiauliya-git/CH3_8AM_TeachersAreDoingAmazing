@@ -10,8 +10,25 @@ import SwiftUI
 struct NameInputView: View {
     
     var body: some View {
-        Image("Thingy")
-        Text("How would you like to be called?")
+        
+        VStack {
+            HStack {
+                Spacer()
+                Text("1 of 4")
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
+            
+            Spacer()
+
+            
+            Text("How would you like to be called?")
+            MascotView()
+            
+            Spacer()
+
+            
+        }
     }
    
 }
