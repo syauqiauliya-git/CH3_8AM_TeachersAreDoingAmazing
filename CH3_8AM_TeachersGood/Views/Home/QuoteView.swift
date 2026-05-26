@@ -16,7 +16,7 @@ struct QuoteView: View {
                 } label: {
                     Image(systemName: "person")
                         .font(.system(size: 20))
-                        .foregroundStyle(Color.blue) // color of this will be changed
+                        .foregroundStyle(Color.appPrimary)
                 }
                 .frame(width: 50, height: 50)
                 .frame(maxWidth: .infinity, alignment: .topTrailing)
@@ -40,7 +40,7 @@ struct QuoteView: View {
                         } label: {
                             Image(systemName: "square.and.arrow.up")
                                 .font(.system(size: 20))
-                                .foregroundStyle(Color.blue) // color of this will be changed
+                                .foregroundStyle(Color.appPrimary)
                         }
                         .frame(width: 50, height: 50)
                         .buttonBorderShape(.circle)
@@ -51,7 +51,7 @@ struct QuoteView: View {
                         } label: {
                             Image(systemName: "bookmark")
                                 .font(.system(size: 20))
-                                .foregroundStyle(Color.blue) // color of this will be changed
+                                .foregroundStyle(Color.appPrimary)
                         }
                         .frame(width: 50, height: 50)
                         .buttonBorderShape(.circle)
@@ -60,17 +60,32 @@ struct QuoteView: View {
                     }
                 }
                 Spacer()
-                NavigationLink {
-                    // add later
-                } label: {
-                    Circle()
-                        .fill(Color(red: 35/255, green: 39/255, blue: 144/255))
-                        .frame(width: 50, height: 50)
-                        .overlay(Image(systemName: "ellipsis.message.fill"))
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
+                HStack {
+                    NavigationLink {
+                        // add later
+                    } label: {
+                        Image(systemName: "book.pages")
+                            .font(.system(size: 20))
+                            .foregroundStyle(Color.appPrimary)
+                    }
+                    .frame(width: 50, height: 50)
+                    .frame(maxWidth: .infinity, alignment: .bottomLeading)
+                    .buttonBorderShape(.circle)
+                    .buttonStyle(.glass)
+                    .controlSize(ControlSize.large)
+                    Spacer()
+                    NavigationLink {
+                        // add later
+                    } label: {
+                        Circle()
+                            .fill(Color.appPrimary)
+                            .frame(width: 50, height: 50)
+                            .overlay(Image(systemName: "ellipsis.message.fill"))
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                 }
-                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             }
             .padding(20)
         }
