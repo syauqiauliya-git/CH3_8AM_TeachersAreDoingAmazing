@@ -10,11 +10,7 @@ import SwiftUI
 struct GradeInputView: View {
     
     @State private var selectedGrade: GradeLevel? = nil
-    
-    @State private var selectedItem: String = "Option 1"
-    
-    let items = ["Option 1", "Option 2", "Option 3", "Option 4"]
-    
+
     
     var body: some View {
         
@@ -31,7 +27,7 @@ struct GradeInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 16)
             
-            Spacer()
+        
             
             // MASCOT QUESTION
             
@@ -83,7 +79,7 @@ struct GradeInputView: View {
                     }
                 }
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 15)
             
             // CONTINUE BUTTONT
             
@@ -107,6 +103,7 @@ struct GradeInputView: View {
             Spacer()
             
         }
+        .background(Color.appBackground)
         
     }
 }

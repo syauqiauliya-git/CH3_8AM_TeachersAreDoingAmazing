@@ -27,10 +27,10 @@ struct NameInputView: View {
             Spacer()
             
             SpeechBubbleView(
-                text: "How would you like\n to be called?",
+                text: "How would you like\nto be called?",
                 tail: .bottomRight
             )
-            MascotView(size: 300)
+            MascotView(size: 400)
             
             Spacer()
             
@@ -62,7 +62,7 @@ struct NameInputView: View {
             
             
         }
-        
+        .background(Color.appBackground)
         
     }
     
