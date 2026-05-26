@@ -12,9 +12,10 @@ struct QuoteView: View {
         NavigationStack {
             VStack {
                 Button {
-                    // action
+                    // add later
                 } label: {
                     Image(systemName: "person")
+                        .font(.system(size: 20))
                         .foregroundStyle(Color.blue) // color of this will be changed
                 }
                 .frame(width: 50, height: 50)
@@ -23,15 +24,41 @@ struct QuoteView: View {
                 .buttonStyle(.glass)
                 .controlSize(ControlSize.large)
                 Spacer()
-                Text("“I want to change the future by educating younger generations.”")
-                    .font(.system(size: 40, design: .serif))
-                HStack {
-                    Spacer()
-                    Text("- Lorem")
-                        .font(.system(size: 20, design: .serif))
-                        .italic(true)
+                VStack {
+                    Text("“I want to change the future by educating younger generations.”")
+                        .font(.system(size: 40, design: .serif))
+                    HStack {
+                        Spacer()
+                        Text("- Lorem")
+                            .font(.system(size: 20, design: .serif))
+                            .italic(true)
+                    }
+                    .padding(.trailing, 25)
+                    HStack(spacing: 20) {
+                        Button {
+                            // add later
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                                .font(.system(size: 20))
+                                .foregroundStyle(Color.blue) // color of this will be changed
+                        }
+                        .frame(width: 50, height: 50)
+                        .buttonBorderShape(.circle)
+                        .buttonStyle(.glass)
+                        .controlSize(ControlSize.large)
+                        Button {
+                            // add later
+                        } label: {
+                            Image(systemName: "bookmark")
+                                .font(.system(size: 20))
+                                .foregroundStyle(Color.blue) // color of this will be changed
+                        }
+                        .frame(width: 50, height: 50)
+                        .buttonBorderShape(.circle)
+                        .buttonStyle(.glass)
+                        .controlSize(ControlSize.large)
+                    }
                 }
-                .padding(.trailing, 25)
                 Spacer()
                 NavigationLink {
                     // add later
