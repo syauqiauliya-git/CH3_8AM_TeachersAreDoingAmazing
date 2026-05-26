@@ -27,16 +27,15 @@ struct NameInputView: View {
             Spacer()
             
             SpeechBubbleView(
-                text: "How would you like\n to be called?",
+                text: "\n    How would you like    \n    to be called?    \n",
                 tail: .bottomRight
             )
-            MascotView(size: 300)
+            MascotView(size: 350)
             
-            Spacer()
             
             TextField("Insert your name", text: $teacherName)
                 .padding(.horizontal, 16)
-                .padding(.vertical, 14)
+                .padding(.vertical, 20)
                 .background(Color(.systemGray6))
                 .cornerRadius(20)
                 .overlay(
@@ -52,7 +51,7 @@ struct NameInputView: View {
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
+                    .padding(.vertical, 20)
                     .background(Color.appPrimary)
             }
             .cornerRadius(20)
@@ -62,7 +61,7 @@ struct NameInputView: View {
             
             
         }
-        
+        .background(Color.appBackground)
         
     }
     

@@ -10,11 +10,7 @@ import SwiftUI
 struct GradeInputView: View {
     
     @State private var selectedGrade: GradeLevel? = nil
-    
-    @State private var selectedItem: String = "Option 1"
-    
-    let items = ["Option 1", "Option 2", "Option 3", "Option 4"]
-    
+
     
     var body: some View {
         
@@ -31,14 +27,14 @@ struct GradeInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 16)
             
-            Spacer()
+        
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
                 MascotView(size: 150)
                 SpeechBubbleView(
-                    text: "What grade do\nyou usually teach?",
+                    text: "\nWhat grade do\nyou usually teach?\n",
                     tail: .left
                 )
                 Spacer()
@@ -72,8 +68,8 @@ struct GradeInputView: View {
                         radius: 8, x: 0, y: 4
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(hex: "#4723B5").opacity(0.2), lineWidth: selectedGrade == grade ? 0 : 1)
+                        RoundedRectangle(cornerRadius: 18)
+                            .stroke(Color(hex: "#4723B5").opacity(0.2), lineWidth: selectedGrade == grade ? 0 : 2)
                     )
                     .padding(.horizontal, 24)
                     .scaleEffect(x: selectedGrade == grade ? 1.1 : 1.0, y: selectedGrade == grade ? 1.15 : 1.0)
@@ -83,7 +79,7 @@ struct GradeInputView: View {
                     }
                 }
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 15)
             
             // CONTINUE BUTTONT
             
@@ -96,7 +92,7 @@ struct GradeInputView: View {
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
+                    .padding(.vertical, 20)
                     .background(Color.appPrimary)
             }
             .cornerRadius(20)
@@ -107,6 +103,7 @@ struct GradeInputView: View {
             Spacer()
             
         }
+        .background(Color.appBackground)
         
     }
 }

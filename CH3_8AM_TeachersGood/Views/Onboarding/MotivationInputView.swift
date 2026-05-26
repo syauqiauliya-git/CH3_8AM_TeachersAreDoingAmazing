@@ -1,5 +1,5 @@
 //
-//  ReasonInputView.swift
+//  MotivationInputView.swift
 //  CH3_8AM_TeachersGood
 //
 //  Created by Syauqi Auliya M on 26/05/26.
@@ -7,18 +7,16 @@
 
 import SwiftUI
 
-struct ReasonInputView: View {
-    
-    @State private var isRecording = false
-    @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
+struct MotivationInputView: View {
     
     var body: some View {
+        
         VStack{
             // PAGE NUMBER
             
             HStack {
                 Spacer()
-                Text("3 of 4")
+                Text("4 of 4")
                     .font(.system(size: 14))
                     .foregroundColor(.appTextSecondary)
             }
@@ -27,21 +25,33 @@ struct ReasonInputView: View {
             
             Spacer()
             
-            // SPEECH BUBBLESlider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
-                        
-            SpeechBubbleView(text: "Why did you start teaching?", tail: .bottomLeft)
+            // SPEECH BUBBLESl
+            
+            SpeechBubbleView(text: "How are you currently \nfeeling about teaching??", tail: .bottomLeft)
             
             //MASCOT
             
-            MascotView(size: 300)
-                        
-            //RECORD
-            RecordView(isRecording: $isRecording, audioLevels: $audioLevels)
+            MascotView(size: 350)
             
+            Spacer()
             
-            //PLACEHOLDER CONTINUE BUTTON WHILE WAITING FOR THE COMPLETE SCREEN DESIGNS
+            // SLIDER
+            
+            SliderView()
+            HStack {
+                Text("Not Motivated")
+                    .padding(.leading,30)
+                Spacer()
+                Text("Very Motivated")
+                    .padding(.trailing,30)
+
+            }
+            .padding(.vertical, 15)
+            .foregroundStyle(Color.appTextTertiary)
+            Spacer()
+            
             NavigationLink {
-                MotivationInputView()
+                QuoteView()
             } label: {
                 Text("Continue")
                     .font(.system(size: 17, weight: .semibold))
@@ -54,12 +64,14 @@ struct ReasonInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 16)
             .padding(.bottom, 32)
+
         }
         .background(Color.appBackground)
-
+        
+        
     }
 }
 
 #Preview {
-    ReasonInputView()
+    MotivationInputView()
 }

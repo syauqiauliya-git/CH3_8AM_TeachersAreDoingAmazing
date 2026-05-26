@@ -12,16 +12,21 @@ struct WelcomeView: View {
     var body: some View {
         
         NavigationStack {
-            VStack {
-                MascotView(size: 300)
-                SpeechBubbleView(text: "Welcome", tail: .topRight)
-                
-                NavigationLink("Start") {
-                    NameInputView(teacherName: .constant("")) {}
+            ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
+                VStack {
+                    MascotView(size: 300)
+                    SpeechBubbleView(text: "Welcome", tail: .topRight)
+                    
+                    NavigationLink("Start") {
+                        NameInputView(teacherName: .constant("")) {}
+                    }
                 }
             }
             
         }
+        
     }
     
 }
