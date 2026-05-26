@@ -13,13 +13,12 @@ struct WelcomeView: View {
         
         NavigationStack {
             VStack {
-                MascotView()
+                MascotView(size: 300)
                 SpeechBubbleView(text: "Welcome", tail: .topRight)
                 
-            }
-            
-            NavigationLink("Start") {
-                NameInputView(teacherName: .constant("")) {}
+                NavigationLink("Start") {
+                    NameInputView(teacherName: .constant("")) {}
+                }
             }
             
         }

@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct MascotView: View {
-    
+    var size: CGFloat = 150
+
     var body: some View {
         Image("Thingy")
+            .resizable()
+            .scaledToFit()
+            .frame(width: size, height: size)
     }
 }
 

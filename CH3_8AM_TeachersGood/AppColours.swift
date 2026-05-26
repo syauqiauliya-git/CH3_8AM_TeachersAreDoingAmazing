@@ -8,15 +8,23 @@
 import SwiftUI
 
 extension Color {
-    static let appPrimary           = Color(hex: "#6B4DE6") // purple — buttons, accents
-    static let appSpeechBubble      = Color(hex: "#EAE6FF") // lavender — bubble background
-    static let appSpeechBubbleText  = Color(hex: "#232790")
-    static let appGradeSelected     = Color(hex: "#FFB347") // amber — selected grade row
-    static let appBackground        = Color(hex: "#F4F4F4") // page background
-    static let appMascotOrange      = Color(hex: "#FF6B35") // mascot gradient start
-    static let appMascotYellow      = Color(hex: "#FFC84A") // mascot gradient end
-    static let appTextPrimary       = Color(hex: "#2D2D2D")
-    static let appTextSecondary     = Color(hex: "#888888")
+    static let appPrimary               = Color(hex: "#6B4DE6") // purple — buttons, accents
+    static let appBackground            = Color(hex: "#F4F4F4") // page background
+    
+    static let appSpeechBubble          = Color(hex: "#EAE6FF") // lavender — bubble background
+    static let appSpeechBubbleText      = Color(hex: "#232790")
+    
+    static let appGradeBorder           = Color(hex: "#CECECE")
+    static let appGradeNotSelected      = Color(hex: "#F3F3F3")
+    static let appGradeSelected         = Color(hex: "#FDD9A5") // amber — selected grade row
+    static let appGradeNotSelectedText  = Color(hex: "#4A4DB2")
+    static let appGradeSelectedText     = Color(hex: "#4723B5")
+    
+    static let appMascotOrange          = Color(hex: "#FF6B35") // mascot gradient start
+    static let appMascotYellow          = Color(hex: "#FFC84A") // mascot gradient end
+    
+    static let appTextPrimary           = Color(hex: "#2D2D2D")
+    static let appTextSecondary         = Color(hex: "#888888")
 
 
     init(hex: String) {
