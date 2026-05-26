@@ -16,6 +16,11 @@
 			path = CH3_8AM_TeachersGood;
 			sourceTree = "<group>";
 		};
+		0044B07C2FC524AE00385DFC /* TestingExperiments */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TestingExperiments;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +39,7 @@
 			children = (
 				0044B05E2FC3F56200385DFC /* CH3_8AM_TeachersGood */,
 				0044B05D2FC3F56200385DFC /* Products */,
+				0044B07C2FC524AE00385DFC /* TestingExperiments */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +68,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0044B05E2FC3F56200385DFC /* CH3_8AM_TeachersGood */,
+				0044B07C2FC524AE00385DFC /* TestingExperiments */,
 			);
 			name = CH3_8AM_TeachersGood;
 			packageProductDependencies = (

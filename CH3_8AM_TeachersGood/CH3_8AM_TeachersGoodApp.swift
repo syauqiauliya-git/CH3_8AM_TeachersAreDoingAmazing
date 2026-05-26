@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct CH3_8AM_TeachersGoodApp: App {
@@ -13,5 +14,7 @@ struct CH3_8AM_TeachersGoodApp: App {
         WindowGroup {
             ContentView()
         }
+        
+        .modelContainer(for: TeacherProfile.self)
     }
 }
