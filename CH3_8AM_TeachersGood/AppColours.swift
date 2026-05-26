@@ -25,6 +25,7 @@ extension Color {
     
     static let appTextPrimary           = Color(hex: "#2D2D2D")
     static let appTextSecondary         = Color(hex: "#888888")
+    static let appTextTertiary          = Color(hex: "#C1C1C1")
 
 
     init(hex: String) {
