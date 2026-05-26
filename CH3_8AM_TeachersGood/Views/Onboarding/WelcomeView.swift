@@ -10,10 +10,21 @@ import SwiftUI
 struct WelcomeView: View {
     
     var body: some View {
-        MascotView()
-        SpeechBubbleView(text: "Welcome", tail: .topRight)
+        
+        NavigationStack {
+            VStack {
+                MascotView()
+                SpeechBubbleView(text: "Welcome", tail: .topRight)
+                
+            }
+            
+            NavigationLink("Start") {
+                NameInputView(teacherName: .constant("")) {}
+            }
+            
+        }
     }
-   
+    
 }
 
 #Preview {

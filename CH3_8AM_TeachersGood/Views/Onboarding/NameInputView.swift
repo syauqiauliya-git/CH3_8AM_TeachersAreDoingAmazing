@@ -9,30 +9,67 @@ import SwiftUI
 
 struct NameInputView: View {
     
+    @Binding var teacherName: String
+    var onContinue: () -> Void
+    
     var body: some View {
         
-        VStack {
-            HStack {
+        NavigationStack {
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("1 of 4")
+                        .font(.system(size: 14))
+                        .foregroundColor(.appTextSecondary)
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+                
                 Spacer()
-                Text("1 of 4")
+                
+                SpeechBubbleView(
+                    text: "How would you like\n to be called?",
+                    tail: .bottomRight
+                )
+                MascotView()
+                
+                Spacer()
+                
+                TextField("Insert your name", text: $teacherName)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(20)
+                    .padding(.horizontal, 24)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color(hex: "#4723B5"), lineWidth: 2)
+                            .opacity(0.2)
+                            .frame(width: 351, height: 48)
+                    )
+                
+                
+                
+                Button(action: onContinue) {
+                    Text("Continue")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(Color.appPrimary)
+                }
+                .cornerRadius(20)
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+                .padding(.bottom, 32)
+                
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
-            
-            Spacer()
-
-            
-            Text("How would you like to be called?")
-            MascotView()
-            
-            Spacer()
-
             
         }
     }
-   
+    
 }
 
 #Preview {
-    NameInputView()
+    NameInputView(teacherName: .constant("")) {}
 }
