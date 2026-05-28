@@ -62,7 +62,7 @@ struct QuoteView: View {
                 Spacer()
                 HStack {
                     NavigationLink {
-                        // add later
+                        ArticlesView()
                     } label: {
                         Image(systemName: "book.pages")
                             .font(.system(size: 20))
