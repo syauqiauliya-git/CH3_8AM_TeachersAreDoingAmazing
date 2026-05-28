@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ArticlesView: View {
+    let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
@@ -36,6 +41,19 @@ struct ArticlesView: View {
                     }
                 }
                 .frame(height: 400)
+                VStack {
+                    Text("All Stories")
+                        .font(.headline.bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    LazyVGrid(columns: columns) {
+                        ForEach(1...10, id: \.self) { index in
+                            RoundedRectangle(cornerRadius: 25)
+                                .fill(.gray)
+                                .frame(width: 170, height: 170)
+                        }
+                    }
+                }
+                .padding(20)
             }
         }
         .ignoresSafeArea(edges: .top)

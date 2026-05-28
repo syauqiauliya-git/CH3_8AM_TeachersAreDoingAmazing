@@ -75,7 +75,7 @@ struct QuoteView: View {
                     .controlSize(ControlSize.large)
                     Spacer()
                     NavigationLink {
-                        // add later
+                        MainVoiceInputView()
                     } label: {
                         Circle()
                             .fill(Color.appPrimary)
