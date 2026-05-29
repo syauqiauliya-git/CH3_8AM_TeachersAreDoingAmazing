@@ -25,7 +25,6 @@ struct QuoteView: View {
     }
     
     var body: some View {
-        NavigationStack {
             VStack {
                 Button {
                     // add later
@@ -92,7 +91,7 @@ struct QuoteView: View {
                 }
             }
             .padding(20)
-        }
+            .navigationBarBackButtonHidden(true)
     }
 }
 
