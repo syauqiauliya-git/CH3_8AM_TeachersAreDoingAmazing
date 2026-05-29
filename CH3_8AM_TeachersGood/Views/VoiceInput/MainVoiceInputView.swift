@@ -13,6 +13,8 @@ struct MainVoiceInputView: View {
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     
+    @State private var showConfirmation = false
+    
     var body: some View {
         VStack {
             Spacer()
@@ -27,11 +29,18 @@ struct MainVoiceInputView: View {
             
             Spacer()
             
-            RecordView(currentState: $currentState, audioLevels: $audioLevels)
+            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)
         .ignoresSafeArea(.all, edges: .bottom)
+        
+        .overlay {
+            if showConfirmation {
+                ConfirmationOverlayView(isPresented: $showConfirmation)
+                    .transition(.opacity.combined(with: .scale(scale: 0.92)))
+            }
+        }
     }
 }
 
