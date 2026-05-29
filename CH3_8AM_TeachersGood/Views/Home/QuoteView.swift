@@ -8,6 +8,22 @@
 import SwiftUI
 
 struct QuoteView: View {
+    @State private var isBookmarked: Bool = false
+    
+    var mainQuote: AttributedString {
+        var result = AttributedString("“I want to change the future by educating younger generations.”")
+        
+        if let range = result.range(of: "change the future") {
+            result[range].foregroundColor = .appMascotOrange
+        }
+        
+        if let range = result.range(of: "educating") {
+            result[range].foregroundColor = .appPrimary
+        }
+        
+        return result
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -24,8 +40,8 @@ struct QuoteView: View {
                 .buttonStyle(.glass)
                 .controlSize(ControlSize.large)
                 Spacer()
-                VStack {
-                    Text("“I want to change the future by educating younger generations.”")
+                VStack(spacing: 20) {
+                    Text(mainQuote)
                         .font(.system(size: 40, design: .serif))
                     HStack {
                         Spacer()
@@ -34,29 +50,17 @@ struct QuoteView: View {
                             .italic(true)
                     }
                     .padding(.trailing, 25)
-                    HStack(spacing: 20) {
+                    HStack(spacing: 25) {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 25))
+                            .foregroundStyle(Color.appPrimary)
                         Button {
-                            // add later
+                            isBookmarked.toggle()
                         } label: {
-                            Image(systemName: "square.and.arrow.up")
-                                .font(.system(size: 20))
+                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                                .font(.system(size: 25))
                                 .foregroundStyle(Color.appPrimary)
                         }
-                        .frame(width: 50, height: 50)
-                        .buttonBorderShape(.circle)
-                        .buttonStyle(.glass)
-                        .controlSize(ControlSize.large)
-                        Button {
-                            // add later
-                        } label: {
-                            Image(systemName: "bookmark")
-                                .font(.system(size: 20))
-                                .foregroundStyle(Color.appPrimary)
-                        }
-                        .frame(width: 50, height: 50)
-                        .buttonBorderShape(.circle)
-                        .buttonStyle(.glass)
-                        .controlSize(ControlSize.large)
                     }
                 }
                 Spacer()
