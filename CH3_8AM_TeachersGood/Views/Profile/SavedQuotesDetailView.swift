@@ -51,7 +51,6 @@ struct SavedQuoteDetailView: View {
         }
         .padding(20)
         .background(Color.appBackground.ignoresSafeArea())
-        .navigationBarHidden(true)
     }
 }
 
