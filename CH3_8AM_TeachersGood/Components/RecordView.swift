@@ -15,6 +15,8 @@ struct RecordView: View {
     @Binding var currentState: RecordingState
     @Binding var audioLevels: [CGFloat]
     
+    @Binding var showConfirmation: Bool
+    
     @State private var isTypingMode = false
     @State private var inputText = ""
     
@@ -123,18 +125,27 @@ struct RecordView: View {
                         
                     case .finished:
                         Button(action: {
-                            print("Audio dikirim!")
-                        }) {
-                            ZStack {
-                                Circle()
-                                    .fill(AnyShapeStyle(LinearGradient(colors: [Color(red: 91/255, green: 35/255, blue: 181/255), Color(red: 210/255, green: 50/255, blue: 255/255)], startPoint: .bottomLeading, endPoint: .topTrailing)))
-                                    .frame(width: 80, height: 80)
-                                Image(systemName: "paperplane.fill")
-                                    .font(.system(size: 28, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .offset(x: -2, y: 2)
+                        withAnimation(.spring()) {
+                            showConfirmation = true
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            withAnimation {
+                                showConfirmation = false
+                                currentState = .ready
                             }
                         }
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(AnyShapeStyle(LinearGradient(colors: [Color(red: 91/255, green: 35/255, blue: 181/255), Color(red: 210/255, green: 50/255, blue: 255/255)], startPoint: .bottomLeading, endPoint: .topTrailing)))
+                                .frame(width: 80, height: 80)
+                            Image(systemName: "paperplane.fill")
+                                .font(.system(size: 28, weight: .bold))
+                                .foregroundColor(.white)
+                                .offset(x: -2, y: 2)
+                        }
+                    }
                         
                         Button(action: {
                             withAnimation {
@@ -166,5 +177,5 @@ struct RecordView: View {
 }
 
 #Preview {
-    RecordView(currentState: .constant(.ready), audioLevels: .constant(Array(repeating: 10.0, count: 7)))
+    RecordView(currentState: .constant(.ready), audioLevels: .constant(Array(repeating: 10.0, count: 7)), showConfirmation: .constant(false))
 }
