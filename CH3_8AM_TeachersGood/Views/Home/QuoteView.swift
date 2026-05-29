@@ -26,8 +26,8 @@ struct QuoteView: View {
     
     var body: some View {
             VStack {
-                Button {
-                    // add later
+                NavigationLink {
+                    ProfileView()
                 } label: {
                     Image(systemName: "person")
                         .font(.system(size: 20))
