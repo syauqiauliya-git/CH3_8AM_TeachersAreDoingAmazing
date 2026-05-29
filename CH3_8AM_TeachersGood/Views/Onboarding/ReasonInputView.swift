@@ -11,6 +11,7 @@ struct ReasonInputView: View {
     
     @State private var isRecording = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
+    @State private var currentState: RecordingState = .ready
     
     var body: some View {
         VStack{
@@ -36,7 +37,7 @@ struct ReasonInputView: View {
             MascotView(size: 300)
                         
             //RECORD
-            RecordView(isRecording: $isRecording, audioLevels: $audioLevels)
+            RecordView(currentState: $currentState, audioLevels: $audioLevels)
             
             
             //PLACEHOLDER CONTINUE BUTTON WHILE WAITING FOR THE COMPLETE SCREEN DESIGNS
