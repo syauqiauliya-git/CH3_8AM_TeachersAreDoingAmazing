@@ -10,7 +10,7 @@ internal import Combine
 
 struct MainVoiceInputView: View {
     
-    @State private var isRecording = false
+    @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     
     var body: some View {
@@ -19,7 +19,7 @@ struct MainVoiceInputView: View {
                 .frame(height: 80)
             
             SpeechBubbleView(
-                text: "How was your day?",
+                text: currentState.bubbleText,
                 tail: .bottomRight
             )
             
@@ -27,8 +27,7 @@ struct MainVoiceInputView: View {
             
             Spacer()
             
-            RecordView(isRecording: $isRecording, audioLevels: $audioLevels)
-            
+            RecordView(currentState: $currentState, audioLevels: $audioLevels)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)
