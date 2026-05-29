@@ -15,77 +15,125 @@ struct RecordView: View {
     @Binding var isRecording: Bool
     @Binding var audioLevels: [CGFloat]
     
+    @State private var isTypingMode = false
+    @State private var inputText = ""
+    
+    @FocusState private var isTextFieldFocused: Bool
+    
     let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
     
     var body: some View{
         VStack(spacing: 25) {
             
-            HStack(spacing: 6) {
-                ForEach(0..<audioLevels.count, id: \.self) { index in
-                    Capsule()
-                        .fill(isRecording ? .red : primaryColor.opacity(0.3))
-                        .frame(width: 6, height: isRecording ? audioLevels[index] : 10)
-                        .animation(.easeInOut(duration: 0.15), value: audioLevels[index])
+            if isTypingMode {
+                VStack(spacing: 16) {
+                    HStack {
+                        TextField("Type your message...", text: $inputText)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($isTextFieldFocused)
+                        
+                        Button(action: {
+                            print("Sent: \(inputText)")
+                            inputText = ""
+                            withAnimation {
+                                isTextFieldFocused = false
+                                isTypingMode = false
+                            }
+                        }) {
+                            Image(systemName: "paperplane.fill")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(primaryColor)
+                                .clipShape(Circle())
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    Button(action: {
+                        withAnimation {
+                            isTextFieldFocused = false
+                            isTypingMode = false
+                        }
+                    }) {
+                        Text("Cancel")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
                 }
-            }
-            .frame(height: 50)
-            
-            Button(action: {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                    isRecording.toggle()
+                .frame(height: 155)
+                
+            } else {
+                HStack(spacing: 6) {
+                    ForEach(0..<audioLevels.count, id: \.self) { index in
+                        Capsule()
+                            .fill(isRecording ? .red : primaryColor.opacity(0.3))
+                            .frame(width: 6, height: isRecording ? audioLevels[index] : 10)
+                            .animation(.easeInOut(duration: 0.15), value: audioLevels[index])
+                    }
                 }
-            }) {
-                ZStack {
-                    Circle()
-                        .fill(isRecording ?
-                              AnyShapeStyle(
-                                LinearGradient(
-                                    colors: [
-                                        Color(red: 255/255, green: 160/255, blue: 65/255),
-                                        Color(red: 213/255, green: 20/255, blue: 20/255)
-                                    ],
-                                    startPoint: .bottomLeading,
-                                    endPoint: .topTrailing
-                                )
-                              ):
-                                AnyShapeStyle(
+                .frame(height: 50)
+                
+                Button(action: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                        isRecording.toggle()
+                    }
+                }) {
+                    ZStack {
+                        Circle()
+                            .fill(isRecording ?
+                                  AnyShapeStyle(
                                     LinearGradient(
                                         colors: [
-                                            Color(red: 91/255, green: 35/255, blue: 181/255),
-                                            Color(red: 210/255, green: 50/255, blue: 255/255)
+                                            Color(red: 255/255, green: 160/255, blue: 65/255),
+                                            Color(red: 213/255, green: 20/255, blue: 20/255)
                                         ],
                                         startPoint: .bottomLeading,
                                         endPoint: .topTrailing
                                     )
-                                )
-                        )
-                        .frame(width: 80, height: 80)
-                    
-                    if isRecording {
-                        Image(systemName: "square.fill")
-                            .font(.system(size: 28, weight: .black))
-                            .foregroundColor(.white)
-                    } else {
-                        Image(systemName: "mic")
-                            .font(.system(size: 32, weight: .regular))
-                            .foregroundColor(.white)
+                                  ):
+                                    AnyShapeStyle(
+                                        LinearGradient(
+                                            colors: [
+                                                Color(red: 91/255, green: 35/255, blue: 181/255),
+                                                Color(red: 210/255, green: 50/255, blue: 255/255)
+                                            ],
+                                            startPoint: .bottomLeading,
+                                            endPoint: .topTrailing
+                                        )
+                                    )
+                            )
+                            .frame(width: 80, height: 80)
+                        
+                        if isRecording {
+                            Image(systemName: "square.fill")
+                                .font(.system(size: 28, weight: .black))
+                                .foregroundColor(.white)
+                        } else {
+                            Image(systemName: "mic")
+                                .font(.system(size: 32, weight: .regular))
+                                .foregroundColor(.white)
+                        }
                     }
                 }
+                
+                Button(action: {
+                    withAnimation {
+                        isTypingMode = true
+                        isRecording = false
+                        isTextFieldFocused = true
+                    }
+                }) {
+                    Text("I can't speak right now")
+                        .font(.caption)
+                        .underline()
+                        .foregroundStyle(Color(red: 74/255, green: 77/255, blue: 178/255))
+                }
+                .opacity(0.5)
             }
-            
-            Button(action: {
-                print("text clicked")
-            }) {
-                Text("I can't speak right now")
-                    .font(.caption)
-                    .underline()
-                    .foregroundStyle(Color(red: 74/255, green: 77/255, blue: 178/255))
-            }
-            .opacity(0.5)
         }
         .padding(.bottom, 60)
         .onReceive(timer) { _ in
-            if isRecording {
+            if isRecording && !isTypingMode {
                 for i in 0..<audioLevels.count {
                     audioLevels[i] = CGFloat.random(in: 10...50)
                 }
