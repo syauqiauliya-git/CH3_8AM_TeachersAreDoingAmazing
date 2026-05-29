@@ -54,7 +54,7 @@ struct ProfileView: View {
                     }
                     Section("Library") {
                         NavigationLink {
-                            // add later
+                            SavedQuotesView()
                         } label: {
                             HStack {
                                 Text("Saved Quotes")
