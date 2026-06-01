@@ -27,6 +27,16 @@ extension Color {
     static let appTextSecondary         = Color(hex: "#888888")
     static let appTextTertiary          = Color(hex: "#C1C1C1")
 
+    //  button gradient in voice input
+    static let appGradientPurpleStart   = Color(hex: "#5B23B5")
+    static let appGradientPurpleEnd     = Color(hex: "#D232FF")
+    
+    static let appGradientOrangeStart = Color(hex: "#FFA041")
+    static let appGradientRedEnd      = Color(hex: "#D51414")
+    
+    // status & extra text colors
+    static let appSuccessGreen = Color(hex: "#5CB83C")
+    static let appMutedPurple  = Color(hex: "#706FCF")
 
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

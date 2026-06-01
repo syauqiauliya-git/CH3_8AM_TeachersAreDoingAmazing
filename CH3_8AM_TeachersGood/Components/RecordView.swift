@@ -30,23 +30,44 @@ struct RecordView: View {
             if isTypingMode {
                 VStack(spacing: 16) {
                     HStack {
-                        TextField("Type your message...", text: $inputText)
-                            .textFieldStyle(.roundedBorder)
+                        TextField("", text: $inputText, prompt: Text("Type here").foregroundColor(.appTextTertiary))
+                            .foregroundColor(.appTextPrimary)
+                            .padding(.vertical, 14)
+                            .padding(.horizontal, 20)
+                            .background(Color.appBackground)
+                            .cornerRadius(25)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.appSpeechBubble, lineWidth: 2.0)
+                            )
                             .focused($isTextFieldFocused)
                         
                         Button(action: {
                             print("Sent: \(inputText)")
-                            inputText = ""
-                            withAnimation {
+                            
+                            withAnimation(.spring()) {
                                 isTextFieldFocused = false
                                 isTypingMode = false
-                                currentState = .ready
+                                showConfirmation = true
+                            }
+                            
+                            inputText = ""
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                withAnimation {
+                                    showConfirmation = false
+                                    currentState = .ready
+                                }
                             }
                         }) {
                             Image(systemName: "paperplane.fill")
                                 .foregroundColor(.white)
-                                .padding(10)
-                                .background(primaryColor)
+                                .padding(13)
+                                .background(LinearGradient(
+                                    colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
+                                    startPoint: .bottomLeading,
+                                    endPoint: .topTrailing
+                                ))
                                 .clipShape(Circle())
                         }
                     }
@@ -86,7 +107,13 @@ struct RecordView: View {
                         }) {
                             ZStack {
                                 Circle()
-                                    .fill(AnyShapeStyle(LinearGradient(colors: [Color(red: 91/255, green: 35/255, blue: 181/255), Color(red: 210/255, green: 50/255, blue: 255/255)], startPoint: .bottomLeading, endPoint: .topTrailing)))
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
+                                            startPoint: .bottomLeading,
+                                            endPoint: .topTrailing
+                                        )
+                                    )
                                     .frame(width: 80, height: 80)
                                 Image(systemName: "mic")
                                     .font(.system(size: 32, weight: .regular))
@@ -115,7 +142,13 @@ struct RecordView: View {
                         }) {
                             ZStack {
                                 Circle()
-                                    .fill(AnyShapeStyle(LinearGradient(colors: [Color(red: 255/255, green: 160/255, blue: 65/255), Color(red: 213/255, green: 20/255, blue: 20/255)], startPoint: .bottomLeading, endPoint: .topTrailing)))
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.appGradientOrangeStart, .appGradientRedEnd],
+                                            startPoint: .bottomLeading,
+                                            endPoint: .topTrailing
+                                        )
+                                    )
                                     .frame(width: 80, height: 80)
                                 Image(systemName: "square.fill")
                                     .font(.system(size: 28, weight: .black))
@@ -138,7 +171,13 @@ struct RecordView: View {
                     }) {
                         ZStack {
                             Circle()
-                                .fill(AnyShapeStyle(LinearGradient(colors: [Color(red: 91/255, green: 35/255, blue: 181/255), Color(red: 210/255, green: 50/255, blue: 255/255)], startPoint: .bottomLeading, endPoint: .topTrailing)))
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
+                                        startPoint: .bottomLeading,
+                                        endPoint: .topTrailing
+                                    )
+                                )
                                 .frame(width: 80, height: 80)
                             Image(systemName: "paperplane.fill")
                                 .font(.system(size: 28, weight: .bold))
