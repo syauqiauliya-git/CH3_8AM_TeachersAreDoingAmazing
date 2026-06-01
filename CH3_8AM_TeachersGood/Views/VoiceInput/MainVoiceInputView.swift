@@ -12,8 +12,9 @@ struct MainVoiceInputView: View {
     
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
-    
     @State private var showConfirmation = false
+    
+    @State private var speechManager = SpeechRecognitionManager()
     
     var body: some View {
         VStack {
@@ -27,6 +28,14 @@ struct MainVoiceInputView: View {
             
             MascotView(size: 300)
             
+            ScrollView {
+                Text(speechManager.transcript)
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            .frame(maxHeight: 100)
+            
             Spacer()
             
             RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
@@ -39,6 +48,21 @@ struct MainVoiceInputView: View {
             if showConfirmation {
                 ConfirmationOverlayView(isPresented: $showConfirmation)
                     .transition(.opacity.combined(with: .scale(scale: 0.92)))
+            }
+        }
+        
+        .onChange(of: currentState) {
+            Task {
+                switch currentState {
+                case .recording:
+                    await speechManager.startTranscribing()
+                    
+                case .finished:
+                    await speechManager.stopTranscribing()
+                    
+                case .ready:
+                    await speechManager.stopTranscribing()
+                }
             }
         }
     }
