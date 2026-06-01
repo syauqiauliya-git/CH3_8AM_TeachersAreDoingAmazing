@@ -41,8 +41,10 @@ struct MainVoiceInputView: View {
             RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
-        .ignoresSafeArea(.all, edges: .bottom)
+        .background {
+            Color.white
+                .ignoresSafeArea(.all, edges: [.bottom, .top])
+        }
         
         .overlay {
             if showConfirmation {
