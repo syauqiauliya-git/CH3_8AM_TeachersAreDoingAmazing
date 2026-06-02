@@ -87,15 +87,17 @@ struct RecordView: View {
                 .frame(height: 155)
                 
             } else {
-                HStack(spacing: 6) {
-                    ForEach(0..<audioLevels.count, id: \.self) { index in
-                        Capsule()
-                            .fill(currentState == .recording ? .red : primaryColor.opacity(0.3))
-                            .frame(width: 6, height: currentState == .recording ? audioLevels[index] : 10)
-                            .animation(.easeInOut(duration: 0.15), value: audioLevels[index])
+                if currentState == .ready || currentState == .recording  {
+                    HStack(spacing: 6) {
+                        ForEach(0..<audioLevels.count, id: \.self) { index in
+                            Capsule()
+                                .fill(currentState == .recording ? .red : primaryColor.opacity(0.3))
+                                .frame(width: 6, height: currentState == .recording ? audioLevels[index] : 10)
+                                .animation(.easeInOut(duration: 0.15), value: audioLevels[index])
+                        }
                     }
+                    .frame(height: 50)
                 }
-                .frame(height: 50)
                 
                 VStack(spacing: 15) {
                     switch currentState {
@@ -206,11 +208,16 @@ struct RecordView: View {
                 for i in 0..<audioLevels.count {
                     audioLevels[i] = CGFloat.random(in: 10...50)
                 }
-            } else {
+            } else if currentState == .ready {
                 for i in 0..<audioLevels.count {
                     audioLevels[i] = 10.0
                 }
+            } else {
+                for i in 0..<audioLevels.count {
+                    audioLevels[i] = 0.0
+                }
             }
+            
         }
     }
 }
