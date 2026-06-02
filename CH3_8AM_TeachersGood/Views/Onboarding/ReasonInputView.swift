@@ -15,6 +15,7 @@ struct ReasonInputView: View {
     @State private var currentState: RecordingState = .ready
     @State private var showConfirmation = false
     
+    
     var body: some View {
         VStack{
             // PAGE NUMBER
@@ -26,17 +27,19 @@ struct ReasonInputView: View {
                     .foregroundColor(.appTextSecondary)
             }
             .padding(.horizontal, 24)
-            .padding(.vertical, 50)
+            .padding(.top, 16)
             
             Spacer()
             
-            // SPEECH BUBBLESlider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
-            
-            SpeechBubbleView(text: "Why did you start teaching?", tail: .bottomLeft)
-            
+            // SPEECH BUBBLESlider
+            SpeechBubbleView(
+                text: "What made you become a teacher?",
+                tail: .bottomRight
+            )
+
             //MASCOT
             
-            MascotView(size: 300)
+            MascotView(size: 250)
             
             //RECORD
             RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
@@ -44,8 +47,7 @@ struct ReasonInputView: View {
         }
         .background(Color.appBackground)
         .navigationDestination(isPresented: $finishOnboarding) {
-            QuoteView()
-                .navigationBarBackButtonHidden(true)
+            ThanksView()
         }
         .overlay {
             if showConfirmation {

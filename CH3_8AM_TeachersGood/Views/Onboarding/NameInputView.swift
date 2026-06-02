@@ -27,13 +27,14 @@ struct NameInputView: View {
             Spacer()
             
             SpeechBubbleView(
-                text: "\n    How would you like    \n    to be called?    \n",
+                text: "How would you like to be called?",
                 tail: .bottomRight
             )
             MascotView(size: 350)
             
             
             TextField("Insert your name", text: $teacherName)
+                .font(.custom("Futura", size: 16))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 20)
                 .background(Color(.systemGray6))
@@ -48,7 +49,7 @@ struct NameInputView: View {
                 GradeInputView()
             } label: {
                 Text("Continue")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(.custom("Futura", size: 20))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)

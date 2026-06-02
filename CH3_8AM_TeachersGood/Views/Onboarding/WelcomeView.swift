@@ -28,13 +28,14 @@ struct WelcomeView: View {
                 if stage >= 1 {
                     VStack(spacing: 24) {
                         Spacer()
-                        SpeechBubbleView(text: bubbleText, tail: .bottomLeft)
+                        SpeechBubbleView(text: bubbleText, tail: .bottomRight)
                             .padding(.horizontal, 40)
                             .id(stage) // forces transition to re-trigger on text change
                             .transition(.opacity)
 
                         MascotView(size: 300)
                         Spacer()
+                        
 
                         // Stage 4 next button
                         if stage >= 4 {
@@ -64,21 +65,21 @@ struct WelcomeView: View {
     var bubbleText: String {
         switch stage {
         case 1: return "Welcome!"
-        case 2: return "I'm Thingy. My mission\nis to help lift up your \nmood."
-        case 3: return "Before that, I'm\ngoing to ask you\nsome questions."
-        default: return "Please answer based\non your current\nconditions, okay?"
+        case 2: return "I'm Thingy. My mission is to help lift up your mood."
+        case 3: return "Before that, I'm going to ask you some questions."
+        default: return "Please answer based on your current conditions, okay?"
         }
     }
 
     func startSequence() {
         Task {
-            try? await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(for: .seconds(1.5))
             withAnimation { stage = 1 }
-            try? await Task.sleep(for: .seconds(1.5))
+            try? await Task.sleep(for: .seconds(2))
             withAnimation { stage = 2 }
-            try? await Task.sleep(for: .seconds(1.5))
+            try? await Task.sleep(for: .seconds(2))
             withAnimation { stage = 3 }
-            try? await Task.sleep(for: .seconds(1.5))
+            try? await Task.sleep(for: .seconds(2))
             withAnimation { stage = 4 }
         }
     }

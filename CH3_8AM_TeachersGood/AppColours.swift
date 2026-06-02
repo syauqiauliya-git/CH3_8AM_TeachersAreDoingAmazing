@@ -12,7 +12,6 @@ extension Color {
     static let appBackground            = Color(hex: "#FCFDFF") // page background
     
     static let appSpeechBubble          = Color(hex: "#F4F0FA") // lavender — bubble background
-    static let appSpeechBubbleText      = Color(hex: "#232790")
     
     static let appGradeBorder           = Color(hex: "#CECECE")
     static let appGradeNotSelected      = Color(hex: "#F3F3F3")
@@ -33,6 +32,11 @@ extension Color {
     
     static let appGradientOrangeStart = Color(hex: "#FFA041")
     static let appGradientRedEnd      = Color(hex: "#D51414")
+    
+    static let appSliderBackground      = Color(hex: "#F9F7FC")
+    static let appSliderBorder      = Color(hex: "#EDE3FC")
+
+
     
     // status & extra text colors
     static let appSuccessGreen = Color(hex: "#5CB83C")

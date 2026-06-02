@@ -26,15 +26,14 @@ struct GradeInputView: View {
             }
             .padding(.horizontal, 24)
             .padding(.top, 16)
-            
         
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
-                MascotView(size: 150)
+                MascotView(size: 120)
                 SpeechBubbleView(
-                    text: "\nWhat grade do you\nusually teach?\n",
+                    text: "What grade do you usually teach?",
                     tail: .left
                 )
                 Spacer()
@@ -50,12 +49,11 @@ struct GradeInputView: View {
                 ForEach(GradeLevel.allCases, id: \.self) { grade in
                     HStack {
                         Text(grade.rawValue)
-                            .fontWeight(selectedGrade == grade ? .bold : .regular)
+                            .font(.custom("Futura", size: 16))
                             .foregroundColor(selectedGrade == grade ? .appGradeSelectedText : .appGradeNotSelectedText)
                         Spacer()
                         Text(grade.ageRange)
-                            .font(.system(size: 14))
-                            .opacity(0.7)
+                            .font(.custom("Futura", size: 13))
                             .foregroundColor(selectedGrade == grade ? .appGradeSelectedText : .appGradeNotSelectedText)
                         
                     }
@@ -73,6 +71,7 @@ struct GradeInputView: View {
                     .onTapGesture {
                         selectedGrade = grade
                     }
+                    .opacity(selectedGrade == grade ? 1  : 0.6 )
                 }
             }
             .padding(.horizontal, 15)
@@ -85,7 +84,7 @@ struct GradeInputView: View {
                 ReasonInputView()
             } label: {
                 Text("Continue")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(.custom("Futura", size: 20))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
@@ -95,9 +94,7 @@ struct GradeInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 16)
             .padding(.bottom, 32)
-            
-            Spacer()
-            
+                        
         }
         .background(Color.appBackground)
         
