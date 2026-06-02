@@ -16,8 +16,8 @@ struct WelcomeView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 VStack {
-                    MascotView(size: 300)
-                    SpeechBubbleView(text: "Welcome", tail: .topRight)
+                    Image("Motivateach")
+//                    SpeechBubbleView(text: "Welcome", tail: .topRight)
                     
                     NavigationLink("Start") {
                         NameInputView(teacherName: .constant("")) {}

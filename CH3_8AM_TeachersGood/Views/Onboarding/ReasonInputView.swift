@@ -40,22 +40,9 @@ struct ReasonInputView: View {
             //RECORD
             RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
             
-            
+
             //PLACEHOLDER CONTINUE BUTTON WHILE WAITING FOR THE COMPLETE SCREEN DESIGNS
-            NavigationLink {
-                MotivationInputView()
-            } label: {
-                Text("Continue")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
-                    .background(Color.appPrimary)
-            }
-            .cornerRadius(20)
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
-            .padding(.bottom, 32)
+
         }
         .background(Color.appBackground)
         .overlay {
