@@ -36,12 +36,12 @@ struct SavedQuoteDetailView: View {
                     Button { } label: {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 25))
-                            .foregroundStyle(Color.appPrimary)
+                            .foregroundStyle(Color.appPrimaryLight)
                     }
                     Button { isBookmarked.toggle() } label: {
                         Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark.slash")
                             .font(.system(size: 25))
-                            .foregroundStyle(Color.appPrimary)
+                            .foregroundStyle(Color.appPrimaryLight)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

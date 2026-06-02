@@ -10,6 +10,7 @@ import SwiftUI
 struct ReasonInputView: View {
     
     @State private var isRecording = false
+    @State private var finishOnboarding = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var currentState: RecordingState = .ready
     @State private var showConfirmation = false
@@ -30,25 +31,26 @@ struct ReasonInputView: View {
             Spacer()
             
             // SPEECH BUBBLESlider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
-                        
+            
             SpeechBubbleView(text: "Why did you start teaching?", tail: .bottomLeft)
             
             //MASCOT
             
             MascotView(size: 300)
-                        
+            
             //RECORD
             RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
             
-
-            //PLACEHOLDER CONTINUE BUTTON WHILE WAITING FOR THE COMPLETE SCREEN DESIGNS
-
         }
         .background(Color.appBackground)
+        .navigationDestination(isPresented: $finishOnboarding) {
+            QuoteView()
+                .navigationBarBackButtonHidden(true)
+        }
         .overlay {
             if showConfirmation {
-                ConfirmationOverlayView(isPresented: $showConfirmation)
-                    .transition(.opacity.combined(with: .scale(scale: 0.92)))
+                ConfirmationOverlayView(isPresented: $showConfirmation,
+                onConfirm: { finishOnboarding = true }  )
             }
         }
     }

@@ -37,7 +37,7 @@ extension QuoteCard {
             str[range].foregroundColor = .appMascotOrange
         }
         if let range = str.range(of: "educating") {
-            str[range].foregroundColor = .appPrimary
+            str[range].foregroundColor = .appPrimaryLight
         }
 
         return str

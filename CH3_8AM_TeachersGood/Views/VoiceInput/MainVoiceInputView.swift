@@ -48,7 +48,7 @@ struct MainVoiceInputView: View {
         
         .overlay {
             if showConfirmation {
-                ConfirmationOverlayView(isPresented: $showConfirmation)
+                ConfirmationOverlayView(isPresented: $showConfirmation, onConfirm: {})
             }
         }
         
