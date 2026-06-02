@@ -34,7 +34,7 @@ struct GradeInputView: View {
             HStack(alignment: .center, spacing: 12) {
                 MascotView(size: 150)
                 SpeechBubbleView(
-                    text: "\nWhat grade do\nyou usually teach?\n",
+                    text: "\nWhat grade do you\nusually teach?\n",
                     tail: .left
                 )
                 Spacer()
@@ -61,18 +61,14 @@ struct GradeInputView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 14)
-                    .background(selectedGrade == grade ? Color.appGradeSelected : Color.appGradeNotSelected)
+                    .background(selectedGrade == grade ? Color.appSpeechBubble : Color.appGradeNotSelected)
                     .cornerRadius(15)
-                    .shadow(
-                        color: selectedGrade == grade ? Color.appGradeSelected.opacity(0.5) : .clear,
-                        radius: 8, x: 0, y: 4
-                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color(hex: "#4723B5").opacity(0.2), lineWidth: selectedGrade == grade ? 0 : 2)
+                            .stroke(Color(hex: "#4723B5").opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
                     )
                     .padding(.horizontal, 24)
-                    .scaleEffect(x: selectedGrade == grade ? 1.1 : 1.0, y: selectedGrade == grade ? 1.15 : 1.0)
+                    .scaleEffect(x: selectedGrade == grade ? 1.1 : 1.0, y: selectedGrade == grade ? 1.2 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedGrade)
                     .onTapGesture {
                         selectedGrade = grade
@@ -93,7 +89,7 @@ struct GradeInputView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimary)
+                    .background(Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)

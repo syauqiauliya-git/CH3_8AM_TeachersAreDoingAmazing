@@ -52,7 +52,7 @@ struct NameInputView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimary)
+                    .background(Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)
