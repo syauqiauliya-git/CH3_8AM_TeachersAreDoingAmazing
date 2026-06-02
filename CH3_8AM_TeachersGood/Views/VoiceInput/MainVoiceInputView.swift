@@ -38,7 +38,12 @@ struct MainVoiceInputView: View {
             
             Spacer()
             
-            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
+            if currentState == .ready || currentState == .recording || currentState == .finished {
+                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
+            } else if currentState == .next {
+                SuggestedStoriesView()
+            }
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
@@ -57,11 +62,11 @@ struct MainVoiceInputView: View {
                 switch currentState {
                 case .recording:
                     await speechManager.startTranscribing()
-                    
                 case .finished:
                     await speechManager.stopTranscribing()
-                    
                 case .ready:
+                    await speechManager.stopTranscribing()
+                case .next:
                     await speechManager.stopTranscribing()
                 }
             }
