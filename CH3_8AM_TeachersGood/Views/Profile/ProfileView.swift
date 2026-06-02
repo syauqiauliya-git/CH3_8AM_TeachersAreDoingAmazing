@@ -52,6 +52,7 @@ struct ProfileView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                     Section("Library") {
                         NavigationLink {
                             SavedQuotesView()
@@ -86,6 +87,7 @@ struct ProfileView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
+                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
