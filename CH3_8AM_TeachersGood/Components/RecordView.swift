@@ -167,7 +167,7 @@ struct RecordView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                             withAnimation {
                                 showConfirmation = false
-                                currentState = .ready
+                                currentState = .next
                             }
                         }
                     }) {
@@ -198,6 +198,8 @@ struct RecordView: View {
                                 .underline()
                                 .foregroundColor(.gray)
                         }
+                    case .next:
+                        EmptyView()
                     }
                 }
             }
