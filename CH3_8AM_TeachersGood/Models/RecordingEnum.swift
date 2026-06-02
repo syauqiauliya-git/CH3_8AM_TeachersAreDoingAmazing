@@ -16,7 +16,7 @@ enum RecordingState {
     var bubbleText: String {
         switch self {
         case .ready:
-            return "How was your day, teach?"
+            return "What's up, teach?"
         case .recording:
             return "Go on! I'm listening."
         case .finished:
