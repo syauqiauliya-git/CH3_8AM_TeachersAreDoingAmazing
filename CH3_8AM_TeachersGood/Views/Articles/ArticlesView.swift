@@ -8,19 +8,39 @@
 import SwiftUI
 
 struct ArticleSheetView: View {
+    @State private var isBookmarked: Bool = false
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("This is your Sheet View")
-                .font(.title)
-            
-            Button("Dismiss Sheet") {
-                dismiss() // Closes the sheet
+        NavigationStack {
+            VStack {
+                Image("placeholder-article-pic")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 250)
+                Text("Behind every award-winning teacher is someone who once inspired them. As this year’s teaching award winners reflected on their journeys, many shared stories of mentors, family members, and former teachers who shaped the way they teach today. Some remembered educators who believed in them during difficult moments, while others spoke about people who showed them the importance of patience, kindness, and encouragement. Those experiences stayed with them and now influence the way they support their own students. For many winners, the award was not just a celebration of their work, but also a tribute to the people who helped them become the teachers they are today.")
+                    .padding()
             }
-            .buttonStyle(.borderedProminent)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Label("Close", systemImage: "xmark")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isBookmarked.toggle()
+                    } label: {
+                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                            .foregroundStyle(Color.appPrimary)
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
