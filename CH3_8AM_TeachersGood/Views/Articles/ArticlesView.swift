@@ -54,30 +54,35 @@ struct ArticlesView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
-                VStack(alignment: .leading) {
-                    Text("Inspirational teachers")
-                        .font(.title.bold())
-                    Text("Teaching Award winners share who made an impact on them.")
-                        .font(.body)
-                }
-                .foregroundStyle(Color.white)
-                .padding(20)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                .background {
-                    ZStack {
-                        Image("placeholder-article-pic")
-                            .resizable()
-                            .scaledToFill()
-                        LinearGradient(
-                            colors: [
-                                .clear,
-                                .black.opacity(1.5)
-                            ],
-                            startPoint: .center,
-                            endPoint: .bottom
-                        )
+                TabView {
+                    ForEach(1...3, id: \.self) { index in
+                        VStack(alignment: .leading) {
+                            Text("Inspirational teachers")
+                                .font(.title.bold())
+                            Text("Teaching Award winners share who made an impact on them.")
+                                .font(.body)
+                        }
+                        .foregroundStyle(Color.white)
+                        .padding(20)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                        .background {
+                            ZStack {
+                                Image("placeholder-article-pic")
+                                    .resizable()
+                                    .scaledToFill()
+                                LinearGradient(
+                                    colors: [
+                                        .clear,
+                                        .black.opacity(1.5)
+                                    ],
+                                    startPoint: .center,
+                                    endPoint: .bottom
+                                )
+                            }
+                        }
                     }
                 }
+                .tabViewStyle(.page)
                 .frame(height: 400)
                 VStack {
                     HStack(spacing: 10) {
