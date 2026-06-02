@@ -36,7 +36,7 @@ struct ArticleSheetView: View {
                         isBookmarked.toggle()
                     } label: {
                         Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                            .foregroundStyle(Color.appPrimary)
+                            .foregroundStyle(Color.appPrimaryLight)
                     }
                 }
             }
