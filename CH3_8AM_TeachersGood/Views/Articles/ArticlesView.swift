@@ -7,7 +7,26 @@
 
 import SwiftUI
 
+struct ArticleSheetView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("This is your Sheet View")
+                .font(.title)
+            
+            Button("Dismiss Sheet") {
+                dismiss() // Closes the sheet
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding()
+    }
+}
+
 struct ArticlesView: View {
+    @State private var isArticleDetailOpen = false
+    
     let columns = [
         GridItem(.flexible())
     ]
@@ -50,15 +69,22 @@ struct ArticlesView: View {
                     }
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(1...10, id: \.self) { index in
-                            RoundedRectangle(cornerRadius: 25)
-                                .fill(.gray)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 200)
+                            Button {
+                                isArticleDetailOpen = true
+                            } label: {
+                                RoundedRectangle(cornerRadius: 25)
+                                    .fill(.gray)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 200)
+                            }
                         }
                     }
                 }
                 .padding(20)
             }
+        }
+        .sheet(isPresented: $isArticleDetailOpen) {
+            ArticleSheetView()
         }
         .ignoresSafeArea(edges: .top)
     }
