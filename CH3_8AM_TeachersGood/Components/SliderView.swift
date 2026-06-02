@@ -13,7 +13,6 @@ struct SliderView: View {
     var body: some View {
         GeometryReader { proxy in
             let inset: CGFloat = 5
-            let circleSize = proxy.size.height
             let innerWidth = proxy.size.width - inset * 2
             
             ZStack(alignment: .leading) {
@@ -30,7 +29,7 @@ struct SliderView: View {
                 // Filled portion
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: innerWidth * sliderPercentage, height: 30)
-                    .foregroundStyle(Color.appPrimary)
+                    .foregroundStyle(Color.appPrimaryLight)
                     .offset(x: inset)
                 
                 // Indicator

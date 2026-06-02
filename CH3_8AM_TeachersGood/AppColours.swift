@@ -8,10 +8,10 @@
 import SwiftUI
 
 extension Color {
-    static let appPrimary               = Color(hex: "#6B4DE6") // purple — buttons, accents
+    static let appPrimaryLight               = Color(hex: "#5B23B5") // purple — buttons, accents
     static let appBackground            = Color(hex: "#FCFDFF") // page background
     
-    static let appSpeechBubble          = Color(hex: "#EAE6FF") // lavender — bubble background
+    static let appSpeechBubble          = Color(hex: "#F4F0FA") // lavender — bubble background
     static let appSpeechBubbleText      = Color(hex: "#232790")
     
     static let appGradeBorder           = Color(hex: "#CECECE")

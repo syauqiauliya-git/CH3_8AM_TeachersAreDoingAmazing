@@ -18,7 +18,7 @@ struct QuoteView: View {
         }
         
         if let range = result.range(of: "educating") {
-            result[range].foregroundColor = .appPrimary
+            result[range].foregroundColor = .appPrimaryLight
         }
         
         return result
@@ -31,7 +31,7 @@ struct QuoteView: View {
                 } label: {
                     Image(systemName: "person")
                         .font(.system(size: 20))
-                        .foregroundStyle(Color.appPrimary)
+                        .foregroundStyle(Color.appPrimaryLight)
                 }
                 .frame(width: 50, height: 50)
                 .frame(maxWidth: .infinity, alignment: .topTrailing)
@@ -52,13 +52,13 @@ struct QuoteView: View {
                     HStack(spacing: 25) {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 25))
-                            .foregroundStyle(Color.appPrimary)
+                            .foregroundStyle(Color.appPrimaryLight)
                         Button {
                             isBookmarked.toggle()
                         } label: {
                             Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
                                 .font(.system(size: 25))
-                                .foregroundStyle(Color.appPrimary)
+                                .foregroundStyle(Color.appPrimaryLight)
                         }
                     }
                 }
@@ -69,7 +69,7 @@ struct QuoteView: View {
                     } label: {
                         Image(systemName: "book.pages")
                             .font(.system(size: 20))
-                            .foregroundStyle(Color.appPrimary)
+                            .foregroundStyle(Color.appPrimaryLight)
                     }
                     .frame(width: 50, height: 50)
                     .frame(maxWidth: .infinity, alignment: .bottomLeading)
@@ -81,7 +81,7 @@ struct QuoteView: View {
                         MainVoiceInputView()
                     } label: {
                         Circle()
-                            .fill(Color.appPrimary)
+                            .fill(Color.appPrimaryLight)
                             .frame(width: 50, height: 50)
                             .overlay(Image(systemName: "ellipsis.message.fill"))
                             .font(.system(size: 20))

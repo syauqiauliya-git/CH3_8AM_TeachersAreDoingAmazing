@@ -11,6 +11,8 @@ import SwiftUI
 struct ConfirmationOverlayView: View {
     @Binding var isPresented: Bool
     
+    var onConfirm: () -> Void  // add this
+    
     var body: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -18,6 +20,7 @@ struct ConfirmationOverlayView: View {
                 .onTapGesture {
                     withAnimation {
                         isPresented = false
+                        onConfirm()
                     }
                 }
             
@@ -52,5 +55,6 @@ struct ConfirmationOverlayView: View {
 }
 
 #Preview {
-    ConfirmationOverlayView(isPresented: .constant(true))
+    ConfirmationOverlayView(isPresented: .constant(true), onConfirm: {} )
 }
+
