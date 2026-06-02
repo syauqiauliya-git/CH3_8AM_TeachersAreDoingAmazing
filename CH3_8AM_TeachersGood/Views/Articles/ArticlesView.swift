@@ -73,9 +73,38 @@ struct ArticlesView: View {
                                 isArticleDetailOpen = true
                             } label: {
                                 RoundedRectangle(cornerRadius: 25)
-                                    .fill(.gray)
                                     .frame(maxWidth: .infinity)
-                                    .frame(height: 200)
+                                    .frame(height: 250)
+                                    .overlay {
+                                        ZStack {
+                                            Image("placeholder-article-pic")
+                                                .resizable()
+                                                .scaledToFill()
+                                            LinearGradient(
+                                                colors: [
+                                                    .clear,
+                                                    .black.opacity(0.9)
+                                                ],
+                                                startPoint: .center,
+                                                endPoint: .bottom
+                                            )
+                                            VStack(alignment: .leading) {
+                                                Text("Inspirational teachers")
+                                                    .font(.title2.bold())
+                                                Text("Teaching Award winners share who made an impact on them.")
+                                                    .font(.subheadline)
+                                            }
+                                            .foregroundStyle(.white)
+                                            .padding(20)
+                                            .frame(
+                                                maxWidth: .infinity,
+                                                maxHeight: .infinity,
+                                                alignment: .bottomLeading
+                                            )
+                                            .multilineTextAlignment(.leading)
+                                        }
+                                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                                    }
                             }
                         }
                     }
