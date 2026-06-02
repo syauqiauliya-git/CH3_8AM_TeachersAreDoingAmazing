@@ -17,12 +17,15 @@ struct SpeechBubbleView: View {
     
     var body: some View {
         Text(text)
-            .font(.system(size: 16, weight: .medium))
-            .foregroundColor(.appSpeechBubbleText)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .font(.custom("Futura", size: 18))
+            .foregroundColor(.appPrimaryLight)
+            .opacity(0.7)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: 200, alignment: .leading)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 40)
             .background(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 20)
                     .fill(Color.appSpeechBubble)
             )
             .overlay(alignment: tailAlignment) {

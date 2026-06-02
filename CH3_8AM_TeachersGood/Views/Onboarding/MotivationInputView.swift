@@ -21,16 +21,18 @@ struct MotivationInputView: View {
                     .foregroundColor(.appTextSecondary)
             }
             .padding(.horizontal, 24)
-            .padding(.vertical, 50)
+            .padding(.top, 16)
             
             Spacer()
             
             // SPEECH BUBBLESl
             
-            SpeechBubbleView(text: "How are you currently \nfeeling about teaching??", tail: .bottomLeft)
+            SpeechBubbleView(
+                text: "How are you feeling about teaching?",
+                tail: .bottomRight
+            )
             
-            //MASCOT
-            
+            //Mascot
             MascotView(size: 350)
             
             Spacer()
@@ -39,22 +41,22 @@ struct MotivationInputView: View {
             
             SliderView()
             HStack {
-                Text("Not Motivated")
+                Text("Struggling")
                     .padding(.leading,30)
                 Spacer()
-                Text("Very Motivated")
+                Text("Thriving")
                     .padding(.trailing,30)
 
             }
             .padding(.vertical, 15)
-            .foregroundStyle(Color.appTextTertiary)
+            .foregroundStyle(Color.appPrimaryLight)
             Spacer()
             
             NavigationLink {
-                QuoteView()
+                FinishView()
             } label: {
-                Text("Continue")
-                    .font(.system(size: 17, weight: .semibold))
+                Text("Save")
+                    .font(.custom("Futura", size: 20))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)

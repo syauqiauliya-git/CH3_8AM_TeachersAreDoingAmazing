@@ -37,7 +37,7 @@ struct ConfirmationOverlayView: View {
                     }
                     .padding(.top, 10)
                     
-                    Text("Thank you for sharing.")
+                    Text("Your voice entry has been sent")
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(.appMutedPurple)
