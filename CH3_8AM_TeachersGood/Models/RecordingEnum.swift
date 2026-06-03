@@ -11,15 +11,19 @@ enum RecordingState {
     case ready
     case recording
     case finished
+    case next
 
     var bubbleText: String {
         switch self {
         case .ready:
-            return "How was your day,\nteach?"
+            return "What's up, teach?"
+
         case .recording:
             return "Go on! I'm listening."
         case .finished:
             return "Thank you for telling\nme about your day!"
+        case .next:
+            return "Generated Response Placeholder"
         }
     }
 }
