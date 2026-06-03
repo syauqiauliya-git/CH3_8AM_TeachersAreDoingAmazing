@@ -60,7 +60,7 @@ struct FinishView: View {
                     Spacer()
                     
                     if stage == 3 {
-                        QuoteView()
+                        AffirmationsView()
                     }
                 }
                 .transition(.opacity)
@@ -68,7 +68,7 @@ struct FinishView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $navigateToHome) {
-            QuoteView()
+            AffirmationsView()
                 .navigationBarBackButtonHidden(true)
         }
         .onAppear { startSequence() }
