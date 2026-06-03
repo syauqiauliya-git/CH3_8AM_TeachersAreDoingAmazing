@@ -33,7 +33,7 @@ struct ProfileView: View {
                             }
                         }
                         NavigationLink {
-                            // add later
+                           EditGradeView()
                         } label: {
                             HStack {
                                 Text("Grade")
@@ -75,12 +75,12 @@ struct ProfileView: View {
                     }
                     Section("Preferences") {
                         NavigationLink {
-                            // add later
+                            EditPreferencesView()
                         } label: {
                             HStack {
                                 Text("Light Mode")
                                 Spacer()
-                                Text("System Default")
+                                Text("Light Mode")
                                     .foregroundStyle(.secondary)
                             }
                         }
