@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct QuoteView: View {
+struct AffirmationsView: View {
     @State private var isBookmarked: Bool = false
     
     var mainQuote: AttributedString {
@@ -96,5 +96,5 @@ struct QuoteView: View {
 }
 
 #Preview {
-    QuoteView()
+    AffirmationsView()
 }
