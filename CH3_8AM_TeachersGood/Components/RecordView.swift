@@ -16,6 +16,8 @@ struct RecordView: View {
     @Binding var showConfirmation: Bool
     @Binding var isOnboarding: Bool
     
+    @Binding var isOnboarding: Bool
+    
     @State private var isTypingMode = false
     @State private var inputText = ""
     @FocusState private var isTextFieldFocused: Bool
