@@ -11,16 +11,19 @@ enum RecordingState {
     case ready
     case recording
     case finished
+    case next
 
-    // Computed property untuk teks bubble
     var bubbleText: String {
         switch self {
         case .ready:
             return "What's up, teach?"
+
         case .recording:
             return "Go on! I'm listening."
         case .finished:
-            return "Thank you for telling me about your day!"
+            return "Thank you for telling\nme about your day!"
+        case .next:
+            return "Generated Response Placeholder"
         }
     }
 }
