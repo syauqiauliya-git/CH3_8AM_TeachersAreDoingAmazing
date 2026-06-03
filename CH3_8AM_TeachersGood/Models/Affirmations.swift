@@ -10,14 +10,14 @@ import SwiftData
 
 @Model
 class Affirmations {
-    var id: UUID = UUID()
+//    var id: UUID = UUID()
+    var text: String
     var labels: [String]
-    var isLiked: Bool
-    var lastShown: Date
+    var lastShown: Date?
     
-    init(labels: [String] = [], isLiked: Bool = false, lastShown: Date = .now) {
+    init(text: String, labels: [String] = [], lastShown: Date? =  nil) {
+        self.text = text
         self.labels = labels
-        self.isLiked = isLiked
         self.lastShown = lastShown
     }
 }
