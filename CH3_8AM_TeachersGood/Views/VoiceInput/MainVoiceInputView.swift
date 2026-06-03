@@ -16,6 +16,8 @@ struct MainVoiceInputView: View {
     
     @State private var speechManager = SpeechRecognitionManager()
     
+    @State private var isOnboarding: Bool = false
+    
     var body: some View {
         VStack {
             Spacer()
@@ -39,7 +41,7 @@ struct MainVoiceInputView: View {
             Spacer()
             
             if currentState == .ready || currentState == .recording || currentState == .finished {
-                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
+                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
             } else if currentState == .next {
                 SuggestedStoriesView()
             }
