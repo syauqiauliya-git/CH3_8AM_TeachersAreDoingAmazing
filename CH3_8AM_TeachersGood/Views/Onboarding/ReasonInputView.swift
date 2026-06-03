@@ -15,6 +15,8 @@ struct ReasonInputView: View {
     @State private var currentState: RecordingState = .ready
     @State private var showConfirmation = false
     
+    @State private var isOnboarding = true
+    
     
     var body: some View {
         VStack{
@@ -41,8 +43,13 @@ struct ReasonInputView: View {
             
             MascotView(size: 250)
             
+            Spacer()
+            
             //RECORD
-            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation)
+            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
+            
+            
+            Spacer()
             
         }
         .background(Color.appBackground)

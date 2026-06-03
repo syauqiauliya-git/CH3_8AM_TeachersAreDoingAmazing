@@ -23,7 +23,7 @@ struct SpeechBubbleView: View {
             .multilineTextAlignment(.leading)
             .frame(maxWidth: 200, alignment: .leading)
             .padding(.horizontal, 20)
-            .padding(.vertical, 40)
+            .padding(.vertical, 20)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.appSpeechBubble)

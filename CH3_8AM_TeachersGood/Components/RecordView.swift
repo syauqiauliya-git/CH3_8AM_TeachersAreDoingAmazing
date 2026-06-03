@@ -17,6 +17,8 @@ struct RecordView: View {
     
     @Binding var showConfirmation: Bool
     
+    @Binding var isOnboarding: Bool
+    
     @State private var isTypingMode = false
     @State private var inputText = ""
     
@@ -199,7 +201,50 @@ struct RecordView: View {
                                 .foregroundColor(.gray)
                         }
                     case .next:
-                        EmptyView()
+                        if isOnboarding == false {
+                            EmptyView()
+                        } else {
+                            Button(action: {
+                            withAnimation(.spring()) {
+                                showConfirmation = true
+                            }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                withAnimation {
+                                    showConfirmation = false
+                                    currentState = .next
+                                }
+                            }
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
+                                            startPoint: .bottomLeading,
+                                            endPoint: .topTrailing
+                                        )
+                                    )
+                                    .frame(width: 80, height: 80)
+                                Image(systemName: "paperplane.fill")
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .offset(x: -2, y: 2)
+                            }
+                        }
+                            
+                            Button(action: {
+                                withAnimation {
+                                    currentState = .ready
+                                }
+                            }) {
+                                Text("Re-Record")
+                                    .font(.caption)
+                                    .underline()
+                                    .foregroundColor(.gray)
+                            }
+                            
+                        }
                     }
                 }
             }
@@ -225,5 +270,5 @@ struct RecordView: View {
 }
 
 #Preview {
-    RecordView(currentState: .constant(.ready), audioLevels: .constant(Array(repeating: 10.0, count: 7)), showConfirmation: .constant(false))
+    RecordView(currentState: .constant(.ready), audioLevels: .constant(Array(repeating: 10.0, count: 7)), showConfirmation: .constant(false), isOnboarding: .constant(true))
 }
