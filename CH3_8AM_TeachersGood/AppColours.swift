@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension Color {
-    
     static let appGradeBorder           = Color(hex: "#CECECE")
     static let appGradeNotSelected      = Color(hex: "#F3F3F3")
     static let appGradeSelected         = Color(hex: "#FDD9A5") // amber — selected grade row
