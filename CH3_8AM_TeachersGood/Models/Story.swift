@@ -8,8 +8,8 @@
 import Foundation
 import SwiftData
 
-class Stories {
-    var id: UUID = UUID()
+class Story {
+//    var id: UUID = UUID()
     var labels: [String]
     var image: String
     var isBookmarked: Bool

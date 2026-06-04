@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AffirmationsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var affirmations: [Affirmation]
+    @State private var selected: Affirmation?
+    
     @State private var isBookmarked: Bool = false
     
     var mainQuote: AttributedString {
@@ -40,6 +45,11 @@ struct AffirmationsView: View {
                 .controlSize(ControlSize.large)
                 Spacer()
                 VStack(spacing: 20) {
+                    Text("Count: \(affirmations.count)")
+
+                        ForEach(affirmations) { affirmation in
+                            Text(affirmation.text)
+                        }
                     Text(mainQuote)
                         .font(.system(size: 40, design: .serif))
                     HStack {
@@ -90,9 +100,68 @@ struct AffirmationsView: View {
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                 }
             }
+            .onAppear {
+                seedIfNeeded()
+
+                if selected == nil {
+                    selected = affirmations.randomElement()
+                }
+            }
+//            .onChange(of: affirmations) {
+//                selected = affirmations.randomElement()
+//            }
+//            .onAppear {
+//                seedIfNeeded()
+//            }
             .padding(20)
             .navigationBarBackButtonHidden(true)
     }
+    
+    private func seedIfNeeded() {
+        let samples = [
+            "You are capable of amazing things.",
+            "Every day is a new opportunity.",
+            "You are stronger than you think.",
+            "Progress is progress, no matter how small.",
+            "You deserve kindness and patience."
+        ]
+
+        do {
+            let existing = try modelContext.fetch(FetchDescriptor<Affirmation>())
+
+            if existing.isEmpty {
+                for text in samples {
+                    modelContext.insert(Affirmation(text: text))
+                }
+
+                try modelContext.save()
+            }
+
+            let allAffirmations = try modelContext.fetch(FetchDescriptor<Affirmation>())
+            selected = allAffirmations.randomElement()
+
+        } catch {
+            print("Error:", error)
+        }
+    }
+    
+//    private func seedIfNeeded() {
+//        guard affirmations.isEmpty else { return }
+//
+//        let samples = [
+//            "You are capable of amazing things.",
+//            "Progress is still progress.",
+//            "You are stronger than you think.",
+//            "Small steps still move forward.",
+//            "You deserve kindness."
+//        ]
+//
+//        for text in samples {
+//            modelContext.insert(Affirmation(text: text))
+//        }
+//
+//        try? modelContext.save()
+//    }
 }
 
 #Preview {
