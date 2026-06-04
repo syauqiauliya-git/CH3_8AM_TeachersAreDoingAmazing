@@ -34,7 +34,7 @@ struct FinishView: View {
                         ) // forces transition to re-trigger on text change
                         .transition(.opacity)
                     
-                    MascotView(size: 300)
+                    MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
                     
                     GeometryReader { proxy in
                         ZStack(alignment: .leading) {
