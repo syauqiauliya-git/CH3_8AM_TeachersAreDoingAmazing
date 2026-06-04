@@ -53,7 +53,7 @@ struct NameInputView: View {
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimaryLight)
+                    .background(teacherName == "" ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)

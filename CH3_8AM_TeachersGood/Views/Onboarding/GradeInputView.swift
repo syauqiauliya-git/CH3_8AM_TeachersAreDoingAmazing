@@ -79,6 +79,7 @@ struct GradeInputView: View {
             // CONTINUE BUTTONT
             
             Spacer()
+    
             
             NavigationLink {
                 ReasonInputView()
@@ -88,12 +89,13 @@ struct GradeInputView: View {
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimaryLight)
+                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)
             .padding(.top, 16)
             .padding(.bottom, 32)
+            .disabled(selectedGrade == nil)
                         
         }
         .background(Color.appBackground)
