@@ -10,6 +10,7 @@
 		003CD7442FD164BF00A029FF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003CD67C2FD124A400A029FF /* WidgetKit.framework */; };
 		003CD7452FD164BF00A029FF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003CD67E2FD124A400A029FF /* SwiftUI.framework */; };
 		003CD7522FD164C000A029FF /* SolaceWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 003CD7432FD164BF00A029FF /* SolaceWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		61D08A622FD1D3720045532F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 61D08A612FD1D3720045532F /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61D08A622FD1D3720045532F /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +170,7 @@
 			);
 			name = CH3_8AM_TeachersGood;
 			packageProductDependencies = (
+				61D08A612FD1D3720045532F /* MarkdownUI */,
 			);
 			productName = CH3_8AM_TeachersGood;
 			productReference = 0044B05C2FC3F56200385DFC /* CH3_8AM_TeachersGood.app */;
@@ -200,6 +203,9 @@
 			);
 			mainGroup = 0044B0532FC3F56200385DFC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				61D08A602FD1D3720045532F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0044B05D2FC3F56200385DFC /* Products */;
 			projectDirPath = "";
@@ -534,6 +540,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		61D08A602FD1D3720045532F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		61D08A612FD1D3720045532F /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 61D08A602FD1D3720045532F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0044B0542FC3F56200385DFC /* Project object */;
 }
