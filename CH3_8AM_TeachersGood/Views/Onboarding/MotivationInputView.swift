@@ -57,7 +57,7 @@ struct MotivationInputView: View {
             } label: {
                 Text("Save")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.white)
+                    .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
                     .background(Color.appPrimaryLight)

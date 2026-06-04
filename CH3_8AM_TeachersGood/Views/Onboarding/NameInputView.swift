@@ -50,7 +50,7 @@ struct NameInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.white)
+                    .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
                     .background(Color.appPrimaryLight)

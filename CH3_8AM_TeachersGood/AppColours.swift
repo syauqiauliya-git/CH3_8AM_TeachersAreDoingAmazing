@@ -8,10 +8,10 @@
 import SwiftUI
 
 extension Color {
-    static let appPrimaryLight               = Color(hex: "#5B23B5") // purple — buttons, accents
-    static let appBackground            = Color(hex: "#FCFDFF") // page background
-    
-    static let appSpeechBubble          = Color(hex: "#F4F0FA") // lavender — bubble background
+//    static let appPrimaryLight               = Color(hex: "#5B23B5") // purple — buttons, accents
+//    static let appBackground            = Color(hex: "#FCFDFF") // page background
+//    
+//    static let appSpeechBubble          = Color(hex: "#F4F0FA") // lavender — bubble background
     
     static let appGradeBorder           = Color(hex: "#CECECE")
     static let appGradeNotSelected      = Color(hex: "#F3F3F3")
@@ -22,9 +22,9 @@ extension Color {
     static let appMascotOrange          = Color(hex: "#FF6B35") // mascot gradient start
     static let appMascotYellow          = Color(hex: "#FFC84A") // mascot gradient end
     
-    static let appTextPrimary           = Color(hex: "#2D2D2D")
-    static let appTextSecondary         = Color(hex: "#888888")
-    static let appTextTertiary          = Color(hex: "#C1C1C1")
+//    static let appTextPrimary           = Color(hex: "#2D2D2D")
+//    static let appTextSecondary         = Color(hex: "#888888")
+//    static let appTextTertiary          = Color(hex: "#C1C1C1")
 
     //  button gradient in voice input
     static let appGradientPurpleStart   = Color(hex: "#5B23B5")
