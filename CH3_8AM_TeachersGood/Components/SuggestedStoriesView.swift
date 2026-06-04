@@ -13,32 +13,34 @@ struct SuggestedStoriesView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 15) {
             
-            HStack(spacing: 8) {
+            HStack() {
                 Text("Suggested stories")
-                    .font(.title2)
-                    .fontWeight(.semibold)
+                    .font(.custom("Futura", size: 17))
                     .foregroundColor(.appPrimaryLight)
                 
-                // is using and modifying this logo allowed?
                 Image(systemName: "apple.intelligence")
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [.appGradientOrangeStart, .appGradientPurpleEnd],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+                            colors: [
+                                .aiTeal,
+                                .aiBlue,
+                                .aiPurple,
+                                .aiRed,
+                                .aiYellow
+                            ],
+                            startPoint: .topTrailing,
+                            endPoint: .bottomLeading
                         )
                     )
                     .font(.title2)
             }
-            .padding(.top, 24)
             
-            HStack(spacing: 16) {
+            HStack(spacing: 8) {
                 StoryCardView(title: "Inspirational\nteachers", imageName: "teacher_image")
                 StoryCardView(title: "Inspirational\nteachers", imageName: "teacher_image")
             }
-            .padding(.horizontal, 20)
             
             Button(action: {
                 dismiss()
@@ -53,7 +55,6 @@ struct SuggestedStoriesView: View {
             .cornerRadius(20)
             .padding(.horizontal, 24)
             .padding(.bottom, 32)
-            
         }
         .background(Color.appBackground)
     }
@@ -65,18 +66,18 @@ struct StoryCardView: View {
     let imageName: String
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 6) {
             
             if let uiImage = UIImage(named: imageName) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 64, height: 64)
+                    .frame(width: 75, height: 75)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             } else {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: 64, height: 64)
+                    .frame(width: 75, height: 75)
                     .overlay(
                         Image(systemName: "photo")
                             .foregroundColor(.gray)
@@ -84,18 +85,15 @@ struct StoryCardView: View {
             }
             
             Text(title)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(.appTextPrimary)
-                .lineLimit(2)
+                .font(.custom("Futura", size: 13))
+                .padding(.trailing, 4)
+                .foregroundColor(.appPrimaryLight)
                 .multilineTextAlignment(.leading)
             
-            Spacer(minLength: 0)
         }
-        .padding(8)
-        .padding(.trailing, 8)
+        .padding(4)
         .background(Color.appSpeechBubble)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 
