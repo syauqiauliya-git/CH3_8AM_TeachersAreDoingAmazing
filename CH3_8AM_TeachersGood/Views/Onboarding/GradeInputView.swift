@@ -79,11 +79,7 @@ struct GradeInputView: View {
             // CONTINUE BUTTONT
             
             Spacer()
-            
-            Text("\(Image(systemName: "info.circle")) This will also affect how often you receive notifications if you activate them. This can be later modified on settings.")
-                .font(.system(size: 13))
-                .foregroundColor(.appPrimaryLight)
-                .padding(.horizontal, 30)
+    
             
             NavigationLink {
                 ReasonInputView()
@@ -93,12 +89,13 @@ struct GradeInputView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimaryLight)
+                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)
             .padding(.top, 16)
             .padding(.bottom, 32)
+            .disabled(selectedGrade == nil)
                         
         }
         .background(Color.appBackground)

@@ -23,8 +23,6 @@ class Affirmation {
         Affirmation(text: "You go girl!"),
         Affirmation(text: "Woah!"),
         Affirmation(text: "You're doing so good")
- 
-
     ]
     
     init(tokens: [AffirmationToken] = [], text: String = "", labels: [String] = [], isLiked: Bool = false, lastShown: Date? =  nil) {
