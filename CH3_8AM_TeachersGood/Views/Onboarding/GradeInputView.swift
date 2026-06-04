@@ -80,6 +80,11 @@ struct GradeInputView: View {
             
             Spacer()
             
+            Text("\(Image(systemName: "info.circle")) This will also affect how often you receive notifications if you activate them. This can be later modified on settings.")
+                .font(.system(size: 13))
+                .foregroundColor(.appPrimaryLight)
+                .padding(.horizontal, 30)
+            
             NavigationLink {
                 ReasonInputView()
             } label: {
