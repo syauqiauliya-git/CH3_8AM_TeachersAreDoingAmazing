@@ -23,7 +23,7 @@ enum RecordingState {
         case .finished:
             return "Thank you for telling\nme about your day!"
         case .next:
-            return "Generated Response Placeholder"
+            return "It's okay if you don't have a \ngrand reason today. Taking a \nbreath is enough. These are \nthe story that might be relevant"
         }
     }
 }
