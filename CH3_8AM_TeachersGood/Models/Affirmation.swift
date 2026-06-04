@@ -9,13 +9,13 @@ import Foundation
 import SwiftData
 
 @Model
-class Affirmations {
+class Affirmation {
 //    var id: UUID = UUID()
     var text: String
     var labels: [String]
     var lastShown: Date?
     
-    init(text: String, labels: [String] = [], lastShown: Date? =  nil) {
+    init(text: String = "", labels: [String] = [], lastShown: Date? =  nil) {
         self.text = text
         self.labels = labels
         self.lastShown = lastShown
