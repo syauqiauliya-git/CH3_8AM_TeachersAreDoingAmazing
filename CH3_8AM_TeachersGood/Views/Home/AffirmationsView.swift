@@ -47,8 +47,9 @@ struct AffirmationsView: View {
             Spacer()
             VStack(spacing: 20) {
                 //                Text(mainQuote)
-                Text(selectedAffirmation?.text ?? "Loading...")
-                    .font(.system(size: 40, design: .serif))
+                if let affirmation = selectedAffirmation {
+                    Text(render(affirmation))
+                }
                 Button {
                     isBookmarked.toggle()
                 } label: {
@@ -89,70 +90,168 @@ struct AffirmationsView: View {
             }
         }
         .onAppear {
+            seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
         }
         .padding(20)
         .navigationBarBackButtonHidden(true)
     }
     
-    func showAffirmations() {
-        let affirmationTexts = [
-            "You are capable of amazing things.",
-            "Every day is a new opportunity.",
-            "You are stronger than you think.",
-            "Progress is progress, no matter how small.",
-            "You deserve kindness and patience."
-        ]
-        
-        do {
-            let existing = try modelContext.fetch(FetchDescriptor<Affirmation>())
-            
-            if existing.isEmpty {
-                for text in affirmationTexts {
-                    modelContext.insert(Affirmation(text: text))
-                }
-                
-                try modelContext.save()
+    func render(_ affirmation: Affirmation) -> AttributedString {
+        var result = AttributedString()
+
+        for token in affirmation.tokens {
+            var part = AttributedString(token.text + " ")
+
+            switch token.style {
+            case .normal:
+                part.foregroundColor = .primary
+            case .purple:
+                part.foregroundColor = .purple
+            case .orange:
+                part.foregroundColor = .orange
             }
-            
-            let allAffirmations = try modelContext.fetch(FetchDescriptor<Affirmation>())
-            selectedAffirmation = allAffirmations.randomElement()
-            
+
+            result += part
+        }
+
+        return result
+    }
+    
+    func seedIfNeeded(context: ModelContext) {
+        do {
+            let existing = try context.fetch(FetchDescriptor<Affirmation>())
+
+            guard existing.isEmpty else { return }
+
+            for affirmation in AffirmationSeedData.all {
+                context.insert(affirmation)
+            }
+
+            try context.save()
+
         } catch {
-            print("Error:", error)
+            print("Seeding error:", error)
         }
     }
+    
+//    func showAffirmations() {
+//        let affirmationTexts = [
+//            "You are capable of amazing things.",
+//            "Every day is a new opportunity.",
+//            "You are stronger than you think.",
+//            "Progress is progress, no matter how small.",
+//            "You deserve kindness and patience."
+//        ]
+//        
+//        do {
+//            let existing = try modelContext.fetch(FetchDescriptor<Affirmation>())
+//            
+//            if existing.isEmpty {
+//                for text in affirmationTexts {
+//                    modelContext.insert(Affirmation(text: text))
+//                }
+//                
+//                try modelContext.save()
+//            }
+//            
+//            let allAffirmations = try modelContext.fetch(FetchDescriptor<Affirmation>())
+//            selectedAffirmation = allAffirmations.randomElement()
+//            
+//        } catch {
+//            print("Error:", error)
+//        }
+//    }
 }
 
 //#Preview {
 //    AffirmationsView()
 //}
 
+//#Preview {
+//    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//    let container = try! ModelContainer(
+//        for: Affirmation.self,
+//        configurations: config
+//    )
+//    
+//    let context = container.mainContext
+//    
+//    context.insert(
+//        Affirmation(text: "You are capable of amazing things.")
+//    )
+//    
+//    context.insert(
+//        Affirmation(text: "Progress is progress.")
+//    )
+//    
+//    context.insert(
+//        Affirmation(text: "Good job! You've got this!")
+//    )
+//    
+//    context.insert(
+//        Affirmation(text: "The day has come to shine!")
+//    )
+//    
+//    return AffirmationsView()
+//        .modelContainer(container)
+//}
+
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
+
     let container = try! ModelContainer(
-        for: Affirmation.self,
+        for: Affirmation.self, AffirmationToken.self,
         configurations: config
     )
-    
+
     let context = container.mainContext
-    
+
     context.insert(
-        Affirmation(text: "You are capable of amazing things.")
+        Affirmation(tokens: [
+            AffirmationToken(text: "You", style: .normal),
+            AffirmationToken(text: "are", style: .normal),
+            AffirmationToken(text: "capable", style: .purple),
+            AffirmationToken(text: "of", style: .normal),
+            AffirmationToken(text: "amazing", style: .orange),
+            AffirmationToken(text: "things", style: .normal),
+            AffirmationToken(text: ".", style: .normal)
+        ])
     )
-    
+
     context.insert(
-        Affirmation(text: "Progress is progress.")
+        Affirmation(tokens: [
+            AffirmationToken(text: "Progress", style: .purple),
+            AffirmationToken(text: "is", style: .normal),
+            AffirmationToken(text: "progress", style: .purple),
+            AffirmationToken(text: ".", style: .normal)
+        ])
     )
-    
+
     context.insert(
-        Affirmation(text: "Good job! You've got this!")
+        Affirmation(tokens: [
+            AffirmationToken(text: "Good", style: .normal),
+            AffirmationToken(text: "job", style: .orange),
+            AffirmationToken(text: "!", style: .normal),
+            AffirmationToken(text: "You’ve", style: .normal),
+            AffirmationToken(text: "got", style: .orange),
+            AffirmationToken(text: "this", style: .orange),
+            AffirmationToken(text: "!", style: .normal)
+        ])
     )
-    
+
     context.insert(
-        Affirmation(text: "The day has come to shine!")
+        Affirmation(tokens: [
+            AffirmationToken(text: "The", style: .normal),
+            AffirmationToken(text: "day", style: .orange),
+            AffirmationToken(text: "has", style: .normal),
+            AffirmationToken(text: "come", style: .orange),
+            AffirmationToken(text: "to", style: .normal),
+            AffirmationToken(text: "shine", style: .purple),
+            AffirmationToken(text: ".", style: .normal)
+        ])
     )
-    
+
     return AffirmationsView()
         .modelContainer(container)
 }
