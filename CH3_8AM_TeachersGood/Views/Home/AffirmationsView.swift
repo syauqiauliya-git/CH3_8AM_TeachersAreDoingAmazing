@@ -149,6 +149,10 @@ struct AffirmationsView: View {
         Affirmation(text: "Good job! You've got this!")
     )
     
+    context.insert(
+        Affirmation(text: "The day has come to shine!")
+    )
+    
     return AffirmationsView()
         .modelContainer(container)
 }
