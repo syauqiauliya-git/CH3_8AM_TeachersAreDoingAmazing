@@ -7,11 +7,20 @@
 
 import SwiftUI
 
+enum ThingyMode: String, Identifiable {
+    case normal    = "Thingy"
+    case blink   = "ThingyBlink"
+    
+    var id: Self { self }
+}
+
+
 struct MascotView: View {
     var size: CGFloat = 150
-
+    var currentMode: ThingyMode = .normal
+    
     var body: some View {
-        Image("Thingy")
+        Image(currentMode.rawValue)
             .resizable()
             .scaledToFit()
             .frame(width: size, height: size)

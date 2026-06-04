@@ -27,7 +27,7 @@ struct ThanksView: View {
             
             
             NavigationLink {
-                MotivationInputView()
+                IntervalInputView()
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
