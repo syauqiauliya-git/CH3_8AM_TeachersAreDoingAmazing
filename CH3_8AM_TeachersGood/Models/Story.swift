@@ -8,16 +8,19 @@
 import Foundation
 import SwiftData
 
+@Model
 class Story {
 //    var id: UUID = UUID()
     var labels: [String]
+    var title: String
     var mdFileName: String
     var image: String
     var isBookmarked: Bool
     var storyDate: Date
     
-    init(labels: [String] = [], mdFileName: String = "", image: String = "", isBookmarked: Bool = false, storyDate: Date = Date()) {
+    init(labels: [String] = [], title: String = "", mdFileName: String = "", image: String = "", isBookmarked: Bool = false, storyDate: Date = Date()) {
         self.labels = labels
+        self.title = title
         self.mdFileName = mdFileName
         self.image = image
         self.isBookmarked = isBookmarked

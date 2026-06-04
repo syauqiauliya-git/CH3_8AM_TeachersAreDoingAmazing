@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ArticleSheetView: View {
     @State private var isBookmarked: Bool = false
     
     @Environment(\.dismiss) var dismiss
+    
+    let markdown = MarkdownLoader.load("story-1")
     
     var body: some View {
         NavigationStack {
@@ -19,7 +22,7 @@ struct ArticleSheetView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(height: 250)
-                Text("Behind every award-winning teacher is someone who once inspired them. As this year’s teaching award winners reflected on their journeys, many shared stories of mentors, family members, and former teachers who shaped the way they teach today. Some remembered educators who believed in them during difficult moments, while others spoke about people who showed them the importance of patience, kindness, and encouragement. Those experiences stayed with them and now influence the way they support their own students. For many winners, the award was not just a celebration of their work, but also a tribute to the people who helped them become the teachers they are today.")
+                Text(.init(markdown))
                     .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -45,6 +48,10 @@ struct ArticleSheetView: View {
 }
 
 struct ArticlesView: View {
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var stories: [Story]
+    
     @State private var isArticleDetailOpen = false
     
     let columns = [
