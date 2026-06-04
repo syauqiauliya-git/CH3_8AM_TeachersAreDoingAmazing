@@ -15,6 +15,6 @@ struct CH3_8AM_TeachersGoodApp: App {
             ContentView()
         }
 //        .modelContainer(for: TeacherProfile.self)
-        .modelContainer(for: [Affirmation.self, TeacherProfile.self])
+        .modelContainer(for: [Affirmation.self, Story.self, TeacherProfile.self])
     }
 }
