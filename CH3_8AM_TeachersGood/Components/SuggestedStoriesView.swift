@@ -18,7 +18,7 @@ struct SuggestedStoriesView: View {
             HStack() {
                 Text("Suggested stories")
                     .font(.custom("Futura", size: 17))
-                    .foregroundColor(.appPrimaryLight)
+                    .foregroundColor(.appTextAlt)
                 
                 Image(systemName: "apple.intelligence")
                     .foregroundStyle(
@@ -47,7 +47,7 @@ struct SuggestedStoriesView: View {
             }) {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.white)
+                    .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
                     .background(Color.appPrimaryLight)
@@ -87,7 +87,7 @@ struct StoryCardView: View {
             Text(title)
                 .font(.custom("Futura", size: 13))
                 .padding(.trailing, 4)
-                .foregroundColor(.appPrimaryLight)
+                .foregroundColor(.appPrimary)
                 .multilineTextAlignment(.leading)
             
         }

@@ -22,7 +22,7 @@ struct WelcomeView: View {
                         MascotView(size: 250)
                         Text("TrueTeach")
                             .font(.custom("Futura", size: 30))
-                            .foregroundColor(.appTextPrimary)
+                            .foregroundColor(.appTextAlt)
                         
                         Spacer()
                         

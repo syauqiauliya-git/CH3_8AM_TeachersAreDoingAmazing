@@ -40,7 +40,7 @@ struct ConfirmationOverlayView: View {
                     Text("Your voice entry has been sent")
                         .font(.subheadline)
                         .fontWeight(.medium)
-                        .foregroundColor(.appMutedPurple)
+                        .foregroundColor(.appTextAlt)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
                 }
