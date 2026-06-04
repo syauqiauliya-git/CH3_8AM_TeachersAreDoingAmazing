@@ -15,6 +15,7 @@ struct AffirmationsView: View {
     
     @State private var selectedAffirmation: Affirmation?
     @State private var isBookmarked: Bool = false
+        
     
     //    var mainQuote: AttributedString {
     //        var result = AttributedString("“I want to change the future by educating younger generations.”")
@@ -93,16 +94,14 @@ struct AffirmationsView: View {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
         }
-        .padding(20)
-        .navigationBarBackButtonHidden(true)
     }
     
     func render(_ affirmation: Affirmation) -> AttributedString {
         var result = AttributedString()
-
+        
         for token in affirmation.tokens {
             var part = AttributedString(token.text + " ")
-
+            
             switch token.style {
             case .normal:
                 part.foregroundColor = .primary
@@ -111,57 +110,57 @@ struct AffirmationsView: View {
             case .orange:
                 part.foregroundColor = .orange
             }
-
+            
             result += part
         }
-
+        
         return result
     }
     
     func seedIfNeeded(context: ModelContext) {
         do {
             let existing = try context.fetch(FetchDescriptor<Affirmation>())
-
+            
             guard existing.isEmpty else { return }
-
+            
             for affirmation in AffirmationSeedData.all {
                 context.insert(affirmation)
             }
-
+            
             try context.save()
-
+            
         } catch {
             print("Seeding error:", error)
         }
     }
     
-//    func showAffirmations() {
-//        let affirmationTexts = [
-//            "You are capable of amazing things.",
-//            "Every day is a new opportunity.",
-//            "You are stronger than you think.",
-//            "Progress is progress, no matter how small.",
-//            "You deserve kindness and patience."
-//        ]
-//        
-//        do {
-//            let existing = try modelContext.fetch(FetchDescriptor<Affirmation>())
-//            
-//            if existing.isEmpty {
-//                for text in affirmationTexts {
-//                    modelContext.insert(Affirmation(text: text))
-//                }
-//                
-//                try modelContext.save()
-//            }
-//            
-//            let allAffirmations = try modelContext.fetch(FetchDescriptor<Affirmation>())
-//            selectedAffirmation = allAffirmations.randomElement()
-//            
-//        } catch {
-//            print("Error:", error)
-//        }
-//    }
+    //    func showAffirmations() {
+    //        let affirmationTexts = [
+    //            "You are capable of amazing things.",
+    //            "Every day is a new opportunity.",
+    //            "You are stronger than you think.",
+    //            "Progress is progress, no matter how small.",
+    //            "You deserve kindness and patience."
+    //        ]
+    //
+    //        do {
+    //            let existing = try modelContext.fetch(FetchDescriptor<Affirmation>())
+    //
+    //            if existing.isEmpty {
+    //                for text in affirmationTexts {
+    //                    modelContext.insert(Affirmation(text: text))
+    //                }
+    //
+    //                try modelContext.save()
+    //            }
+    //
+    //            let allAffirmations = try modelContext.fetch(FetchDescriptor<Affirmation>())
+    //            selectedAffirmation = allAffirmations.randomElement()
+    //
+    //        } catch {
+    //            print("Error:", error)
+    //        }
+    //    }
 }
 
 //#Preview {
@@ -174,39 +173,39 @@ struct AffirmationsView: View {
 //        for: Affirmation.self,
 //        configurations: config
 //    )
-//    
+//
 //    let context = container.mainContext
-//    
+//
 //    context.insert(
 //        Affirmation(text: "You are capable of amazing things.")
 //    )
-//    
+//
 //    context.insert(
 //        Affirmation(text: "Progress is progress.")
 //    )
-//    
+//
 //    context.insert(
 //        Affirmation(text: "Good job! You've got this!")
 //    )
-//    
+//
 //    context.insert(
 //        Affirmation(text: "The day has come to shine!")
 //    )
-//    
+//
 //    return AffirmationsView()
 //        .modelContainer(container)
 //}
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-
+    
     let container = try! ModelContainer(
         for: Affirmation.self, AffirmationToken.self,
         configurations: config
     )
-
+    
     let context = container.mainContext
-
+    
     context.insert(
         Affirmation(tokens: [
             AffirmationToken(text: "You", style: .normal),
@@ -218,7 +217,7 @@ struct AffirmationsView: View {
             AffirmationToken(text: ".", style: .normal)
         ])
     )
-
+    
     context.insert(
         Affirmation(tokens: [
             AffirmationToken(text: "Progress", style: .purple),
@@ -227,7 +226,7 @@ struct AffirmationsView: View {
             AffirmationToken(text: ".", style: .normal)
         ])
     )
-
+    
     context.insert(
         Affirmation(tokens: [
             AffirmationToken(text: "Good", style: .normal),
@@ -239,7 +238,7 @@ struct AffirmationsView: View {
             AffirmationToken(text: "!", style: .normal)
         ])
     )
-
+    
     context.insert(
         Affirmation(tokens: [
             AffirmationToken(text: "The", style: .normal),
@@ -251,7 +250,7 @@ struct AffirmationsView: View {
             AffirmationToken(text: ".", style: .normal)
         ])
     )
-
+    
     return AffirmationsView()
         .modelContainer(container)
 }
