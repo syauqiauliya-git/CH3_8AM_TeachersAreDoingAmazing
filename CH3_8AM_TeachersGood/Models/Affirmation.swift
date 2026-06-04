@@ -1,4 +1,4 @@
-//
+
 //  Affirmations.swift
 //  CH3_8AM_TeachersGood
 //
@@ -10,7 +10,10 @@ import SwiftData
 
 @Model
 class Affirmation {
-    var id: UUID = UUID()
+    //    var id: UUID = UUID()
+    @Relationship(deleteRule: .cascade)
+    var tokens: [AffirmationToken]
+    
     var text: String
     var labels: [String]
     var isLiked: Bool
@@ -31,6 +34,4 @@ class Affirmation {
         self.isLiked = isLiked
         self.lastShown = lastShown
     }
-    
-    
 }
