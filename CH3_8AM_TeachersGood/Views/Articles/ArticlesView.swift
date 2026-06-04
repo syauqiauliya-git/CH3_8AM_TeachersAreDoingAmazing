@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import MarkdownUI
 
 struct ArticleSheetView: View {
     @State private var isBookmarked: Bool = false
@@ -17,13 +18,21 @@ struct ArticleSheetView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Image("placeholder-article-pic")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 250)
-                Text(.init(markdown))
-                    .padding()
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Image("placeholder-article-pic")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 250)
+                        .clipped()
+                    
+                    Markdown(markdown)
+                        .markdownTextStyle(\.text) {
+                            FontFamily(.custom("Nunito"))
+                        }
+                        .font(.custom("Nunito", size: 18, relativeTo: .body))
+                        .padding(30)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
