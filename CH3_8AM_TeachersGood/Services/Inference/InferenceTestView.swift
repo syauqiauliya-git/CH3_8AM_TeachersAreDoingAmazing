@@ -28,6 +28,10 @@ struct InferenceTestView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 
+                Button("Test notification (5s)") {
+                    NotificationService.shared.sendTestNotification()
+                }
+                
                 // Inputs
                 Group {
                     label("Transcript")
@@ -126,25 +130,31 @@ struct InferenceTestView: View {
             .padding(24)
         }
         .navigationTitle("Inference test")
+        .onAppear {
+            Task {
+                await NotificationService.shared.requestPermission()
+            }
+        }
     }
+    
     
     private func selectAffirmation(for labels: [AffirmationLabel]) -> String {
         struct AffirmationSeed: Codable {
             let text: String
             let labels: [String]
         }
-
+        
         guard let url = Bundle.main.url(forResource: "affirmations", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let all = try? JSONDecoder().decode([AffirmationSeed].self, from: data)
         else { return sampleAffirmation }
-
+        
         let labelStrings = labels.map(\.rawValue)
-
+        
         let matches = all.filter { affirmation in
             affirmation.labels.contains(where: { labelStrings.contains($0) })
         }
-
+        
         return matches.randomElement()?.text ?? sampleAffirmation
     }
     
@@ -191,7 +201,7 @@ struct InferenceTestView: View {
             isLoading = false
         }
     }
-
+    
     private func runRephrase() {
         isLoading = true
         errorMessage = ""

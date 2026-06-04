@@ -11,7 +11,9 @@ import SwiftUI
 struct IntervalInputView: View {
     
     @State private var selectedInterval: IntervalTime? = nil
-
+    @State private var navigateToFinish = false
+    @State private var notificationGranted = false
+    
     
     var body: some View {
         
@@ -27,7 +29,7 @@ struct IntervalInputView: View {
             }
             .padding(.horizontal, 24)
             .padding(.top, 16)
-        
+            
             
             // MASCOT QUESTION
             
@@ -77,21 +79,37 @@ struct IntervalInputView: View {
             
             Spacer()
             
-            NavigationLink {
-                FinishView()
+            Text("\(Image(systemName: "info.circle")) This will also affect how often you receive notifications if you activate them. This can be later modified on settings.")
+                .font(.system(size: 13))
+                .foregroundColor(.appPrimaryLight)
+                .padding(.horizontal, 30)
+            
+            //Use button_navdest because i need async task, the notifcs to run
+            Button {
+                Task {
+                    let granted = await NotificationService.shared.requestPermission()
+                    if granted {
+                        NotificationService.shared.schedule(for: selectedInterval ?? .onetime)
+                    }
+                    navigateToFinish = true
+                }
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimaryLight)
+                    .background(selectedInterval == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)
             .padding(.top, 16)
             .padding(.bottom, 32)
-                        
+            .disabled(selectedInterval == nil)
+            .navigationDestination(isPresented: $navigateToFinish) {
+                FinishView()
+            }
+            
         }
         .background(Color.appBackground)
         
