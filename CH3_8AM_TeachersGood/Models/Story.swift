@@ -11,12 +11,14 @@ import SwiftData
 class Story {
 //    var id: UUID = UUID()
     var labels: [String]
+    var mdFileName: String
     var image: String
     var isBookmarked: Bool
     var storyDate: Date
     
-    init(labels: [String] = [], image: String = "", isBookmarked: Bool = false, storyDate: Date = Date()) {
+    init(labels: [String] = [], mdFileName: String = "", image: String = "", isBookmarked: Bool = false, storyDate: Date = Date()) {
         self.labels = labels
+        self.mdFileName = mdFileName
         self.image = image
         self.isBookmarked = isBookmarked
         self.storyDate = storyDate
