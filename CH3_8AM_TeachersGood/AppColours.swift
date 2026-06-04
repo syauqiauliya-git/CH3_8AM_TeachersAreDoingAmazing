@@ -36,7 +36,12 @@ extension Color {
     static let appSliderBackground      = Color(hex: "#F9F7FC")
     static let appSliderBorder      = Color(hex: "#EDE3FC")
 
-
+    // apple intelligence log color
+    static let aiTeal = Color(hex: "#4FD1C5")
+    static let aiBlue = Color(hex: "#5B8CFF")
+    static let aiPurple = Color(hex: "#8B5CF6")
+    static let aiRed = Color(hex: "#FF5FA2")
+    static let aiYellow = Color(hex: "#FFB347")
     
     // status & extra text colors
     static let appSuccessGreen = Color(hex: "#5CB83C")

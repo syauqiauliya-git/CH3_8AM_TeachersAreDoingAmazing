@@ -30,16 +30,16 @@ struct MainVoiceInputView: View {
             
             MascotView(size: 300)
             
-            ScrollView {
-                Text(speechManager.transcript)
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
+            if currentState == .recording || currentState == .finished {
+                ScrollView {
+                    Text(speechManager.transcript)
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+                .frame(maxHeight: 100)
             }
-            .frame(maxHeight: 100)
-            
-            Spacer()
-            
+                        
             if currentState == .ready || currentState == .recording || currentState == .finished {
                 RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
             } else if currentState == .next {
@@ -49,7 +49,7 @@ struct MainVoiceInputView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
-            Color.white
+            Color.appBackground
                 .ignoresSafeArea(.all, edges: [.bottom, .top])
         }
         
