@@ -19,7 +19,6 @@ struct SpeechBubbleView: View {
         Text(text)
             .font(.custom("Futura", size: 18))
             .foregroundColor(.appTextAlt)
-            .opacity(0.7)
             .multilineTextAlignment(.leading)
             .frame(maxWidth: 200, alignment: .leading)
             .padding(.horizontal, 20)
