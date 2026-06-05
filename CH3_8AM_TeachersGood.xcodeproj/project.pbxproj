@@ -52,6 +52,27 @@
 			);
 			target = 003CD7422FD164BF00A029FF /* SolaceWidgetExtension */;
 		};
+		00BE7D652FD180E500465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "SolaceWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				"Fonts/Canela-Regular-Trial.ttf",
+				"Fonts/Canela-Regular.ttf",
+				"Fonts/FontsFree-Net-Canela-Regular.ttf",
+				"Fonts/Nunito-Bold.ttf",
+				"Fonts/Nunito-Medium.ttf",
+				"Fonts/Nunito-SemiBold.ttf",
+				"Fonts/ShareTech-Regular.ttf",
+			);
+			target = 003CD7422FD164BF00A029FF /* SolaceWidgetExtension */;
+		};
+		00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "CH3_8AM_TeachersGood" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"CH3-8AM-TeachersGood-Info.plist",
+			);
+			target = 0044B05B2FC3F56200385DFC /* CH3_8AM_TeachersGood */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -65,6 +86,10 @@
 		};
 		0044B05E2FC3F56200385DFC /* CH3_8AM_TeachersGood */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "CH3_8AM_TeachersGood" target */,
+				00BE7D652FD180E500465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "SolaceWidgetExtension" target */,
+			);
 			path = CH3_8AM_TeachersGood;
 			sourceTree = "<group>";
 		};
@@ -451,6 +476,7 @@
 				DEVELOPMENT_TEAM = DQK6W7R7J7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CH3-8AM-TeachersGood-Info.plist";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to capture your voice for transcription.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need speech recognition permission to convert your spoken words into text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -485,6 +511,7 @@
 				DEVELOPMENT_TEAM = DQK6W7R7J7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CH3-8AM-TeachersGood-Info.plist";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to capture your voice for transcription.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need speech recognition permission to convert your spoken words into text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

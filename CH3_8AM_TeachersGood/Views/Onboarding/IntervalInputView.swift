@@ -98,11 +98,11 @@ struct IntervalInputView: View {
                     .font(.custom("Futura", size: 20))
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .padding(.vertical, 15)
                     .background(selectedInterval == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 35)
             .padding(.top, 16)
             .padding(.bottom, 32)
             .disabled(selectedInterval == nil)
