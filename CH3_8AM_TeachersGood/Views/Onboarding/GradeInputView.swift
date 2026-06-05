@@ -21,17 +21,18 @@ struct GradeInputView: View {
             HStack {
                 Spacer()
                 Text("2 of 4")
-                    .font(.system(size: 14))
-                    .foregroundColor(.appTextSecondary)
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
             }
             .padding(.horizontal, 24)
-            .padding(.top, 16)
+            .padding(.top, 40)
         
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
-                MascotView(size: 120)
+                MascotView(size: 130)
                 SpeechBubbleView(
                     text: "What grade do you usually teach?",
                     tail: .left
@@ -45,7 +46,7 @@ struct GradeInputView: View {
             
             // TEACHING GROUP SELECTOR
             
-            VStack(spacing: 20) {
+            VStack(spacing: 17) {
                 ForEach(GradeLevel.allCases, id: \.self) { grade in
                     HStack {
                         Text(grade.rawValue)
@@ -82,7 +83,7 @@ struct GradeInputView: View {
     
             
             NavigationLink {
-                ReasonInputView()
+                PrepareVoiceView()
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))

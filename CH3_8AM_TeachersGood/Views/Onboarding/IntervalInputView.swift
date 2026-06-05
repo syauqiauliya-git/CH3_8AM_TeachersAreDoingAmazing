@@ -23,12 +23,13 @@ struct IntervalInputView: View {
             
             HStack {
                 Spacer()
-                Text("2 of 4")
-                    .font(.system(size: 14))
-                    .foregroundColor(.appTextSecondary)
+                Text("4 of 4")
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
             }
             .padding(.horizontal, 24)
-            .padding(.top, 16)
+            .padding(.top, 40)
             
             
             // MASCOT QUESTION
@@ -52,7 +53,7 @@ struct IntervalInputView: View {
                 ForEach(IntervalTime.allCases, id: \.self) { interval in
                     HStack {
                         Text(interval.rawValue)
-                            .font(.custom("Futura", size: 16))
+                            .font(.custom(selectedInterval == interval ? "Nunito-Bold" : "Nunito-SemiBold", size: 16))
                             .foregroundColor(selectedInterval == interval ? .appGradeSelectedText : .appGradeNotSelectedText)
                         Spacer()
                     }
@@ -75,15 +76,20 @@ struct IntervalInputView: View {
             }
             .padding(.horizontal, 15)
             
-            // CONTINUE BUTTONT
             
             Spacer()
             
-            Text("\(Image(systemName: "info.circle")) This will also affect how often you receive notifications if you activate them. This can be later modified on settings.")
-                .font(.system(size: 13))
-                .foregroundColor(.appPrimaryLight)
-                .padding(.horizontal, 30)
             
+            // DISCLAIMER
+            
+            
+            Text("\(Image(systemName: "info.circle")) This will also affect how often you receive notifications if you activate them. This can be later modified on settings.")
+                .font(.custom("Nunito-Medium", size: 13))
+                .foregroundColor(.appPrimaryLight)
+                .opacity(0.6)
+                .padding(.horizontal, 35)
+            
+            //BUTTON
             //Use button_navdest because i need async task, the notifcs to run
             Button {
                 Task {
