@@ -16,14 +16,14 @@ enum RecordingState {
     var bubbleText: String {
         switch self {
         case .ready:
-            return "What's up, teach?"
+            return "Hey, have something\nto share?"
 
         case .recording:
-            return "Go on! I'm listening."
+            return "Go on! I’m all ears."
         case .finished:
-            return "Thank you for telling\nme about your day!"
+            return "Feeling any better? Or\ndo you want to try that\nagain?"
         case .next:
-            return "It's okay if you don't have a \ngrand reason today. Taking a \nbreath is enough. These are \nthe story that might be relevant"
+            return "Thank you for telling\nme about your day!"
         }
     }
 }
