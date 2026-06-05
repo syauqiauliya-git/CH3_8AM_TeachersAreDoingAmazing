@@ -10,11 +10,18 @@ import SwiftData
 
 @main
 struct CH3_8AM_TeachersGoodApp: App {
+    @State private var showVoiceInput = false
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .fullScreenCover(isPresented: $showVoiceInput) {
+                    MainVoiceInputView()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .openVoiceInput)) { _ in
+                    showVoiceInput = true
+                }
         }
-//        .modelContainer(for: TeacherProfile.self)
-        .modelContainer(for: [Affirmation.self, Story.self, TeacherProfile.self])
+        .modelContainer(for: [TeacherProfile.self, Affirmation.self])
     }
 }

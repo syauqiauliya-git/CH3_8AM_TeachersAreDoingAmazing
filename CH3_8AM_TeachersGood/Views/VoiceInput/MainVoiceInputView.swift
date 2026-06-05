@@ -17,6 +17,7 @@ struct MainVoiceInputView: View {
     @State private var speechManager = SpeechRecognitionManager()
     
     @State private var isOnboarding: Bool = false
+        
     
     var body: some View {
         VStack {
@@ -39,7 +40,7 @@ struct MainVoiceInputView: View {
                 }
                 .frame(maxHeight: 100)
             }
-                        
+            
             if currentState == .ready || currentState == .recording || currentState == .finished {
                 RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
             } else if currentState == .next {
@@ -73,9 +74,11 @@ struct MainVoiceInputView: View {
                 }
             }
         }
+        
     }
 }
 
 #Preview {
     MainVoiceInputView()
 }
+
