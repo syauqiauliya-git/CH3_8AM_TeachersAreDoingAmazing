@@ -49,18 +49,18 @@ struct GradeInputView: View {
                 ForEach(GradeLevel.allCases, id: \.self) { grade in
                     HStack {
                         Text(grade.rawValue)
-                            .font(.custom("Futura", size: 16))
+                            .font(.custom(selectedGrade == grade ? "Nunito-Bold" : "Nunito-SemiBold" , size: 16))
                             .foregroundColor(selectedGrade == grade ? .appGradeSelectedText : .appGradeNotSelectedText)
                         Spacer()
                         Text(grade.ageRange)
-                            .font(.custom("Futura", size: 13))
+                            .font(.custom(selectedGrade == grade ? "Nunito-Bold" : "Nunito-SemiBold", size: 13))
                             .foregroundColor(selectedGrade == grade ? .appGradeSelectedText : .appGradeNotSelectedText)
                         
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 14)
                     .background(selectedGrade == grade ? Color.appSpeechBubble : Color.appGradeNotSelected)
-                    .cornerRadius(15)
+                    .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
                             .stroke(Color(hex: "#4723B5").opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
@@ -88,11 +88,11 @@ struct GradeInputView: View {
                     .font(.custom("Futura", size: 20))
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .padding(.vertical, 15)
                     .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 35)
             .padding(.top, 16)
             .padding(.bottom, 32)
             .disabled(selectedGrade == nil)

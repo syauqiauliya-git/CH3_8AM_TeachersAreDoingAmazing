@@ -25,7 +25,6 @@ struct ThanksView: View {
             
             Spacer()
             
-            
             NavigationLink {
                 IntervalInputView()
             } label: {
