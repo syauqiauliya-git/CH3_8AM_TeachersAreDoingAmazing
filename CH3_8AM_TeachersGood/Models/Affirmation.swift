@@ -16,7 +16,7 @@ class Affirmation {
     var tokens: [AffirmationToken]
 
     var labels: [String]
-    var isLiked: Bool
+//    var isLiked: Bool
     var lastShown: Date?
     
 //    static let sampleAffirmations: [Affirmation] = [
@@ -25,10 +25,9 @@ class Affirmation {
 //        Affirmation(text: "You're doing so good")
 //    ]
     
-    init(tokens: [AffirmationToken] = [], labels: [String] = [], isLiked: Bool = false, lastShown: Date? =  nil) {
+    init(tokens: [AffirmationToken] = [], labels: [String] = [], lastShown: Date? =  nil) {
         self.tokens = tokens
         self.labels = labels
-        self.isLiked = isLiked
         self.lastShown = lastShown
     }
 }
