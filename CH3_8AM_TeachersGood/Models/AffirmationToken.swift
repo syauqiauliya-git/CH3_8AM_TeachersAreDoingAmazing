@@ -12,9 +12,11 @@ import SwiftData
 class AffirmationToken {
     var text: String
     var style: HighlightStyle
+    var order: Int
     
-    init(text: String = "", style: HighlightStyle = .normal) {
+    init(text: String = "", style: HighlightStyle = .normal, order: Int = 0) {
         self.text = text
         self.style = style
+        self.order = order
     }
 }

@@ -10,26 +10,23 @@ import SwiftData
 
 @Model
 class Affirmation {
-    //    var id: UUID = UUID()
+    var id: UUID = UUID()
+    
     @Relationship(deleteRule: .cascade)
     var tokens: [AffirmationToken]
     
-    var text: String
     var labels: [String]
-    var isLiked: Bool
     var lastShown: Date?
     
-    static let sampleAffirmations: [Affirmation] = [
-        Affirmation(text: "You go girl!"),
-        Affirmation(text: "Woah!"),
-        Affirmation(text: "You're doing so good")
-    ]
+//    static let sampleAffirmations: [Affirmation] = [
+//        Affirmation(text: "You go girl!"),
+//        Affirmation(text: "Woah!"),
+//        Affirmation(text: "You're doing so good")
+//    ]
     
-    init(tokens: [AffirmationToken] = [], text: String = "", labels: [String] = [], isLiked: Bool = false, lastShown: Date? =  nil) {
+    init(tokens: [AffirmationToken] = [], labels: [String] = [], lastShown: Date? =  nil) {
         self.tokens = tokens
-        self.text = text
         self.labels = labels
-        self.isLiked = isLiked
         self.lastShown = lastShown
     }
 }
