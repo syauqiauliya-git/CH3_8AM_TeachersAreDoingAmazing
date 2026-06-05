@@ -33,15 +33,6 @@ struct ProfileView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
-                        NavigationLink {
-                            // add later
-                        } label: {
-                            HStack {
-                                Text("Motivation")
-                                Spacer()
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
                     }
                     Section("Preferences") {
                         NavigationLink {
