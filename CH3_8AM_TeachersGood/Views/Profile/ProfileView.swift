@@ -11,15 +11,6 @@ struct ProfileView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack(alignment: .center, spacing: 12) {
-                    MascotView(size: 150)
-                    SpeechBubbleView(
-                        text: "\nHi John!\nPersonalise your experience and revisit your saved inspirations.\n",
-                        tail: .left
-                    )
-                    Spacer()
-                }
-                .padding(.horizontal, 24)
                 List {
                     Section("Personal") {
                         NavigationLink {
@@ -33,7 +24,7 @@ struct ProfileView: View {
                             }
                         }
                         NavigationLink {
-                           EditGradeView()
+                            EditGradeView()
                         } label: {
                             HStack {
                                 Text("Grade")
@@ -52,14 +43,14 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    .scrollContentBackground(.hidden)
-                    Section("Library") {
+                    Section("Preferences") {
                         NavigationLink {
-                            SavedQuotesView()
+                            EditPreferencesView()
                         } label: {
                             HStack {
-                                Text("Saved Quotes")
+                                Text("Appearance")
                                 Spacer()
+                                Text("Light Mode")
                                     .foregroundStyle(.secondary)
                             }
                         }
@@ -67,20 +58,20 @@ struct ProfileView: View {
                             // add later
                         } label: {
                             HStack {
-                                Text("Saved Stories")
+                                Text("Affirmation Frequency")
                                 Spacer()
+                                Text("Daily")
                                     .foregroundStyle(.secondary)
                             }
                         }
                     }
-                    Section("Preferences") {
+                    Section("Privacy") {
                         NavigationLink {
-                            EditPreferencesView()
+                            SavedQuotesView()
                         } label: {
                             HStack {
-                                Text("Light Mode")
+                                Text("Privacy & Policy")
                                 Spacer()
-                                Text("Light Mode")
                                     .foregroundStyle(.secondary)
                             }
                         }
