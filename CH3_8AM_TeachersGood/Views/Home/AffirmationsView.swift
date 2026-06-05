@@ -81,6 +81,7 @@ struct AffirmationsView: View {
             }
         }
         .padding(25)
+        .background(Color.appBackground)
         .onAppear {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
