@@ -32,7 +32,9 @@ struct GradeInputView: View {
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
-                MascotView(size: 130)
+              //  MascotView(size: 130)
+                GifWebView(gifName: ThingyState.lookright.mode)
+                    .frame(width: 160, height: 80)
                 SpeechBubbleView(
                     text: "What grade do you usually teach?",
                     tail: .left

@@ -20,6 +20,7 @@ struct WelcomeView: View {
                     VStack {
                         Spacer()
                         MascotView(size: 250)
+                      //  GifWebView(gifName: "ThingyIdle")
                         Text("SolacEd")
                             .font(.custom("Futura", size: 30))
                             .foregroundColor(.appTextAlt)
@@ -39,8 +40,10 @@ struct WelcomeView: View {
                             .id(stage)
                             .transition(.opacity)
                         
-                        MascotView(size: 350)
-                        
+                        //MascotView(size: 350)
+                        GifWebView(gifName: ThingyState.idle.mode)
+                            .frame(width: 400, height: 240)
+                                                
                         Spacer()
                         
                         NavigationLink {
@@ -54,11 +57,12 @@ struct WelcomeView: View {
                                 .background(Color.appPrimaryLight)
                                 .cornerRadius(20)
                         }
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, 35)
+                        .padding(.top, 16)
+                        .padding(.bottom, 32)
                         .opacity(stage >= 5 ? 1 : 0)
                         .disabled(stage < 5)
                         .animation(.easeInOut, value: stage)
-                        .padding(.bottom, 32)
                     }
                 }
             }

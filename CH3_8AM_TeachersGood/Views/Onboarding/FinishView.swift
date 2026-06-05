@@ -29,12 +29,15 @@ struct FinishView: View {
                     Spacer()
                     SpeechBubbleView(text: bubbleText, tail: .bottomRight)
                         .padding(.horizontal, 40)
+                        .padding(.top, 50)
                         .id(
                             stage
                         ) // forces transition to re-trigger on text change
                         .transition(.opacity)
                     
-                    MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
+                   // MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
+                    GifWebView(gifName: "ThingySmile")
+                        .frame(width: 400, height: 300)
                     
                     // FILLER FOR LAYOUTING
                     if stage < 2 {
@@ -75,6 +78,7 @@ struct FinishView: View {
                     }
                     .frame(height: 5)
                     .padding(.horizontal, 60)
+                    .padding(.bottom, 100)
                     .transition(.opacity)
                     
                     
