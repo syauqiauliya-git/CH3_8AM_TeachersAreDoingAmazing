@@ -87,7 +87,7 @@ struct StoryCardView: View {
             Text(title)
                 .font(.custom("Futura", size: 13))
                 .padding(.trailing, 4)
-                .foregroundColor(.appPrimary)
+                .foregroundColor(.appTextAlt)
                 .multilineTextAlignment(.leading)
             
         }
