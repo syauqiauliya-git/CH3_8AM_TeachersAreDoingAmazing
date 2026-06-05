@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class Story {
-//    var id: UUID = UUID()
+    var id: UUID = UUID()
     var labels: [String]
     var title: String
     var mdFileName: String
