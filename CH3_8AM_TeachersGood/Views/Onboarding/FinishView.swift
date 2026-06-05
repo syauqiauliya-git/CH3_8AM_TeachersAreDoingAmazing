@@ -36,6 +36,27 @@ struct FinishView: View {
                     
                     MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
                     
+                    // FILLER FOR LAYOUTING
+                    if stage < 2 {
+                        ZStack(alignment: .leading) {
+                            // Track
+                            Capsule()
+                                .fill(Color.appPrimaryLight)
+                                .opacity(0)
+                                .frame(height: 5)
+                            // Fill
+                            Capsule()
+                                .fill(Color.appPrimaryLight)
+                                .opacity(0)
+                                .frame(
+                                    width: 4,
+                                    height: 5
+                                )
+                        }
+                    }
+                    
+                    //REAL PROGRESS BAR
+                    
                     GeometryReader { proxy in
                         ZStack(alignment: .leading) {
                             // Track
@@ -76,8 +97,8 @@ struct FinishView: View {
     
     var bubbleText: String {
         switch stage {
-        case 1: return "Thank you for answering!"
-        default: return "Personalizing the app for you..."
+        case 1: return "We will meet again later. Feel free to reach out to me whenever you need"
+        default: return "Adjusting the experience just for you"
         }
     }
     

@@ -33,6 +33,8 @@ struct NameInputView: View {
             )
             MascotView(size: 350)
             
+            Spacer()
+            
             // INSERT NAME
             
             

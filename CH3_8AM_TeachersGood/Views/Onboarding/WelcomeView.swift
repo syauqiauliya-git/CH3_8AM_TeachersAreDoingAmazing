@@ -39,7 +39,7 @@ struct WelcomeView: View {
                             .id(stage)
                             .transition(.opacity)
                         
-                        MascotView(size: 250)
+                        MascotView(size: 350)
                         
                         Spacer()
                         
@@ -71,7 +71,7 @@ struct WelcomeView: View {
         case 1: return "\nHey!\n"
         case 2: return "I'm Thingy. My mission is to help you lift up your mood!"
         case 3: return "In order to help you, I want to ask you some questions"
-        case 4: return "Be honest and sincere, I’ll keep it between us."
+        case 4: return "You can be honest and sincere, I’ll keep it between us."
         default: return "Please answer based on your current conditions, okay?"
         }
     }

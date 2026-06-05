@@ -7,9 +7,9 @@
 
 enum IntervalTime: String, CaseIterable, Identifiable {
     case onetime    = "Daily"
-    case twotimes   = "2 times/day"
-    case threetimes = "3 times/day"
-    case fourtimes   = "4 times/day"
+    case twotimes   = "Twice a day"
+    case threetimes = "3 times a day"
+    case fourtimes   = "4 times a day"
 
     var id: Self { self }
 }
