@@ -48,7 +48,7 @@ struct AffirmationsView: View {
                 //                Text(mainQuote)
                 if let affirmation = selectedAffirmation {
                     Text(render(affirmation))
-                        .font(.custom("CanelaText-Regular", size: 48))
+                        .font(.custom("Canela-Regular", size: 34))
 //                        .font(.system(size: 48))
                 }
             }
@@ -80,6 +80,7 @@ struct AffirmationsView: View {
                 .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             }
         }
+        .padding(25)
         .onAppear {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
@@ -93,7 +94,7 @@ struct AffirmationsView: View {
             var part = AttributedString(token.text + " ")
             
             switch token.style {
-            case .normal: part.foregroundColor = .black
+            case .normal: part.foregroundColor = .appTextBnW
             case .purple: part.foregroundColor = .appGradientPurpleStart
             case .orange: part.foregroundColor = .appMascotOrange
             }
