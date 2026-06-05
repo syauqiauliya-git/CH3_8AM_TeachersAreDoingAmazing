@@ -22,7 +22,7 @@ struct WelcomeView: View {
                         MascotView(size: 250)
                         Text("TrueTeach")
                             .font(.custom("Futura", size: 30))
-                            .foregroundColor(.appPrimaryLight)
+                            .foregroundColor(.appTextAlt)
                         
                         Spacer()
                         
@@ -48,7 +48,7 @@ struct WelcomeView: View {
                         } label: {
                             Text("Let's get started!")
                                 .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(.white)
+                                .foregroundColor(.appTextPrimary)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 20)
                                 .background(Color.appPrimaryLight)

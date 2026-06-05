@@ -133,7 +133,7 @@ extension RecordView {
                 Text("I can't speak right now")
                     .font(.caption)
                     .underline()
-                    .foregroundStyle(Color.appGradeSelectedText)
+                    .foregroundStyle(Color.appTextAlt)
             }
             .opacity(0.5)
         }
