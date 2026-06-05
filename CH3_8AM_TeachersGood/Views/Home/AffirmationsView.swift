@@ -84,8 +84,6 @@ struct AffirmationsView: View {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
         }
-        .padding(20)
-        .navigationBarBackButtonHidden(true)
     }
     
     func render(_ affirmation: Affirmation) -> AttributedString {

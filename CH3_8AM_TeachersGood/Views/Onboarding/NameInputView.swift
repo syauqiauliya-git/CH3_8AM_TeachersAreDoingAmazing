@@ -18,11 +18,12 @@ struct NameInputView: View {
             HStack {
                 Spacer()
                 Text("1 of 4")
-                    .font(.system(size: 14))
-                    .foregroundColor(.appTextSecondary)
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
             }
             .padding(.horizontal, 24)
-            .padding(.top, 16)
+            .padding(.top, 40)
             
             Spacer()
             
@@ -32,18 +33,28 @@ struct NameInputView: View {
             )
             MascotView(size: 350)
             
+            Spacer()
             
-            TextField("Insert your name", text: $teacherName)
-                .font(.custom("Futura", size: 16))
-                .padding(.horizontal, 16)
-                .padding(.vertical, 20)
-                .background(Color(.systemGray6))
-                .cornerRadius(20)
-                .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(hex: "#4723B5").opacity(0.2), lineWidth: 2)
-                    )
-                    .padding(.horizontal, 24)
+            // INSERT NAME
+            
+            
+            TextField("", text: $teacherName, prompt:
+                Text("Insert your name")
+                    .foregroundColor(.appPrimaryLight)
+            )
+            .font(.custom("Nunito-Medium", size: 16))
+            .opacity(0.6)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 15)
+            .background(Color.appSliderBackground)
+            .cornerRadius(20)
+            .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.appSliderBorder.opacity(1), lineWidth: 1)
+                )
+                .padding(.horizontal, 35)
+            
+            //CONTINUE BUTTON
             
             NavigationLink {
                 GradeInputView()
@@ -52,11 +63,11 @@ struct NameInputView: View {
                     .font(.custom("Futura", size: 20))
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .padding(.vertical, 15)
                     .background(teacherName == "" ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 35)
             .padding(.top, 16)
             .padding(.bottom, 32)
             

@@ -20,7 +20,7 @@ struct WelcomeView: View {
                     VStack {
                         Spacer()
                         MascotView(size: 250)
-                        Text("TrueTeach")
+                        Text("SolacEd")
                             .font(.custom("Futura", size: 30))
                             .foregroundColor(.appTextAlt)
                         
@@ -39,7 +39,7 @@ struct WelcomeView: View {
                             .id(stage)
                             .transition(.opacity)
                         
-                        MascotView(size: 300)
+                        MascotView(size: 350)
                         
                         Spacer()
                         
@@ -55,8 +55,8 @@ struct WelcomeView: View {
                                 .cornerRadius(20)
                         }
                         .padding(.horizontal, 24)
-                        .opacity(stage >= 4 ? 1 : 0)
-                        .disabled(stage < 4)
+                        .opacity(stage >= 5 ? 1 : 0)
+                        .disabled(stage < 5)
                         .animation(.easeInOut, value: stage)
                         .padding(.bottom, 32)
                     }
@@ -68,9 +68,10 @@ struct WelcomeView: View {
     
     var bubbleText: String {
         switch stage {
-        case 1: return "\nWelcome!\n"
-        case 2: return "I'm Thingy. My mission is to help lift up your mood."
-        case 3: return "Before that, I would like to ask you some questions."
+        case 1: return "\nHey!\n"
+        case 2: return "I'm Thingy. My mission is to help you lift up your mood!"
+        case 3: return "In order to help you, I want to ask you some questions"
+        case 4: return "You can be honest and sincere, I’ll keep it between us."
         default: return "Please answer based on your current conditions, okay?"
         }
     }
@@ -85,6 +86,8 @@ struct WelcomeView: View {
             withAnimation { stage = 3 }
             try? await Task.sleep(for: .seconds(2))
             withAnimation { stage = 4 }
+            try? await Task.sleep(for: .seconds(2))
+            withAnimation { stage = 5 }
         }
     }
 }

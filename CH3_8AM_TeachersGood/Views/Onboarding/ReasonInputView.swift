@@ -25,32 +25,31 @@ struct ReasonInputView: View {
             HStack {
                 Spacer()
                 Text("3 of 4")
-                    .font(.system(size: 14))
-                    .foregroundColor(.appTextSecondary)
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
             }
             .padding(.horizontal, 24)
-            .padding(.top, 16)
+            .padding(.top, 40)
             
             Spacer()
             
             // SPEECH BUBBLESlider
             SpeechBubbleView(
-                text: "What made you become a teacher?",
+                text: "Could you tell me why you became a teacher?",
                 tail: .bottomRight
             )
 
             //MASCOT
             
-            MascotView(size: 250)
+            MascotView(size: 350)
             
             Spacer()
             
             //RECORD
             RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
             
-            
-            Spacer()
-            
+                        
         }
         .background(Color.appBackground)
         .navigationDestination(isPresented: $finishOnboarding) {
