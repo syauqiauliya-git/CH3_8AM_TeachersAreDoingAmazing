@@ -56,13 +56,18 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				"Fonts/Canela-Regular-Trial.ttf",
-				"Fonts/Canela-Regular.ttf",
-				"Fonts/FontsFree-Net-Canela-Regular.ttf",
-				"Fonts/Nunito-Bold.ttf",
-				"Fonts/Nunito-Medium.ttf",
-				"Fonts/Nunito-SemiBold.ttf",
-				"Fonts/ShareTech-Regular.ttf",
+				"CreativeAssets/Fonts/Canela-Regular-Trial.ttf",
+				"CreativeAssets/Fonts/Canela-Regular.ttf",
+				"CreativeAssets/Fonts/FontsFree-Net-Canela-Regular.ttf",
+				"CreativeAssets/Fonts/Nunito-Bold.ttf",
+				"CreativeAssets/Fonts/Nunito-Medium.ttf",
+				"CreativeAssets/Fonts/Nunito-SemiBold.ttf",
+				"CreativeAssets/Fonts/ShareTech-Regular.ttf",
+				"CreativeAssets/Icon/thingy-icon.icon",
+				CreativeAssets/ThingyGIF/ThingyIdle.gif,
+				CreativeAssets/ThingyGIF/ThingyListen.gif,
+				CreativeAssets/ThingyGIF/ThingyLookRight.gif,
+				CreativeAssets/ThingyGIF/ThingySmile.gif,
 			);
 			target = 003CD7422FD164BF00A029FF /* SolaceWidgetExtension */;
 		};
@@ -469,8 +474,9 @@
 		0044B0682FC3F56300385DFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "thingy-icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76PRHH7VP6;
@@ -504,8 +510,9 @@
 		0044B0692FC3F56300385DFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "thingy-icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76PRHH7VP6;

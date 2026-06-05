@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ReasonInputView: View {
     
-    @State private var isRecording = false
     @State private var finishOnboarding = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var currentState: RecordingState = .ready
@@ -36,13 +35,15 @@ struct ReasonInputView: View {
             
             // SPEECH BUBBLESlider
             SpeechBubbleView(
-                text: "Could you tell me why you became a teacher?",
+                text: currentState.bubbleText,
                 tail: .bottomRight
             )
 
             //MASCOT
             
-            MascotView(size: 350)
+          //  MascotView(size: 350)
+            GifWebView(gifName: currentState.thingyMode )
+                .frame(width: 400, height: 240)
             
             Spacer()
             

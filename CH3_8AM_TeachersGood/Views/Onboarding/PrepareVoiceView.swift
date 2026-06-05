@@ -20,7 +20,10 @@ struct PrepareVoiceView: View {
                 text: "Next question is a deeper one. Express yourself openly",
                 tail: .bottomRight
             )
-            MascotView(size: 350)
+            .padding(.bottom, 40)
+            //MascotView(size: 350)
+            GifWebView(gifName: "ThingyIdle")
+                .frame(width: 400, height: 240)
             
             Spacer()
             

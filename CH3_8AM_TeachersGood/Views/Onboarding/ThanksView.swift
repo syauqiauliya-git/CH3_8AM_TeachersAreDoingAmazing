@@ -11,27 +11,28 @@ import SwiftUI
 struct ThanksView: View {
     
     @State private var stage = 0
-
+    
     var body: some View {
         
         VStack {
             
+            Spacer()
+            
             if stage >= 0 {
-                VStack(spacing: 24) {
-                    Spacer()
-                    SpeechBubbleView(text: bubbleText, tail: .bottomRight)
-                        .padding(.horizontal, 40)
-                        .id(
-                            stage
-                        ) // forces transition to re-trigger on text change
-                        .transition(.opacity)
-                    
-                    MascotView(size: 300, currentMode: stage >= 1 ? .normal : .blink)
-                    
-                    Spacer()
-                }
-                .transition(.opacity)
+                SpeechBubbleView(text: bubbleText, tail: .bottomRight)
+                    .padding(.horizontal, 40)
+                    .id(
+                        stage
+                    ) // forces transition to re-trigger on text change
+                    .transition(.opacity)
                 
+                //   MascotView(size: 300, currentMode: stage >= 1 ? .normal : .blink)
+                GifWebView(gifName: ThingyState.smile.mode)
+                    .frame(width: 400, height: 240)
+                 
+                
+                Spacer()
+
                 NavigationLink {
                     IntervalInputView()
                 } label: {
@@ -48,13 +49,14 @@ struct ThanksView: View {
                 .padding(.top, 16)
                 .padding(.bottom, 32)
                 .disabled(stage != 1)
+                
             }
-            
+                        
             
         }
         .background(Color.appBackground)
         .onAppear { startSequence() }
-
+        
         
     }
     
@@ -67,7 +69,7 @@ struct ThanksView: View {
     
     func startSequence() {
         Task {
-            try? await Task.sleep(for: .seconds(1.5))
+            try? await Task.sleep(for: .seconds(2))
             withAnimation { stage = 1 }
         }
     }

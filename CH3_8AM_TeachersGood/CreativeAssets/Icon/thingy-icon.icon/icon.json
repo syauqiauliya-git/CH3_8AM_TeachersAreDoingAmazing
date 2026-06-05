@@ -1,0 +1,52 @@
+{
+  "fill" : {
+    "solid" : "display-p3:0.97070,0.99880,1.00000,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "thingy 2.svg",
+          "name" : "thingy 2",
+          "position" : {
+            "scale" : 2.2200000000000006,
+            "translation-in-points" : [
+              -10.047500000000014,
+              -0.0036954163404061546
+            ]
+          }
+        },
+        {
+          "blend-mode" : "normal",
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "thingy gede1 .png",
+          "name" : "thingy gede1 ",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -15,
+              32
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

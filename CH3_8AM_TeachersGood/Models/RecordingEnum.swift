@@ -17,7 +17,6 @@ enum RecordingState {
         switch self {
         case .ready:
             return "Hey, have something\nto share?"
-
         case .recording:
             return "Go on! I’m all ears."
         case .finished:
@@ -26,4 +25,16 @@ enum RecordingState {
             return "Thank you for telling\nme about your day!"
         }
     }
+    
+    var thingyMode: String {
+        switch self{
+        case .ready:
+            return ThingyState.idle.mode
+        case .recording:
+            return ThingyState.listen.mode
+        default:
+            return ThingyState.idle.mode
+        }
+    }
+
 }

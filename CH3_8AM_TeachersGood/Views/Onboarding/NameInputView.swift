@@ -23,15 +23,20 @@ struct NameInputView: View {
                     .opacity(0.4)
             }
             .padding(.horizontal, 24)
-            .padding(.top, 40)
+            .padding(.top, 20)
+            .padding(.bottom, 70)
             
-            Spacer()
             
             SpeechBubbleView(
                 text: "How would you like to be called?",
                 tail: .bottomRight
             )
-            MascotView(size: 350)
+            
+            Spacer()
+            
+            GifWebView(gifName: "ThingyIdle")
+                .frame(width: 400, height: 240)
+           // MascotView(size: 350)
             
             Spacer()
             
@@ -53,6 +58,8 @@ struct NameInputView: View {
                         .stroke(Color.appSliderBorder.opacity(1), lineWidth: 1)
                 )
                 .padding(.horizontal, 35)
+                .padding(.top, 70)
+
             
             //CONTINUE BUTTON
             
