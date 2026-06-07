@@ -41,8 +41,9 @@ struct EditGradeView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
-                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
+                .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
             }
+            .background(Color.appBackground)
             .navigationTitle("Grade")
             .navigationBarTitleDisplayMode(.inline)
         }
