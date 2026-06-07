@@ -8,11 +8,6 @@
 import SwiftUI
 
 extension Color {
-    static let appGradeBorder           = Color(hex: "#CECECE")
-    static let appGradeNotSelected      = Color(hex: "#F3F3F3")
-    static let appGradeSelected         = Color(hex: "#FDD9A5") // amber — selected grade row
-    static let appGradeNotSelectedText  = Color(hex: "#4A4DB2")
-    static let appGradeSelectedText     = Color(hex: "#4723B5")
     
     static let appMascotOrange          = Color(hex: "#FF6B35") // mascot gradient start
     static let appMascotYellow          = Color(hex: "#FFC84A") // mascot gradient end
