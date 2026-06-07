@@ -17,7 +17,7 @@ struct ProfileView: View {
                         .font(.custom("Futura", size: 18))
                     ) {
                         NavigationLink {
-                            // add later
+                            EditNameView()
                         } label: {
                             HStack {
                                 Text("Name")
