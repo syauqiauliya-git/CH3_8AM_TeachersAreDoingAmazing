@@ -45,17 +45,17 @@ struct NameInputView: View {
             
             TextField("", text: $teacherName, prompt:
                 Text("Insert your name")
-                    .foregroundColor(.appPrimaryLight)
+                    .foregroundColor(.appTextBnW)
             )
             .font(.custom("Nunito-Medium", size: 16))
             .opacity(0.6)
             .padding(.horizontal, 16)
             .padding(.vertical, 15)
-            .background(Color.appSliderBackground)
+            .background(Color.appGradeNotSelected)
             .cornerRadius(20)
             .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.appSliderBorder.opacity(1), lineWidth: 1)
+                        .stroke(Color(hex: "EDE3FC"), lineWidth: 1)
                 )
                 .padding(.horizontal, 35)
                 .padding(.top, 70)
@@ -71,7 +71,7 @@ struct NameInputView: View {
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(teacherName == "" ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
+                    .background(teacherName == "" ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
