@@ -12,9 +12,12 @@ struct ProfileView: View {
         NavigationStack {
             VStack {
                 List {
-                    Section("Personal") {
+                    Section(header: Text("Personal")
+                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .font(.custom("Futura", size: 18))
+                    ) {
                         NavigationLink {
-                            // add later
+                            EditNameView()
                         } label: {
                             HStack {
                                 Text("Name")
@@ -33,17 +36,11 @@ struct ProfileView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
-                        NavigationLink {
-                            // add later
-                        } label: {
-                            HStack {
-                                Text("Motivation")
-                                Spacer()
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
                     }
-                    Section("Preferences") {
+                    Section(header: Text("Preferences")
+                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .font(.custom("Futura", size: 18))
+                    ) {
                         NavigationLink {
                             EditPreferencesView()
                         } label: {
@@ -55,7 +52,7 @@ struct ProfileView: View {
                             }
                         }
                         NavigationLink {
-                            // add later
+                            EditAffirmationFrequencyView()
                         } label: {
                             HStack {
                                 Text("Affirmation Frequency")
@@ -65,9 +62,12 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    Section("Privacy") {
+                    Section(header: Text("Privacy")
+                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .font(.custom("Futura", size: 18))
+                    ) {
                         NavigationLink {
-                            SavedQuotesView()
+                            // add later
                         } label: {
                             HStack {
                                 Text("Privacy & Policy")
@@ -78,8 +78,9 @@ struct ProfileView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
-                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
+                .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
             }
+            .background(Color.appBackground)
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
         }
