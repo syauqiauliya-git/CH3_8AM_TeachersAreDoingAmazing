@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ReasonInputView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @State private var finishOnboarding = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var currentState: RecordingState = .ready
@@ -62,6 +64,8 @@ struct ReasonInputView: View {
                 onConfirm: { finishOnboarding = true }  )
             }
         }
+        .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
+
     }
 }
 

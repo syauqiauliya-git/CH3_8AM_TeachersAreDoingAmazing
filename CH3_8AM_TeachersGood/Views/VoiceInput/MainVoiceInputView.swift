@@ -10,6 +10,8 @@ internal import Combine
 
 struct MainVoiceInputView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var showConfirmation = false
@@ -29,8 +31,12 @@ struct MainVoiceInputView: View {
                 tail: .bottomRight
             )
             
-            MascotView(size: 300)
+            Spacer()
             
+            GifWebView(gifName: currentState.thingyMode )
+                .frame(width: 400, height: 240)
+            
+            Spacer()
 //            if currentState == .recording || currentState == .finished {
 //                ScrollView {
 //                    Text(speechManager.transcript)
@@ -75,6 +81,7 @@ struct MainVoiceInputView: View {
             }
         }
         
+        .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
     }
 }
 
