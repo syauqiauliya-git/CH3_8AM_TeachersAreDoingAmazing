@@ -52,7 +52,7 @@ struct ProfileView: View {
                             }
                         }
                         NavigationLink {
-                            // add later
+                            EditAffirmationFrequencyView()
                         } label: {
                             HStack {
                                 Text("Affirmation Frequency")
