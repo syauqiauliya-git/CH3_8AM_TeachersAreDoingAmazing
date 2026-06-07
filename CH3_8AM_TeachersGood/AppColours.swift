@@ -32,6 +32,9 @@ extension Color {
     // status & extra text colors
     static let appSuccessGreen = Color(hex: "#5CB83C")
     static let appMutedPurple  = Color(hex: "#706FCF")
+    
+    // profile box shadow color
+    static let appProfileShadow = Color(hex: "#B6B8FC")
 
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
