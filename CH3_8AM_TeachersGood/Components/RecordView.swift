@@ -43,8 +43,9 @@ extension RecordView {
     private var typingModeView: some View {
         VStack(spacing: 16) {
             HStack {
-                TextField("", text: $inputText, prompt: Text("Type here").foregroundColor(.appTextTertiary))
-                    .foregroundColor(.appTextPrimary)
+                TextField("", text: $inputText, prompt: Text("Type here").foregroundColor(.appTextTertiary)            .font(.custom("Nunito-Medium", size: 16)))
+                    .foregroundColor(.appTextBnW)
+                    .font(.custom("Nunito-Medium", size: 16))
                     .padding(.vertical, 14)
                     .padding(.horizontal, 20)
                     .background(Color.appBackground)
