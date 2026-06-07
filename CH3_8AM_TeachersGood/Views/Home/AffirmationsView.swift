@@ -49,7 +49,7 @@ struct AffirmationsView: View {
                 if let affirmation = selectedAffirmation {
                     Text(render(affirmation))
                         .font(.custom("Canela-Regular", size: 34))
-//                        .font(.system(size: 48))
+                    //                        .font(.system(size: 48))
                 }
             }
             Spacer()
@@ -82,6 +82,52 @@ struct AffirmationsView: View {
         }
         .padding(25)
         .background(Color.appBackground)
+        //        .navigationBarBackButtonHidden(true)
+        //        .toolbarBackground(.visible, for: .navigationBar)
+        //        .toolbarBackground(Color.appBackground, for: .navigationBar)
+        //        .toolbarBackground(.visible, for: .bottomBar)
+        //        .toolbarBackground(Color.appBackground, for: .bottomBar)
+        //        .toolbar {
+        //            ToolbarItem(placement: .topBarTrailing) {
+        //                NavigationLink {
+        //                    ProfileView()
+        //                } label: {
+        //                    Image(systemName: "person")
+        //                        .font(.system(size: 20))
+        //                        .foregroundStyle(Color.appPrimaryLight)
+        //                }
+        //                .buttonStyle(.plain)
+        //            }
+        //
+        //            ToolbarItem(placement: .bottomBar) {
+        //                NavigationLink {
+        //                    ArticlesView()
+        //                } label: {
+        //                    Image(systemName: "book.pages")
+        //                        .font(.system(size: 20))
+        //                        .foregroundStyle(Color.appPrimaryLight)
+        //                }
+        //                .buttonStyle(.plain)
+        //            }
+        //
+        //            ToolbarItem(placement: .bottomBar) { Spacer() }
+        //
+        //            ToolbarItem(placement: .bottomBar) {
+        //                NavigationLink {
+        //                    MainVoiceInputView()
+        //                } label: {
+        //                    Circle()
+        //                        .fill(Color.appPrimaryLight)
+        //                        .frame(width: 50, height: 50)
+        //                        .overlay(
+        //                            Image(systemName: "ellipsis.message.fill")
+        //                                .font(.system(size: 20))
+        //                                .foregroundColor(.white)
+        //                        )
+        //                }
+        //                .buttonStyle(.plain)
+        //            }
+        //        }
         .onAppear {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()

@@ -19,24 +19,28 @@ struct EditPreferencesView: View {
         Preferences(name: "System Default")
     ]
     
+    @AppStorage("appearanceMode") private var appearanceMode: String = AppearanceMode.system.rawValue
+    
     @State private var selectedPreference: UUID?
     
     var body: some View {
         NavigationStack {
             VStack {
-                List(preferences) { preference in
-                    HStack {
-                        Text(preference.name)
-                        Spacer()
-                        if selectedPreference == preference.id {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.appPrimaryLight)
-                                .font(.body.bold())
+                List {
+                    ForEach(AppearanceMode.allCases, id: \.self) { mode in
+                        Button {
+                            appearanceMode = mode.rawValue
+                        } label: {
+                            HStack {
+                                Text(mode.rawValue)
+                                Spacer()
+                                if appearanceMode == mode.rawValue {
+                                    Image(systemName: "checkmark")
+                                        .foregroundStyle(Color.appGradientPurpleStart)
+                                }
+                            }
                         }
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        selectedPreference = preference.id
+                        .foregroundStyle(.primary)
                     }
                 }
                 .scrollContentBackground(.hidden)
