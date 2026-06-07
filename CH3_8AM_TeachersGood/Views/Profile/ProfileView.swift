@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @AppStorage("appearanceMode") private var appearanceMode: String = AppearanceMode.system.rawValue
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -47,7 +49,7 @@ struct ProfileView: View {
                             HStack {
                                 Text("Appearance")
                                 Spacer()
-                                Text("Light Mode")
+                                Text(appearanceMode)
                                     .foregroundStyle(.secondary)
                             }
                         }

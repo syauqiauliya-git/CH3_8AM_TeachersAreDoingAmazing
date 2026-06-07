@@ -11,10 +11,13 @@ import SwiftData
 @main
 struct CH3_8AM_TeachersGoodApp: App {
     @State private var showVoiceInput = false
-
+    
+    @AppStorage("appearanceMode") private var appearanceMode: String = AppearanceMode.system.rawValue
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(AppearanceMode(rawValue: appearanceMode)?.colorScheme)
                 .fullScreenCover(isPresented: $showVoiceInput) {
                     MainVoiceInputView()
                 }
@@ -22,6 +25,6 @@ struct CH3_8AM_TeachersGoodApp: App {
                     showVoiceInput = true
                 }
         }
-        .modelContainer(for: [TeacherProfile.self, Affirmation.self])
+        .modelContainer(for: [TeacherProfile.self, Affirmation.self, AffirmationToken.self, Story.self])
     }
 }
