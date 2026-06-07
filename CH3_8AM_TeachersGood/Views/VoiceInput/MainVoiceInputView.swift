@@ -31,15 +31,15 @@ struct MainVoiceInputView: View {
             
             MascotView(size: 300)
             
-            if currentState == .recording || currentState == .finished {
-                ScrollView {
-                    Text(speechManager.transcript)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                }
-                .frame(maxHeight: 100)
-            }
+//            if currentState == .recording || currentState == .finished {
+//                ScrollView {
+//                    Text(speechManager.transcript)
+//                        .font(.body)
+//                        .multilineTextAlignment(.center)
+//                        .padding(.horizontal)
+//                }
+//                .frame(maxHeight: 100)
+//            }
             
             if currentState == .ready || currentState == .recording || currentState == .finished {
                 RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)

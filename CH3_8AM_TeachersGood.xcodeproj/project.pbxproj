@@ -75,6 +75,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"CH3-8AM-TeachersGood-Info.plist",
+				CreativeAssets/Fonts/ThingySmile.gif,
 			);
 			target = 0044B05B2FC3F56200385DFC /* CH3_8AM_TeachersGood */;
 		};
