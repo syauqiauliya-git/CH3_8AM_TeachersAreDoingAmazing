@@ -6,46 +6,41 @@
 //
 
 import SwiftUI
-
-struct AffirmationFrequency: Identifiable {
-    let id = UUID()
-    let name: String
-}
+import SwiftData
 
 struct EditAffirmationFrequencyView: View {
-    let affirmationFrequencies = [
-        AffirmationFrequency(name: "Daily"),
-        AffirmationFrequency(name: "Twice a day"),
-        AffirmationFrequency(name: "3 times a day"),
-        AffirmationFrequency(name: "4 times a day")
-    ]
+    @Query var teachers: [Teacher]
     
-    @State private var selectedAffirmationFrequency: UUID?
+    var teacher: Teacher? { teachers.first }
+    
+    @State private var selectedInterval: IntervalTime = .onetime
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                List(affirmationFrequencies) { affirmationFrequency in
+        List {
+            ForEach(IntervalTime.allCases) { interval in
+                Button {
+                    selectedInterval = interval
+                    teacher?.affirmationInterval = interval.rawValue
+                    NotificationService.shared.schedule(for: interval)
+                } label: {
                     HStack {
-                        Text(affirmationFrequency.name)
+                        Text(interval.rawValue)
                         Spacer()
-                        if selectedAffirmationFrequency == affirmationFrequency.id {
+                        if selectedInterval == interval {
                             Image(systemName: "checkmark")
-                                .foregroundColor(.appPrimaryLight)
-                                .font(.body.bold())
+                                .foregroundStyle(Color.appGradientPurpleStart)
                         }
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        selectedAffirmationFrequency = affirmationFrequency.id
-                    }
                 }
-                .scrollContentBackground(.hidden)
-                .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
+                .foregroundStyle(.primary)
             }
-            .background(Color.appBackground)
-            .navigationTitle("Affirmation Frequency")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationTitle("Affirmation Frequency")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            if let saved = teacher?.affirmationInterval {
+                selectedInterval = IntervalTime(rawValue: saved) ?? .onetime
+            }
         }
     }
 }

@@ -7,8 +7,12 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct IntervalInputView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query var teachers: [Teacher]
+    var teacher: Teacher? { teachers.first }
     
     @State private var selectedInterval: IntervalTime? = nil
     @State private var navigateToFinish = false
@@ -99,6 +103,7 @@ struct IntervalInputView: View {
                     if granted {
                         NotificationService.shared.schedule(for: selectedInterval ?? .onetime)
                     }
+                    teacher?.affirmationInterval = (selectedInterval ?? .onetime).rawValue
                     navigateToFinish = true
                 }
             } label: {
@@ -120,7 +125,11 @@ struct IntervalInputView: View {
             
         }
         .background(Color.appBackground)
-        
+        .onAppear {
+            if let saved = teacher?.affirmationInterval {
+                selectedInterval = IntervalTime(rawValue: saved)
+            }
+        }
     }
 }
 

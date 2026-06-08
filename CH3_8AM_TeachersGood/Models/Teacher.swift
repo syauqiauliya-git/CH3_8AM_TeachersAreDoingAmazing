@@ -15,12 +15,16 @@ class Teacher {
     var affirmationInterval: String
     var savedStories: [Story]
     var likedAffirmations: [Affirmation]
-
-    init(name: String = "", grade: String = "", affirmationInterval: String = "", savedStories: [Story] = [], likedAffirmations: [Affirmation] = []) {
+    var currentAffirmationID: String
+    var lastShownAt: Date
+    
+    init(name: String = "", grade: String = "", affirmationInterval: String = "", savedStories: [Story] = [], likedAffirmations: [Affirmation] = [], currentAffirmationID: String = "", lastShownAt: Date = .distantPast) {
         self.name = name
         self.grade = grade
         self.affirmationInterval = affirmationInterval
         self.savedStories = savedStories
         self.likedAffirmations = likedAffirmations
+        self.currentAffirmationID = currentAffirmationID
+        self.lastShownAt = lastShownAt
     }
 }

@@ -25,6 +25,6 @@ struct CH3_8AM_TeachersGoodApp: App {
                     showVoiceInput = true
                 }
         }
-        .modelContainer(for: [TeacherProfile.self, Affirmation.self, AffirmationToken.self, Story.self])
+        .modelContainer(for: [TeacherProfile.self, Affirmation.self, AffirmationToken.self, Teacher.self, Story.self])
     }
 }
