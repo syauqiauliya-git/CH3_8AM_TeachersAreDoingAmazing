@@ -71,7 +71,7 @@ struct GradeInputView: View {
                     .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color(hex: "#4723B5").opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
+                            .stroke(Color.appGradeBorder.opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
                     )
                     .padding(.horizontal, 24)
                     .scaleEffect(x: selectedGrade == grade ? 1.1 : 1.0, y: selectedGrade == grade ? 1.2 : 1.0)
@@ -94,10 +94,10 @@ struct GradeInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(selectedGrade == nil ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)

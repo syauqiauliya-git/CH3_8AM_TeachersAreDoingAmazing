@@ -155,8 +155,8 @@ struct AffirmationsView: View {
             
             switch token.style {
             case .normal: part.foregroundColor = .appTextBnW
-            case .purple: part.foregroundColor = .appGradientPurpleStart
-            case .orange: part.foregroundColor = .appMascotOrange
+            case .purple: part.foregroundColor = .purpleHighlight
+            case .orange: part.foregroundColor = .orangeHighlight
             }
             
             result += part

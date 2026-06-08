@@ -73,10 +73,10 @@ struct NameInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(teacherName == "" ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(teacherName == "" ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
