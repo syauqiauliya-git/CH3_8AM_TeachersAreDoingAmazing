@@ -32,8 +32,8 @@ struct MainVoiceInputView: View {
             Spacer()
             
             GifWebView(gifName: currentState.thingyMode )
-                .frame(width: 400, height: 240)
-            
+                .frame(width: 300, height: 300)
+
             Spacer()
             
 //            if currentState == .recording || currentState == .finished {

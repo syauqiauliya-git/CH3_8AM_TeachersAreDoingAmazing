@@ -17,7 +17,9 @@ struct AffirmationsView: View {
     var teacher: Teacher? { teachers.first }
     
     @State private var selectedAffirmation: Affirmation?
+    @State private var showThingyTip: Bool = false
     
+    @State private var tooltipTriggerID: UUID = UUID()
     //    var mainQuote: AttributedString {
     //        var result = AttributedString("“I want to change the future by educating younger generations.”")
     //
@@ -32,28 +34,28 @@ struct AffirmationsView: View {
     //        return result
     //    }
     
+    
     var body: some View {
-        VStack {
-            //            NavigationLink {
-            //                ProfileView()
-            //            } label: {
-            //                Image(systemName: "person")
-            //                    .font(.system(size: 20))
-            //                    .foregroundStyle(Color.appPrimaryLight)
-            //            }
-            //            .frame(width: 50, height: 50)
-            //            .frame(maxWidth: .infinity, alignment: .topTrailing)
-            //            .buttonBorderShape(.circle)
-            //            .buttonStyle(.glass)
-            //            .controlSize(ControlSize.large)
-            Spacer()
-            VStack(spacing: 20) {
-                //                Text(mainQuote)
-                if let affirmation = selectedAffirmation {
-                    Text(render(affirmation))
-                        .font(.custom("Canela-Regular", size: 34))
-                    //                        .font(.system(size: 48))
+        VStack(spacing: 0) {
+            
+            HStack(alignment: .center) {
+                
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showThingyTip.toggle()
+                    }
+                    
+                    // Mutating the identifier explicitly signals the framework to restart the associated task
+                    if showThingyTip {
+                        tooltipTriggerID = UUID()
+                    }
+                }) {
+                    GifWebView(gifName: ThingyState.idle.mode)
+                        .frame(width: 80, height: 80)
+                        .padding(.trailing, 10)
+                        .padding(.leading, 20)
                 }
+<<<<<<< Updated upstream
             }
             Spacer()
             //            HStack {
@@ -105,6 +107,16 @@ struct AffirmationsView: View {
 //                    .scaledToFit()
             }
             ToolbarItem(placement: .topBarTrailing) {
+=======
+                
+                Spacer()
+                
+                if showThingyTip {
+                    SpeechBubbleView(text: "Double tap to like!", tail: .left, isThingyTip: true)
+                        .transition(.opacity)
+                }
+                
+>>>>>>> Stashed changes
                 NavigationLink {
                     ProfileView()
                 } label: {
@@ -112,8 +124,33 @@ struct AffirmationsView: View {
                         .font(.system(size: 20))
                         .foregroundStyle(Color.appGradientPurpleStart)
                 }
-                .buttonStyle(.plain)
+                .frame(width: 50, height: 50)
+                .frame(maxWidth: .infinity, alignment: .topTrailing)
+                .buttonBorderShape(.circle)
+                .buttonStyle(.glass)
+                .controlSize(ControlSize.large)
+                .padding(.trailing, 20)
+                
             }
+            .padding(.top, 8)
+            
+            Spacer()
+            
+            // Affirmation
+            if let affirmation = selectedAffirmation {
+                Text(render(affirmation))
+                    .font(.custom("Canela-Regular", size: 34))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 25)
+            }
+            
+            Spacer()
+        }
+        .background(Color.appBackground.ignoresSafeArea())
+        .navigationBarHidden(true)
+        .toolbarBackground(.visible, for: .bottomBar)
+        .toolbarBackground(Color.appBackground, for: .bottomBar)
+        .toolbar {
             ToolbarItem(placement: .bottomBar) {
                 NavigationLink {
                     ArticlesView()
@@ -124,7 +161,9 @@ struct AffirmationsView: View {
                 }
                 .buttonStyle(.plain)
             }
+            
             ToolbarItem(placement: .bottomBar) { Spacer() }
+            
             ToolbarItem(placement: .bottomBar) {
                 NavigationLink {
                     MainVoiceInputView()
@@ -146,6 +185,7 @@ struct AffirmationsView: View {
             selectedAffirmation = affirmations.randomElement()
         }
     }
+    
     
     func render(_ affirmation: Affirmation) -> AttributedString {
         var result = AttributedString()
@@ -203,6 +243,7 @@ struct AffirmationsView: View {
 //        }
 //    }
     
+<<<<<<< Updated upstream
 //    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
 //        switch interval {
 //        case .onetime:    return [(7, 30)]
@@ -275,3 +316,5 @@ struct AffirmationsView: View {
     return AffirmationsView()
         .modelContainer(container)
 }
+
+

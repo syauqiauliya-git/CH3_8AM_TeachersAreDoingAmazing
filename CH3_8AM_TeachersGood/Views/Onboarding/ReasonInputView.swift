@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ReasonInputView: View {
-    
     @Environment(\.colorScheme) var colorScheme
-    
+
+        
     @State private var finishOnboarding = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var currentState: RecordingState = .ready
     @State private var showConfirmation = false
+    
     
     @State private var isOnboarding = true
     
@@ -45,8 +46,8 @@ struct ReasonInputView: View {
             
           //  MascotView(size: 350)
             GifWebView(gifName: currentState.thingyMode )
-                .frame(width: 400, height: 240)
-            
+                .frame(width: 300, height: 300)
+
             Spacer()
             
             //RECORD
@@ -54,7 +55,7 @@ struct ReasonInputView: View {
             
                         
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .navigationDestination(isPresented: $finishOnboarding) {
             ThanksView()
         }

@@ -12,9 +12,7 @@ struct WelcomeView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color.appBackground.ignoresSafeArea()
-                
+            ZStack {                
                 // Stage 0 logo
                 if stage == 0 {
                     VStack {
@@ -42,8 +40,13 @@ struct WelcomeView: View {
                         
                         //MascotView(size: 350)
                         GifWebView(gifName: ThingyState.idle.mode)
+<<<<<<< Updated upstream
                             .frame(width: 400, height: 240)
                         
+=======
+                            .frame(width: 300, height: 300)
+                                                
+>>>>>>> Stashed changes
                         Spacer()
                         
                         NavigationLink {
@@ -68,15 +71,18 @@ struct WelcomeView: View {
                 }
             }
             .onAppear { startSequence() }
+            .background(Color.appBackground.ignoresSafeArea())
+
         }
     }
+    
     
     var bubbleText: String {
         switch stage {
         case 1: return "\nHey!\n"
-        case 2: return "I'm Thingy. My mission is to help you lift up your mood!"
+        case 2: return "I'm Thingy. I'm going to help you lift up your mood!!"
         case 3: return "In order to help you, I want to ask you some questions"
-        case 4: return "You can be honest and sincere, I’ll keep it between us."
+        case 4: return "Be honest and sincere. I’ll keep it between us."
         default: return "Please answer based on your current conditions, okay?"
         }
     }

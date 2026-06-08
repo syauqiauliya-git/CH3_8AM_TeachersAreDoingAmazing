@@ -37,8 +37,8 @@ struct FinishView: View {
                     
                    // MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
                     GifWebView(gifName: "ThingySmile")
-                        .frame(width: 400, height: 300)
-                    
+                        .frame(width: 300, height: 300)
+
                     // FILLER FOR LAYOUTING
                     if stage < 2 {
                         ZStack(alignment: .leading) {

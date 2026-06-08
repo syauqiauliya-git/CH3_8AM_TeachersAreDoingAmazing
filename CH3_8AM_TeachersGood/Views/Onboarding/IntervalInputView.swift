@@ -124,7 +124,7 @@ struct IntervalInputView: View {
             }
             
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
             if let saved = teacher?.affirmationInterval {
                 selectedInterval = IntervalTime(rawValue: saved)
