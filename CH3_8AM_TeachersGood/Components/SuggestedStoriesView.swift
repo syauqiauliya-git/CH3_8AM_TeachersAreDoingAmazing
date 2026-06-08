@@ -65,10 +65,12 @@ struct StoryCardView: View {
     let title: String
     let imageName: String
     
+    @State private var showArticleSheet: Bool = false
+    
     var body: some View {
         HStack(spacing: 6) {
             
-            if let uiImage = UIImage(named: imageName) {
+            if let uiImage = UIImage(named: "placeholder-article-pic") {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
@@ -94,6 +96,14 @@ struct StoryCardView: View {
         .padding(4)
         .background(Color.appSpeechBubble)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        
+        .onTapGesture {
+            showArticleSheet = true
+        }
+        
+        .sheet(isPresented: $showArticleSheet) {
+            ArticleSheetView()
+        }
     }
 }
 
