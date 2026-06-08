@@ -40,13 +40,8 @@ struct WelcomeView: View {
                         
                         //MascotView(size: 350)
                         GifWebView(gifName: ThingyState.idle.mode)
-<<<<<<< Updated upstream
-                            .frame(width: 400, height: 240)
-                        
-=======
                             .frame(width: 300, height: 300)
                                                 
->>>>>>> Stashed changes
                         Spacer()
                         
                         NavigationLink {

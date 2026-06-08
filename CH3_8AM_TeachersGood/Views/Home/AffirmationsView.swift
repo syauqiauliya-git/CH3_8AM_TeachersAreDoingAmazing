@@ -55,6 +55,21 @@ struct AffirmationsView: View {
                         .padding(.trailing, 10)
                         .padding(.leading, 20)
                 }
+                
+                Spacer()
+                
+                if showThingyTip {
+                    SpeechBubbleView(text: "Double tap to like!", tail: .left, isThingyTip: true)
+                        .transition(.opacity)
+                }
+                
+                NavigationLink {
+                    ProfileView()
+                } label: {
+                    Image(systemName: "person")
+                        .font(.system(size: 20))
+                        .foregroundStyle(Color.appGradientPurpleStart)
+                }
 <<<<<<< Updated upstream
             }
             Spacer()
@@ -84,12 +99,30 @@ struct AffirmationsView: View {
             //                }
             //                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             //            }
+                .frame(width: 50, height: 50)
+                .frame(maxWidth: .infinity, alignment: .topTrailing)
+                .buttonBorderShape(.circle)
+                .buttonStyle(.glass)
+                .controlSize(ControlSize.large)
+                .padding(.trailing, 20)
+                
+            }
+            .padding(.top, 8)
+            
+            Spacer()
+            
+            // Affirmation
+            if let affirmation = selectedAffirmation {
+                Text(render(affirmation))
+                    .font(.custom("Canela-Regular", size: 34))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 25)
+            }
+            
+            Spacer()
         }
-        .padding(25)
-        .background(Color.appBackground)
-        .navigationBarBackButtonHidden(true)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbarBackground(Color.appBackground, for: .navigationBar)
+        .background(Color.appBackground.ignoresSafeArea())
+        .navigationBarHidden(true)
         .toolbarBackground(.visible, for: .bottomBar)
         .toolbarBackground(Color.appBackground, for: .bottomBar)
         .toolbar {
@@ -184,6 +217,11 @@ struct AffirmationsView: View {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
         }
+        .onChange(of: affirmations) { _, newValue in
+            if selectedAffirmation == nil, !newValue.isEmpty {
+                selectedAffirmation = newValue.randomElement()
+            }
+        }
     }
     
     
@@ -220,6 +258,56 @@ struct AffirmationsView: View {
         } catch {
             print("Seeding error:", error)
         }
+    }
+    
+    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
+        switch interval {
+        case .onetime:    return [(7, 30)]
+        case .twotimes:   return [(7, 30), (16, 0)]
+        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
+        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
+        }
+    }
+    
+    func refreshIfNeeded() {
+        guard let teacher else { return }
+        
+        let interval = IntervalTime(rawValue: teacher.affirmationInterval) ?? .onetime
+        
+        if shouldRefresh(for: interval, last: teacher.lastShownAt) {
+            let next = affirmations
+                .filter { $0.id.uuidString != teacher.currentAffirmationID }
+                .randomElement() ?? affirmations.randomElement()
+            
+            if let next {
+                teacher.currentAffirmationID = next.id.uuidString
+                teacher.lastShownAt = Date()
+                selectedAffirmation = next
+            }
+        } else {
+            selectedAffirmation = affirmations.first { $0.id.uuidString == teacher.currentAffirmationID }
+            ?? affirmations.randomElement()
+        }
+    }
+    
+    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
+        let now = Date()
+        let calendar = Calendar.current
+        
+        let todaySlots = times(for: interval).map { slot in
+            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
+        }
+        
+        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
+            print("No slot found before now")
+            return false
+        }
+        
+        print("Last shown: \(last)")
+        print("Most recent slot: \(mostRecentSlot)")
+        print("Should refresh: \(last < mostRecentSlot)")
+        
+        return last < mostRecentSlot
     }
     
 //    func refreshIfNeeded() {
