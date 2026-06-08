@@ -109,10 +109,10 @@ struct IntervalInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedInterval == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(selectedInterval == nil ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)

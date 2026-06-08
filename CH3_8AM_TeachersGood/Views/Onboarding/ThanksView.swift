@@ -38,10 +38,10 @@ struct ThanksView: View {
                 } label: {
                     Text("Continue")
                         .font(.custom("Futura", size: 20))
-                        .foregroundColor(.appTextPrimary)
+                        .foregroundColor(.appBackground)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 15)
-                        .background(Color.appPrimaryLight)
+                        .background(Color.startSendRecord)
                         .opacity(stage == 1 ? 1.0 : 0.0)
                 }
                 .cornerRadius(20)

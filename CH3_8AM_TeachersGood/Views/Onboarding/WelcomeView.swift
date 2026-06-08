@@ -52,10 +52,10 @@ struct WelcomeView: View {
                         } label: {
                             Text("Let's get started!")
                                 .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(.appTextPrimary)
+                                .foregroundColor(.appBackground)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 20)
-                                .background(Color.appPrimaryLight)
+                                .background(Color.startSendRecord)
                                 .cornerRadius(20)
                         }
                         .padding(.horizontal, 35)

@@ -81,7 +81,7 @@ extension RecordView {
         HStack(spacing: 6) {
             ForEach(0..<audioLevels.count, id: \.self) { index in
                 Capsule()
-                    .fill(currentState == .recording ? .red : primaryColor.opacity(0.3))
+                    .fill(currentState == .recording ? .stopRecord : primaryColor.opacity(0.3))
                     .frame(width: 6, height: currentState == .recording ? audioLevels[index] : 10)
                     .animation(.easeInOut(duration: 0.15), value: audioLevels[index])
             }

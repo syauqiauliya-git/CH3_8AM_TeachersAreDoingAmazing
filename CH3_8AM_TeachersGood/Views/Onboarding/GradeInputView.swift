@@ -94,10 +94,10 @@ struct GradeInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(selectedGrade == nil ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
