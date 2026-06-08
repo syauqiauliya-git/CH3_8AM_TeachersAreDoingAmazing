@@ -17,6 +17,7 @@ struct SpeechBubbleView: View {
     
     var body: some View {
         Text(text)
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
             .font(.custom("Futura", size: 18))
             .foregroundColor(.appTextAlt)
             .multilineTextAlignment(.leading)
