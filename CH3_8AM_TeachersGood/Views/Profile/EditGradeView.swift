@@ -6,46 +6,54 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct Grade: Identifiable {
-    let id = UUID()
-    let name: String
-}
+//struct Grade: Identifiable {
+//    let id = UUID()
+//    let name: String
+//}
 
 struct EditGradeView: View {
-    let grades = [
-        Grade(name: "Preschool"),
-        Grade(name: "Elementary"),
-        Grade(name: "Middle School"),
-        Grade(name: "High School")
-    ]
+    @Environment(\.modelContext) var modelContext
     
-    @State private var selectedGrade: UUID?
+    @Query var teachers: [Teacher]
     
+    var teacher: Teacher? { teachers.first }
+
+    @State private var selectedGrade: GradeLevel? = nil
+
     var body: some View {
-        NavigationStack {
-            VStack {
-                List(grades) { grade in
+        List {
+            ForEach(GradeLevel.allCases, id: \.self) { grade in
+                Button {
+                    selectedGrade = grade
+                    teacher?.grade = grade.rawValue
+                } label: {
                     HStack {
-                        Text(grade.name)
+                        Text(grade.rawValue)
                         Spacer()
-                        if selectedGrade == grade.id {
+                        if selectedGrade == grade {
                             Image(systemName: "checkmark")
                                 .foregroundColor(.appPrimaryLight)
                                 .font(.body.bold())
                         }
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        selectedGrade = grade.id
-                    }
                 }
-                .scrollContentBackground(.hidden)
-                .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
+                .foregroundStyle(.primary)
             }
-            .background(Color.appBackground)
-            .navigationTitle("Grade")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+        .scrollContentBackground(.hidden)
+        .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
+        .background(Color.appBackground)
+        .navigationTitle("Grade")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            selectedGrade = GradeLevel(rawValue: teacher?.grade ?? "")
+        }
+        .onChange(of: teacher?.grade) { _, newValue in
+            if let newValue {
+                selectedGrade = GradeLevel(rawValue: newValue)
+            }
         }
     }
 }

@@ -15,11 +15,10 @@ struct NameInputView: View {
     
     var teacher: Teacher? { teachers.first }
     
-    @Binding var teacherName: String
-    var onContinue: () -> Void
+    @State private var teacherName: String = ""
     
     var body: some View {
-        
+
         VStack {
             HStack {
                 Spacer()
@@ -31,27 +30,27 @@ struct NameInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 20)
             .padding(.bottom, 70)
-            
-            
+
+
             SpeechBubbleView(
                 text: "How would you like to be called?",
                 tail: .bottomRight
             )
-            
+
             Spacer()
-            
+
             GifWebView(gifName: "ThingyIdle")
                 .frame(width: 400, height: 240)
             // MascotView(size: 350)
-            
+
             Spacer()
-            
+
             // INSERT NAME
-            
-            
+
+
             TextField("", text: $teacherName, prompt:
-                Text("Insert your name")
-                    .foregroundColor(.appTextBnW)
+                        Text("Insert your name")
+                .foregroundColor(.appTextBnW)
             )
             .font(.custom("Nunito-Medium", size: 16))
             .opacity(0.6)
@@ -65,10 +64,10 @@ struct NameInputView: View {
             )
             .padding(.horizontal, 35)
             .padding(.top, 70)
-            
-            
+
+
             //CONTINUE BUTTON
-            
+
             NavigationLink {
                 GradeInputView()
             } label: {
@@ -90,16 +89,18 @@ struct NameInputView: View {
                     modelContext.insert(Teacher(name: teacherName))
                 }
             })
-            
         }
         .background(Color.appBackground)
         .onAppear {
             teacherName = teacher?.name ?? ""
         }
     }
-    
 }
 
 #Preview {
-    NameInputView(teacherName: .constant("")) {}
+    NameInputView()
 }
+
+//#Preview {
+//    NameInputView(teacherName: .constant("")) {}
+//}

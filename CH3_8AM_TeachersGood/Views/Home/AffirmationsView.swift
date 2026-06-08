@@ -91,6 +91,19 @@ struct AffirmationsView: View {
         .toolbarBackground(.visible, for: .bottomBar)
         .toolbarBackground(Color.appBackground, for: .bottomBar)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                //                NavigationLink {
+                //                    ProfileView()
+                //                } label: {
+                //                    Image(systemName: "person")
+                //                        .font(.system(size: 20))
+                //                        .foregroundStyle(Color.appGradientPurpleStart)
+                //                }
+                //                .buttonStyle(.plain)
+//                GifWebView(gifName: ThingyState.lookright.mode)
+//                    .frame(width: 160, height: 80)
+//                    .scaledToFit()
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
                     ProfileView()
@@ -169,55 +182,55 @@ struct AffirmationsView: View {
         }
     }
     
-    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
-        switch interval {
-        case .onetime:    return [(7, 30)]
-        case .twotimes:   return [(7, 30), (16, 0)]
-        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
-        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
-        }
-    }
+//    func refreshIfNeeded() {
+//        guard let teacher else { return }
+//        
+//        let interval = IntervalTime(rawValue: teacher.affirmationInterval) ?? .onetime
+//        
+//        if shouldRefresh(for: interval, last: teacher.lastShownAt) {
+//            let next = affirmations
+//                .filter { $0.id.uuidString != teacher.currentAffirmationID }
+//                .randomElement() ?? affirmations.randomElement()
+//            
+//            if let next {
+//                teacher.currentAffirmationID = next.id.uuidString
+//                teacher.lastShownAt = Date()
+//                selectedAffirmation = next
+//            }
+//        } else {
+//            selectedAffirmation = affirmations.first { $0.id.uuidString == teacher.currentAffirmationID }
+//            ?? affirmations.randomElement()
+//        }
+//    }
     
-    func refreshIfNeeded() {
-        guard let teacher else { return }
-        
-        let interval = IntervalTime(rawValue: teacher.affirmationInterval) ?? .onetime
-        
-        if shouldRefresh(for: interval, last: teacher.lastShownAt) {
-            let next = affirmations
-                .filter { $0.id.uuidString != teacher.currentAffirmationID }
-                .randomElement() ?? affirmations.randomElement()
-            
-            if let next {
-                teacher.currentAffirmationID = next.id.uuidString
-                teacher.lastShownAt = Date()
-                selectedAffirmation = next
-            }
-        } else {
-            selectedAffirmation = affirmations.first { $0.id.uuidString == teacher.currentAffirmationID }
-            ?? affirmations.randomElement()
-        }
-    }
-    
-    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
-        let now = Date()
-        let calendar = Calendar.current
-
-        let todaySlots = times(for: interval).map { slot in
-            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
-        }
-
-        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
-            print("No slot found before now")
-            return false
-        }
-
-        print("Last shown: \(last)")
-        print("Most recent slot: \(mostRecentSlot)")
-        print("Should refresh: \(last < mostRecentSlot)")
-
-        return last < mostRecentSlot
-    }
+//    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
+//        switch interval {
+//        case .onetime:    return [(7, 30)]
+//        case .twotimes:   return [(7, 30), (16, 0)]
+//        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
+//        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
+//        }
+//    }
+//    
+//    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
+//        let now = Date()
+//        let calendar = Calendar.current
+//        
+//        let todaySlots = times(for: interval).map { slot in
+//            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
+//        }
+//        
+//        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
+//            print("No slot found before now")
+//            return false
+//        }
+//        
+//        print("Last shown: \(last)")
+//        print("Most recent slot: \(mostRecentSlot)")
+//        print("Should refresh: \(last < mostRecentSlot)")
+//        
+//        return last < mostRecentSlot
+//    }
 }
 
 #Preview {

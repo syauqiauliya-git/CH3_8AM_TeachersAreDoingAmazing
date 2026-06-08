@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProfileView: View {
+    @Query var teachers: [Teacher]
+    
+    var teacher: Teacher? { teachers.first }
+    
     @AppStorage("appearanceMode") private var appearanceMode: String = AppearanceMode.system.rawValue
     
     var body: some View {
@@ -24,7 +29,7 @@ struct ProfileView: View {
                             HStack {
                                 Text("Name")
                                 Spacer()
-                                Text("John")
+                                Text(teacher?.name ?? "Not set")
                                     .foregroundStyle(.secondary)
                             }
                         }
@@ -34,7 +39,7 @@ struct ProfileView: View {
                             HStack {
                                 Text("Grade")
                                 Spacer()
-                                Text("Middle School")
+                                Text(teacher?.grade ?? "Not set")
                                     .foregroundStyle(.secondary)
                             }
                         }
@@ -59,7 +64,7 @@ struct ProfileView: View {
                             HStack {
                                 Text("Affirmation Frequency")
                                 Spacer()
-                                Text("Daily")
+                                Text(teacher?.affirmationInterval ?? "Not set")
                                     .foregroundStyle(.secondary)
                             }
                         }
