@@ -34,18 +34,18 @@ struct AffirmationsView: View {
     
     var body: some View {
         VStack {
-            //            NavigationLink {
-            //                ProfileView()
-            //            } label: {
-            //                Image(systemName: "person")
-            //                    .font(.system(size: 20))
-            //                    .foregroundStyle(Color.appPrimaryLight)
-            //            }
-            //            .frame(width: 50, height: 50)
-            //            .frame(maxWidth: .infinity, alignment: .topTrailing)
-            //            .buttonBorderShape(.circle)
-            //            .buttonStyle(.glass)
-            //            .controlSize(ControlSize.large)
+//                        NavigationLink {
+//                            ProfileView()
+//                        } label: {
+//                            Image(systemName: "person")
+//                                .font(.system(size: 20))
+//                                .foregroundStyle(Color.appPrimaryLight)
+//                        }
+//                        .frame(width: 50, height: 50)
+//                        .frame(maxWidth: .infinity, alignment: .topTrailing)
+//                        .buttonBorderShape(.circle)
+//                        .buttonStyle(.glass)
+//                        .controlSize(ControlSize.large)
             Spacer()
             VStack(spacing: 20) {
                 //                Text(mainQuote)
@@ -91,19 +91,6 @@ struct AffirmationsView: View {
         .toolbarBackground(.visible, for: .bottomBar)
         .toolbarBackground(Color.appBackground, for: .bottomBar)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                //                NavigationLink {
-                //                    ProfileView()
-                //                } label: {
-                //                    Image(systemName: "person")
-                //                        .font(.system(size: 20))
-                //                        .foregroundStyle(Color.appGradientPurpleStart)
-                //                }
-                //                .buttonStyle(.plain)
-//                GifWebView(gifName: ThingyState.lookright.mode)
-//                    .frame(width: 160, height: 80)
-//                    .scaledToFit()
-            }
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
                     ProfileView()

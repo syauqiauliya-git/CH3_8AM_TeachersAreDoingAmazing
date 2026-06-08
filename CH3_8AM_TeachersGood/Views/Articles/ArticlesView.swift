@@ -14,7 +14,7 @@ struct ArticleSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    let markdown = MarkdownLoader.load("story-1")
+    let markdown = MarkdownLoader.load("rare-dedication")
     
     var body: some View {
         NavigationStack {
@@ -61,7 +61,13 @@ struct ArticlesView: View {
     
     @Query var stories: [Story]
     
+    @State private var currentIndex = 0
     @State private var isArticleDetailOpen = false
+    @State private var selectedStoryTab = "All Stories"
+    
+    let filterStoryOptions: [String] = [
+        "All Stories", "Favourites"
+    ]
     
     let columns = [
         GridItem(.flexible())
@@ -70,8 +76,8 @@ struct ArticlesView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
-                TabView {
-                    ForEach(1...3, id: \.self) { index in
+                TabView(selection: $currentIndex) {
+                    ForEach(0..<3, id: \.self) { index in
                         VStack(alignment: .leading) {
                             Text("Inspirational teachers")
                                 .font(.title.bold())
@@ -87,26 +93,40 @@ struct ArticlesView: View {
                                     .resizable()
                                     .scaledToFill()
                                 LinearGradient(
-                                    colors: [
-                                        .clear,
-                                        .black.opacity(1.5)
-                                    ],
+                                    colors: [.clear, .black.opacity(1.5)],
                                     startPoint: .center,
                                     endPoint: .bottom
                                 )
                             }
                         }
+                        .tag(index) // this is the key part
                     }
                 }
-                .tabViewStyle(.page)
+                .tabViewStyle(.page(indexDisplayMode: .never))
                 .frame(height: 400)
+                HStack(spacing: 8) {
+                    ForEach(0..<3, id: \.self) { index in
+                        Circle()
+                            .fill(currentIndex == index ? Color.appGradeBorder : Color.appGradeBorder.opacity(0.3))
+                            .frame(width: 8, height: 8)
+                    }
+                }
+                .padding(.top, 6)
+                Picker("HomePicker", selection: $selectedStoryTab) {
+                    ForEach(filterStoryOptions, id: \.self) { index in
+                        Text(index).tag(index)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal, 25)
+                .padding(.vertical, 10)
                 VStack {
                     HStack(spacing: 10) {
-                        Text("All Stories")
+                        Text("Recents")
                             .font(.headline.bold())
-                        Image(systemName: "chevron.right")
-                            .font(.body)
                         Spacer()
+                        Image(systemName: "line.3.horizontal.decrease")
+                            .font(.body)
                     }
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(1...10, id: \.self) { index in
@@ -150,9 +170,10 @@ struct ArticlesView: View {
                         }
                     }
                 }
-                .padding(20)
+                .padding(.horizontal, 25)
             }
         }
+        .background(Color.appBackground)
         .sheet(isPresented: $isArticleDetailOpen) {
             ArticleSheetView()
         }
