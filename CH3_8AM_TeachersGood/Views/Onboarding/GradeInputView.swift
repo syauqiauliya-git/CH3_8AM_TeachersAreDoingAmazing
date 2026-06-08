@@ -71,7 +71,7 @@ struct GradeInputView: View {
                     .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color(hex: "#4723B5").opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
+                            .stroke(Color.appGradeBorder.opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
                     )
                     .padding(.horizontal, 24)
                     .scaleEffect(x: selectedGrade == grade ? 1.1 : 1.0, y: selectedGrade == grade ? 1.2 : 1.0)
