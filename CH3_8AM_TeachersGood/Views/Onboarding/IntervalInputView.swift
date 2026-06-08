@@ -35,13 +35,15 @@ struct IntervalInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 40)
             
+            Spacer()
+            
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
                 //MascotView(size: 120)
                 GifWebView(gifName: ThingyState.lookright.mode)
-                    .frame(width: 160, height: 80)
+                    .frame(width: 100, height: 100)
                 SpeechBubbleView(
                     text: "How often do you want to receive affirmations?",
                     tail: .left

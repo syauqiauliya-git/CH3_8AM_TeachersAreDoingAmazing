@@ -19,41 +19,19 @@ struct AffirmationsView: View {
     @State private var selectedAffirmation: Affirmation?
     @State private var showThingyTip: Bool = false
     
-    @State private var tooltipTriggerID: UUID = UUID()
-    //    var mainQuote: AttributedString {
-    //        var result = AttributedString("“I want to change the future by educating younger generations.”")
-    //
-    //        if let range = result.range(of: "change the future") {
-    //            result[range].foregroundColor = .appMascotOrange
-    //        }
-    //
-    //        if let range = result.range(of: "educating") {
-    //            result[range].foregroundColor = .appPrimaryLight
-    //        }
-    //
-    //        return result
-    //    }
-    
-    
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             
             HStack(alignment: .center) {
                 
                 Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        showThingyTip.toggle()
-                    }
+                    showThingyTip.toggle()
                     
-                    // Mutating the identifier explicitly signals the framework to restart the associated task
-                    if showThingyTip {
-                        tooltipTriggerID = UUID()
-                    }
                 }) {
                     GifWebView(gifName: ThingyState.idle.mode)
                         .frame(width: 80, height: 80)
-                        .padding(.trailing, 10)
-                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
+                        .padding(.leading, 5)
                 }
                 
                 Spacer()
@@ -68,119 +46,39 @@ struct AffirmationsView: View {
                 } label: {
                     Image(systemName: "person")
                         .font(.system(size: 20))
-                        .foregroundStyle(Color.appGradientPurpleStart)
-                }
-<<<<<<< Updated upstream
-            }
-            Spacer()
-            //            HStack {
-            //                NavigationLink {
-            //                    ArticlesView()
-            //                } label: {
-            //                    Image(systemName: "book.pages")
-            //                        .font(.system(size: 20))
-            //                        .foregroundStyle(Color.appPrimaryLight)
-            //                }
-            //                .frame(width: 50, height: 50)
-            //                .frame(maxWidth: .infinity, alignment: .bottomLeading)
-            //                .buttonBorderShape(.circle)
-            //                .buttonStyle(.glass)
-            //                .controlSize(ControlSize.regular)
-            //                Spacer()
-            //                NavigationLink {
-            //                    MainVoiceInputView()
-            //                } label: {
-            //                    Circle()
-            //                        .fill(Color.appPrimaryLight)
-            //                        .frame(width: 50, height: 50)
-            //                        .overlay(Image(systemName: "ellipsis.message.fill"))
-            //                        .font(.system(size: 20))
-            //                        .foregroundColor(.white)
-            //                }
-            //                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
-            //            }
-                .frame(width: 50, height: 50)
-                .frame(maxWidth: .infinity, alignment: .topTrailing)
-                .buttonBorderShape(.circle)
-                .buttonStyle(.glass)
-                .controlSize(ControlSize.large)
-                .padding(.trailing, 20)
-                
-            }
-            .padding(.top, 8)
-            
-            Spacer()
-            
-            // Affirmation
-            if let affirmation = selectedAffirmation {
-                Text(render(affirmation))
-                    .font(.custom("Canela-Regular", size: 34))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 25)
-            }
-            
-            Spacer()
-        }
-        .background(Color.appBackground.ignoresSafeArea())
-        .navigationBarHidden(true)
-        .toolbarBackground(.visible, for: .bottomBar)
-        .toolbarBackground(Color.appBackground, for: .bottomBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                //                NavigationLink {
-                //                    ProfileView()
-                //                } label: {
-                //                    Image(systemName: "person")
-                //                        .font(.system(size: 20))
-                //                        .foregroundStyle(Color.appGradientPurpleStart)
-                //                }
-                //                .buttonStyle(.plain)
-//                GifWebView(gifName: ThingyState.lookright.mode)
-//                    .frame(width: 160, height: 80)
-//                    .scaledToFit()
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-=======
-                
-                Spacer()
-                
-                if showThingyTip {
-                    SpeechBubbleView(text: "Double tap to like!", tail: .left, isThingyTip: true)
-                        .transition(.opacity)
-                }
-                
->>>>>>> Stashed changes
-                NavigationLink {
-                    ProfileView()
-                } label: {
-                    Image(systemName: "person")
-                        .font(.system(size: 20))
-                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .foregroundStyle(Color.appPrimaryLight)
                 }
                 .frame(width: 50, height: 50)
                 .frame(maxWidth: .infinity, alignment: .topTrailing)
                 .buttonBorderShape(.circle)
                 .buttonStyle(.glass)
                 .controlSize(ControlSize.large)
-                .padding(.trailing, 20)
-                
             }
-            .padding(.top, 8)
+            .padding(.top, 35)
+            
             
             Spacer()
             
-            // Affirmation
-            if let affirmation = selectedAffirmation {
-                Text(render(affirmation))
-                    .font(.custom("Canela-Regular", size: 34))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 25)
+            VStack(spacing: 20) {
+                if let affirmation = selectedAffirmation {
+                    Text(render(affirmation))
+                        .font(.custom("Canela-Regular", size: 34))
+                }
             }
             
             Spacer()
         }
-        .background(Color.appBackground.ignoresSafeArea())
-        .navigationBarHidden(true)
+        .padding(25)
+        .background(Color.appBackground)
+        .navigationBarBackButtonHidden(true)
+        
+        // 1. Explicitly hide the system navigation bar so it stops reserving invisible space
+        .toolbar(.hidden, for: .navigationBar)
+        
+        // 2. Push the entire VStack up into the top physical boundary of the device
+        .ignoresSafeArea(edges: .top)
+        
+        // You can remove the top toolbar background modifiers since the bar is now hidden
         .toolbarBackground(.visible, for: .bottomBar)
         .toolbarBackground(Color.appBackground, for: .bottomBar)
         .toolbar {
@@ -194,9 +92,7 @@ struct AffirmationsView: View {
                 }
                 .buttonStyle(.plain)
             }
-            
             ToolbarItem(placement: .bottomBar) { Spacer() }
-            
             ToolbarItem(placement: .bottomBar) {
                 NavigationLink {
                     MainVoiceInputView()
@@ -217,13 +113,7 @@ struct AffirmationsView: View {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
         }
-        .onChange(of: affirmations) { _, newValue in
-            if selectedAffirmation == nil, !newValue.isEmpty {
-                selectedAffirmation = newValue.randomElement()
-            }
-        }
     }
-    
     
     func render(_ affirmation: Affirmation) -> AttributedString {
         var result = AttributedString()
@@ -259,107 +149,6 @@ struct AffirmationsView: View {
             print("Seeding error:", error)
         }
     }
-    
-    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
-        switch interval {
-        case .onetime:    return [(7, 30)]
-        case .twotimes:   return [(7, 30), (16, 0)]
-        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
-        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
-        }
-    }
-    
-    func refreshIfNeeded() {
-        guard let teacher else { return }
-        
-        let interval = IntervalTime(rawValue: teacher.affirmationInterval) ?? .onetime
-        
-        if shouldRefresh(for: interval, last: teacher.lastShownAt) {
-            let next = affirmations
-                .filter { $0.id.uuidString != teacher.currentAffirmationID }
-                .randomElement() ?? affirmations.randomElement()
-            
-            if let next {
-                teacher.currentAffirmationID = next.id.uuidString
-                teacher.lastShownAt = Date()
-                selectedAffirmation = next
-            }
-        } else {
-            selectedAffirmation = affirmations.first { $0.id.uuidString == teacher.currentAffirmationID }
-            ?? affirmations.randomElement()
-        }
-    }
-    
-    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
-        let now = Date()
-        let calendar = Calendar.current
-        
-        let todaySlots = times(for: interval).map { slot in
-            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
-        }
-        
-        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
-            print("No slot found before now")
-            return false
-        }
-        
-        print("Last shown: \(last)")
-        print("Most recent slot: \(mostRecentSlot)")
-        print("Should refresh: \(last < mostRecentSlot)")
-        
-        return last < mostRecentSlot
-    }
-    
-//    func refreshIfNeeded() {
-//        guard let teacher else { return }
-//        
-//        let interval = IntervalTime(rawValue: teacher.affirmationInterval) ?? .onetime
-//        
-//        if shouldRefresh(for: interval, last: teacher.lastShownAt) {
-//            let next = affirmations
-//                .filter { $0.id.uuidString != teacher.currentAffirmationID }
-//                .randomElement() ?? affirmations.randomElement()
-//            
-//            if let next {
-//                teacher.currentAffirmationID = next.id.uuidString
-//                teacher.lastShownAt = Date()
-//                selectedAffirmation = next
-//            }
-//        } else {
-//            selectedAffirmation = affirmations.first { $0.id.uuidString == teacher.currentAffirmationID }
-//            ?? affirmations.randomElement()
-//        }
-//    }
-    
-<<<<<<< Updated upstream
-//    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
-//        switch interval {
-//        case .onetime:    return [(7, 30)]
-//        case .twotimes:   return [(7, 30), (16, 0)]
-//        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
-//        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
-//        }
-//    }
-//    
-//    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
-//        let now = Date()
-//        let calendar = Calendar.current
-//        
-//        let todaySlots = times(for: interval).map { slot in
-//            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
-//        }
-//        
-//        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
-//            print("No slot found before now")
-//            return false
-//        }
-//        
-//        print("Last shown: \(last)")
-//        print("Most recent slot: \(mostRecentSlot)")
-//        print("Should refresh: \(last < mostRecentSlot)")
-//        
-//        return last < mostRecentSlot
-//    }
 }
 
 #Preview {
@@ -404,5 +193,3 @@ struct AffirmationsView: View {
     return AffirmationsView()
         .modelContainer(container)
 }
-
-
