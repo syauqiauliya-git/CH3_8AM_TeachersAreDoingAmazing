@@ -43,8 +43,9 @@ extension RecordView {
     private var typingModeView: some View {
         VStack(spacing: 16) {
             HStack {
-                TextField("", text: $inputText, prompt: Text("Type here").foregroundColor(.appTextTertiary))
-                    .foregroundColor(.appTextPrimary)
+                TextField("", text: $inputText, prompt: Text("Type here").foregroundColor(.appTextTertiary)            .font(.custom("Nunito-Medium", size: 16)))
+                    .foregroundColor(.appTextBnW)
+                    .font(.custom("Nunito-Medium", size: 16))
                     .padding(.vertical, 14)
                     .padding(.horizontal, 20)
                     .background(Color.appBackground)
@@ -60,11 +61,7 @@ extension RecordView {
                         .foregroundColor(.white)
                         .padding(13)
                         .background(
-                            LinearGradient(
-                                colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
-                                startPoint: .bottomLeading,
-                                endPoint: .topTrailing
-                            )
+                            Color.startSendRecord
                         )
                         .clipShape(Circle())
                 }
@@ -74,7 +71,7 @@ extension RecordView {
             Button(action: cancelTypingMode) {
                 Text("Cancel")
                     .font(.caption)
-                    .foregroundColor(.red)
+                    .foregroundColor(.stopRecord)
             }
         }
         .frame(height: 155)
@@ -120,7 +117,7 @@ extension RecordView {
                     imageName: "mic",
                     imageSize: 32,
                     fontWeight: .regular,
-                    colors: [.appGradientPurpleStart, .appGradientPurpleEnd]
+                    colors: .startSendRecord
                 )
             }
             
@@ -149,7 +146,7 @@ extension RecordView {
                 imageName: "square.fill",
                 imageSize: 28,
                 fontWeight: .black,
-                colors: [.appGradientOrangeStart, .appGradientRedEnd]
+                colors: .stopRecord
             )
         }
     }
@@ -161,7 +158,7 @@ extension RecordView {
                     imageName: "paperplane.fill",
                     imageSize: 28,
                     fontWeight: .bold,
-                    colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
+                    colors: .startSendRecord,
                     offset: CGSize(width: -2, height: 2)
                 )
             }
@@ -177,7 +174,7 @@ extension RecordView {
                     imageName: "paperplane.fill",
                     imageSize: 28,
                     fontWeight: .bold,
-                    colors: [.appGradientPurpleStart, .appGradientPurpleEnd],
+                    colors: .startSendRecord,
                     offset: CGSize(width: -2, height: 2)
                 )
             }
@@ -190,10 +187,10 @@ extension RecordView {
         Button(action: {
             withAnimation { currentState = .ready }
         }) {
-            Text("Re-Record")
+            Text("Want to try that again?")
                 .font(.caption)
                 .underline()
-                .foregroundColor(.gray)
+                .foregroundColor(.appTextAlt)
         }
     }
 }
@@ -201,20 +198,16 @@ extension RecordView {
 extension RecordView {
     
     @ViewBuilder
-    private func gradientButton(imageName: String, imageSize: CGFloat, fontWeight: Font.Weight, colors: [Color], offset: CGSize = .zero) -> some View {
+    private func gradientButton(imageName: String, imageSize: CGFloat, fontWeight: Font.Weight, colors: Color, offset: CGSize = .zero) -> some View {
         ZStack {
             Circle()
                 .fill(
-                    LinearGradient(
-                        colors: colors,
-                        startPoint: .bottomLeading,
-                        endPoint: .topTrailing
-                    )
+                    colors
                 )
                 .frame(width: 80, height: 80)
             Image(systemName: imageName)
                 .font(.system(size: imageSize, weight: fontWeight))
-                .foregroundColor(.white)
+                .foregroundColor(.appBackground)
                 .offset(offset)
         }
     }

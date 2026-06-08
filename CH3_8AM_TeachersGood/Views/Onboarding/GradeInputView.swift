@@ -92,7 +92,7 @@ struct GradeInputView: View {
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
+                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)

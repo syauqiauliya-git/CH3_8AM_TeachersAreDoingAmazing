@@ -69,7 +69,7 @@ struct IntervalInputView: View {
                     .cornerRadius(15)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color(hex: "#4723B5").opacity(selectedInterval == interval ? 1 : 0.2), lineWidth: selectedInterval == interval ? 2 : 1)
+                            .stroke(Color.appGradeBorder.opacity(selectedInterval == interval ? 1 : 0.2), lineWidth: selectedInterval == interval ? 2 : 1)
                     )
                     .padding(.horizontal, 24)
                     .scaleEffect(x: selectedInterval == interval ? 1.1 : 1.0, y: selectedInterval == interval ? 1.2 : 1.0)
@@ -112,7 +112,7 @@ struct IntervalInputView: View {
                     .foregroundColor(.appTextPrimary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedInterval == nil ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
+                    .background(selectedInterval == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
