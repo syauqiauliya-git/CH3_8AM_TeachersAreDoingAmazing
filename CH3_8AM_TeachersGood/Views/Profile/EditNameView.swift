@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
@@ -19,6 +20,10 @@ struct OvalTextFieldStyle: TextFieldStyle {
 }
 
 struct EditNameView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query var teachers: [Teacher]
+    var teacher: Teacher? { teachers.first }
+    
     @State private var userInput = ""
     
     var body: some View {
@@ -33,9 +38,9 @@ struct EditNameView: View {
                 .disableAutocorrection(true)
                 .textFieldStyle(OvalTextFieldStyle())
                 if !userInput.isEmpty {
-                    Button(action: {
+                    Button {
                         userInput = ""
-                    }) {
+                    } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray)
                     }
@@ -45,18 +50,76 @@ struct EditNameView: View {
                 }
             }
             .background(Color.white)
-//            .environment(\.colorScheme, .light)
             .cornerRadius(25)
             .compositingGroup()
             .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
+            
             Spacer()
+            
+            Button {
+                teacher?.name = userInput
+            } label: {
+                Text("Save")
+                    .font(.custom("Futura", size: 20))
+                    .foregroundColor(.appTextPrimary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 15)
+                    .background(userInput.isEmpty ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
+            }
+            .cornerRadius(20)
+            .padding(.horizontal, 35)
+            .disabled(userInput.isEmpty)
         }
         .padding(20)
         .background(Color.appBackground)
         .navigationTitle("Name")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Color.appBackground, for: .navigationBar)
+        .onAppear {
+            userInput = teacher?.name ?? ""
+        }
     }
 }
+
+//struct EditNameView: View {
+//    @State private var userInput = ""
+//
+//    var body: some View {
+//        VStack {
+//            ZStack(alignment: .trailing) {
+//                TextField(
+//                    "Type name here...",
+//                    text: $userInput,
+//                    prompt: Text("Type name here...")
+//                        .foregroundStyle(.gray)
+//                )
+//                .disableAutocorrection(true)
+//                .textFieldStyle(OvalTextFieldStyle())
+//                if !userInput.isEmpty {
+//                    Button(action: {
+//                        userInput = ""
+//                    }) {
+//                        Image(systemName: "xmark.circle.fill")
+//                            .foregroundColor(.gray)
+//                    }
+//                    .buttonStyle(.borderless)
+//                    .padding(.trailing, 15)
+//                    .transition(.scale)
+//                }
+//            }
+//            .background(Color.white)
+////            .environment(\.colorScheme, .light)
+//            .cornerRadius(25)
+//            .compositingGroup()
+//            .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
+//            Spacer()
+//        }
+//        .padding(20)
+//        .background(Color.appBackground)
+//        .navigationTitle("Name")
+//        .navigationBarTitleDisplayMode(.inline)
+//    }
+//}
 
 #Preview {
     EditNameView()

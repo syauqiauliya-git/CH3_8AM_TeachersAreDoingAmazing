@@ -6,8 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NameInputView: View {
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var teachers: [Teacher]
+    
+    var teacher: Teacher? { teachers.first }
     
     @Binding var teacherName: String
     var onContinue: () -> Void
@@ -36,7 +42,7 @@ struct NameInputView: View {
             
             GifWebView(gifName: "ThingyIdle")
                 .frame(width: 400, height: 240)
-           // MascotView(size: 350)
+            // MascotView(size: 350)
             
             Spacer()
             
@@ -54,12 +60,12 @@ struct NameInputView: View {
             .background(Color.appGradeNotSelected)
             .cornerRadius(20)
             .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color(hex: "EDE3FC"), lineWidth: 1)
-                )
-                .padding(.horizontal, 35)
-                .padding(.top, 70)
-
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.appSliderBorder.opacity(1), lineWidth: 1)
+            )
+            .padding(.horizontal, 35)
+            .padding(.top, 70)
+            
             
             //CONTINUE BUTTON
             
@@ -77,11 +83,19 @@ struct NameInputView: View {
             .padding(.horizontal, 35)
             .padding(.top, 16)
             .padding(.bottom, 32)
-            
+            .simultaneousGesture(TapGesture().onEnded {
+                if let teacher {
+                    teacher.name = teacherName
+                } else {
+                    modelContext.insert(Teacher(name: teacherName))
+                }
+            })
             
         }
         .background(Color.appBackground)
-        
+        .onAppear {
+            teacherName = teacher?.name ?? ""
+        }
     }
     
 }

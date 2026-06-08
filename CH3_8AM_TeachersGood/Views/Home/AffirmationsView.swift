@@ -12,6 +12,9 @@ struct AffirmationsView: View {
     @Environment(\.modelContext) var modelContext
     
     @Query var affirmations: [Affirmation]
+    @Query var teachers: [Teacher]
+    
+    var teacher: Teacher? { teachers.first }
     
     @State private var selectedAffirmation: Affirmation?
     
@@ -31,18 +34,18 @@ struct AffirmationsView: View {
     
     var body: some View {
         VStack {
-            NavigationLink {
-                ProfileView()
-            } label: {
-                Image(systemName: "person")
-                    .font(.system(size: 20))
-                    .foregroundStyle(Color.appPrimaryLight)
-            }
-            .frame(width: 50, height: 50)
-            .frame(maxWidth: .infinity, alignment: .topTrailing)
-            .buttonBorderShape(.circle)
-            .buttonStyle(.glass)
-            .controlSize(ControlSize.large)
+            //            NavigationLink {
+            //                ProfileView()
+            //            } label: {
+            //                Image(systemName: "person")
+            //                    .font(.system(size: 20))
+            //                    .foregroundStyle(Color.appPrimaryLight)
+            //            }
+            //            .frame(width: 50, height: 50)
+            //            .frame(maxWidth: .infinity, alignment: .topTrailing)
+            //            .buttonBorderShape(.circle)
+            //            .buttonStyle(.glass)
+            //            .controlSize(ControlSize.large)
             Spacer()
             VStack(spacing: 20) {
                 //                Text(mainQuote)
@@ -53,81 +56,78 @@ struct AffirmationsView: View {
                 }
             }
             Spacer()
-            HStack {
+            //            HStack {
+            //                NavigationLink {
+            //                    ArticlesView()
+            //                } label: {
+            //                    Image(systemName: "book.pages")
+            //                        .font(.system(size: 20))
+            //                        .foregroundStyle(Color.appPrimaryLight)
+            //                }
+            //                .frame(width: 50, height: 50)
+            //                .frame(maxWidth: .infinity, alignment: .bottomLeading)
+            //                .buttonBorderShape(.circle)
+            //                .buttonStyle(.glass)
+            //                .controlSize(ControlSize.regular)
+            //                Spacer()
+            //                NavigationLink {
+            //                    MainVoiceInputView()
+            //                } label: {
+            //                    Circle()
+            //                        .fill(Color.appPrimaryLight)
+            //                        .frame(width: 50, height: 50)
+            //                        .overlay(Image(systemName: "ellipsis.message.fill"))
+            //                        .font(.system(size: 20))
+            //                        .foregroundColor(.white)
+            //                }
+            //                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+            //            }
+        }
+        .padding(25)
+        .background(Color.appBackground)
+        .navigationBarBackButtonHidden(true)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(Color.appBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .bottomBar)
+        .toolbarBackground(Color.appBackground, for: .bottomBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    ProfileView()
+                } label: {
+                    Image(systemName: "person")
+                        .font(.system(size: 20))
+                        .foregroundStyle(Color.appGradientPurpleStart)
+                }
+                .buttonStyle(.plain)
+            }
+            ToolbarItem(placement: .bottomBar) {
                 NavigationLink {
                     ArticlesView()
                 } label: {
                     Image(systemName: "book.pages")
                         .font(.system(size: 20))
-                        .foregroundStyle(Color.appPrimaryLight)
+                        .foregroundStyle(Color.appGradientPurpleStart)
                 }
-                .frame(width: 50, height: 50)
-                .frame(maxWidth: .infinity, alignment: .bottomLeading)
-                .buttonBorderShape(.circle)
-                .buttonStyle(.glass)
-                .controlSize(ControlSize.regular)
-                Spacer()
+                .buttonStyle(.plain)
+            }
+            ToolbarItem(placement: .bottomBar) { Spacer() }
+            ToolbarItem(placement: .bottomBar) {
                 NavigationLink {
                     MainVoiceInputView()
                 } label: {
                     Circle()
-                        .fill(Color.appPrimaryLight)
+                        .fill(Color.appGradientPurpleStart)
                         .frame(width: 50, height: 50)
-                        .overlay(Image(systemName: "ellipsis.message.fill"))
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
+                        .overlay(
+                            Image(systemName: "ellipsis.message.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(.white)
+                        )
                 }
-                .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+                .buttonStyle(.plain)
             }
         }
-        .padding(25)
-        .background(Color.appBackground)
-        //        .navigationBarBackButtonHidden(true)
-        //        .toolbarBackground(.visible, for: .navigationBar)
-        //        .toolbarBackground(Color.appBackground, for: .navigationBar)
-        //        .toolbarBackground(.visible, for: .bottomBar)
-        //        .toolbarBackground(Color.appBackground, for: .bottomBar)
-        //        .toolbar {
-        //            ToolbarItem(placement: .topBarTrailing) {
-        //                NavigationLink {
-        //                    ProfileView()
-        //                } label: {
-        //                    Image(systemName: "person")
-        //                        .font(.system(size: 20))
-        //                        .foregroundStyle(Color.appPrimaryLight)
-        //                }
-        //                .buttonStyle(.plain)
-        //            }
-        //
-        //            ToolbarItem(placement: .bottomBar) {
-        //                NavigationLink {
-        //                    ArticlesView()
-        //                } label: {
-        //                    Image(systemName: "book.pages")
-        //                        .font(.system(size: 20))
-        //                        .foregroundStyle(Color.appPrimaryLight)
-        //                }
-        //                .buttonStyle(.plain)
-        //            }
-        //
-        //            ToolbarItem(placement: .bottomBar) { Spacer() }
-        //
-        //            ToolbarItem(placement: .bottomBar) {
-        //                NavigationLink {
-        //                    MainVoiceInputView()
-        //                } label: {
-        //                    Circle()
-        //                        .fill(Color.appPrimaryLight)
-        //                        .frame(width: 50, height: 50)
-        //                        .overlay(
-        //                            Image(systemName: "ellipsis.message.fill")
-        //                                .font(.system(size: 20))
-        //                                .foregroundColor(.white)
-        //                        )
-        //                }
-        //                .buttonStyle(.plain)
-        //            }
-        //        }
         .onAppear {
             seedIfNeeded(context: modelContext)
             selectedAffirmation = affirmations.randomElement()
@@ -167,6 +167,56 @@ struct AffirmationsView: View {
         } catch {
             print("Seeding error:", error)
         }
+    }
+    
+    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
+        switch interval {
+        case .onetime:    return [(7, 30)]
+        case .twotimes:   return [(7, 30), (16, 0)]
+        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
+        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
+        }
+    }
+    
+    func refreshIfNeeded() {
+        guard let teacher else { return }
+        
+        let interval = IntervalTime(rawValue: teacher.affirmationInterval) ?? .onetime
+        
+        if shouldRefresh(for: interval, last: teacher.lastShownAt) {
+            let next = affirmations
+                .filter { $0.id.uuidString != teacher.currentAffirmationID }
+                .randomElement() ?? affirmations.randomElement()
+            
+            if let next {
+                teacher.currentAffirmationID = next.id.uuidString
+                teacher.lastShownAt = Date()
+                selectedAffirmation = next
+            }
+        } else {
+            selectedAffirmation = affirmations.first { $0.id.uuidString == teacher.currentAffirmationID }
+            ?? affirmations.randomElement()
+        }
+    }
+    
+    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
+        let now = Date()
+        let calendar = Calendar.current
+
+        let todaySlots = times(for: interval).map { slot in
+            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
+        }
+
+        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
+            print("No slot found before now")
+            return false
+        }
+
+        print("Last shown: \(last)")
+        print("Most recent slot: \(mostRecentSlot)")
+        print("Should refresh: \(last < mostRecentSlot)")
+
+        return last < mostRecentSlot
     }
 }
 
