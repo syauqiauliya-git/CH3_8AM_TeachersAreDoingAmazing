@@ -40,7 +40,7 @@ struct NameInputView: View {
             Spacer()
 
             GifWebView(gifName: "ThingyIdle")
-                .frame(width: 400, height: 240)
+                .frame(width: 300, height: 300)
             // MascotView(size: 350)
 
             Spacer()
@@ -90,7 +90,7 @@ struct NameInputView: View {
                 }
             })
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
             teacherName = teacher?.name ?? ""
         }

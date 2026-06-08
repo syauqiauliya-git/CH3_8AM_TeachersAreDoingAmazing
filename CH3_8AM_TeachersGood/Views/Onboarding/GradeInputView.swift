@@ -39,7 +39,8 @@ struct GradeInputView: View {
             HStack(alignment: .center, spacing: 12) {
                 //  MascotView(size: 130)
                 GifWebView(gifName: ThingyState.lookright.mode)
-                    .frame(width: 160, height: 80)
+                    .frame(width: 100, height: 100)
+                    .padding(.trailing, 10)
                 SpeechBubbleView(
                     text: "What grade do you usually teach?",
                     tail: .left
@@ -113,8 +114,8 @@ struct GradeInputView: View {
                 selectedGrade = GradeLevel(rawValue: teacher?.grade ?? "")
             }
         }
-        .background(Color.appBackground)
-        
+        .background(Color.appBackground.ignoresSafeArea())
+
     }
 }
 

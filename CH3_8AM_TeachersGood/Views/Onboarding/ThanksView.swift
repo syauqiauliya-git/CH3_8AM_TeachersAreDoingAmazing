@@ -28,8 +28,8 @@ struct ThanksView: View {
                 
                 //   MascotView(size: 300, currentMode: stage >= 1 ? .normal : .blink)
                 GifWebView(gifName: ThingyState.smile.mode)
-                    .frame(width: 400, height: 240)
-                 
+                    .frame(width: 300, height: 300)
+
                 
                 Spacer()
 
@@ -54,7 +54,7 @@ struct ThanksView: View {
                         
             
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear { startSequence() }
         
         

@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct CH3_8AM_TeachersGoodApp: App {
+    
     @State private var showVoiceInput = false
     
     @AppStorage("appearanceMode") private var appearanceMode: String = AppearanceMode.system.rawValue
