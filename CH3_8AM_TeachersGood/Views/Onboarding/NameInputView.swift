@@ -90,7 +90,6 @@ struct NameInputView: View {
                     modelContext.insert(Teacher(name: teacherName))
                 }
             })
-            
         }
         .background(Color.appBackground)
         .onAppear {

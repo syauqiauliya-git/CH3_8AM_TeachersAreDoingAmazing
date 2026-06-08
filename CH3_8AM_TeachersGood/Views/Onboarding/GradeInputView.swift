@@ -6,11 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GradeInputView: View {
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var teachers: [Teacher]
+    
+    var teacher: Teacher? { teachers.first }
     
     @State private var selectedGrade: GradeLevel? = nil
-
     
     var body: some View {
         
@@ -27,12 +32,12 @@ struct GradeInputView: View {
             }
             .padding(.horizontal, 24)
             .padding(.top, 40)
-        
+            
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
-              //  MascotView(size: 130)
+                //  MascotView(size: 130)
                 GifWebView(gifName: ThingyState.lookright.mode)
                     .frame(width: 160, height: 80)
                 SpeechBubbleView(
@@ -82,7 +87,7 @@ struct GradeInputView: View {
             // CONTINUE BUTTONT
             
             Spacer()
-    
+            
             
             NavigationLink {
                 PrepareVoiceView()
@@ -98,8 +103,15 @@ struct GradeInputView: View {
             .padding(.horizontal, 35)
             .padding(.top, 16)
             .padding(.bottom, 32)
+            .simultaneousGesture(TapGesture().onEnded {
+                if let teacher {
+                    teacher.grade = selectedGrade?.rawValue ?? ""
+                }
+            })
             .disabled(selectedGrade == nil)
-                        
+            .onAppear {
+                selectedGrade = GradeLevel(rawValue: teacher?.grade ?? "")
+            }
         }
         .background(Color.appBackground)
         

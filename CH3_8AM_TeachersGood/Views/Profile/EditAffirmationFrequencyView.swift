@@ -35,6 +35,9 @@ struct EditAffirmationFrequencyView: View {
                 .foregroundStyle(.primary)
             }
         }
+        .scrollContentBackground(.hidden)
+        .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
+        .background(Color.appBackground)
         .navigationTitle("Affirmation Frequency")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
