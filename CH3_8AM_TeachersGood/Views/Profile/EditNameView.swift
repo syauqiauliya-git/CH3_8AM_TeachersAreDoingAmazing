@@ -21,7 +21,9 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct EditNameView: View {
     @Environment(\.modelContext) var modelContext
+    
     @Query var teachers: [Teacher]
+    
     var teacher: Teacher? { teachers.first }
     
     @State private var userInput = ""
@@ -53,22 +55,7 @@ struct EditNameView: View {
             .cornerRadius(25)
             .compositingGroup()
             .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
-            
             Spacer()
-            
-            Button {
-                teacher?.name = userInput
-            } label: {
-                Text("Save")
-                    .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 15)
-                    .background(userInput.isEmpty ? Color.appPrimaryLight.opacity(0.4) : Color.appPrimaryLight)
-            }
-            .cornerRadius(20)
-            .padding(.horizontal, 35)
-            .disabled(userInput.isEmpty)
         }
         .padding(20)
         .background(Color.appBackground)
@@ -77,6 +64,14 @@ struct EditNameView: View {
         .toolbarBackground(Color.appBackground, for: .navigationBar)
         .onAppear {
             userInput = teacher?.name ?? ""
+        }
+        .onChange(of: teacher?.name) { _, newValue in
+            if let newValue, userInput.isEmpty {
+                userInput = newValue
+            }
+        }
+        .onChange(of: userInput) { _, newValue in
+            teacher?.name = newValue
         }
     }
 }

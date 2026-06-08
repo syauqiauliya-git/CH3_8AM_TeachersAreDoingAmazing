@@ -20,7 +20,7 @@ struct WelcomeView: View {
                     VStack {
                         Spacer()
                         MascotView(size: 250)
-                      //  GifWebView(gifName: "ThingyIdle")
+                        //  GifWebView(gifName: "ThingyIdle")
                         Text("SolacEd")
                             .font(.custom("Futura", size: 30))
                             .foregroundColor(.appTextAlt)
@@ -43,11 +43,12 @@ struct WelcomeView: View {
                         //MascotView(size: 350)
                         GifWebView(gifName: ThingyState.idle.mode)
                             .frame(width: 400, height: 240)
-                                                
+                        
                         Spacer()
                         
                         NavigationLink {
-                            NameInputView(teacherName: .constant("")) {}
+                            //                            NameInputView(teacherName: .constant("")) {}
+                            NameInputView()
                         } label: {
                             Text("Let's get started!")
                                 .font(.system(size: 17, weight: .semibold))
