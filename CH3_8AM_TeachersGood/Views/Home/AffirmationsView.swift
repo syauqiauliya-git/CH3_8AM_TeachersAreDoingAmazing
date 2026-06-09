@@ -20,7 +20,9 @@ struct AffirmationsView: View {
     @State private var showThingyTip: Bool = false
     @State private var tipTask: Task<Void, Never>? = nil
     @State private var tipIndex: Int = 0
-
+    
+    @State private var showHeartAnimation: Bool = false
+    
     private let tips = [
         "Double tap to like!",
         "Connect your action button to Thingy through settings!",
@@ -29,73 +31,101 @@ struct AffirmationsView: View {
     ]
     
     var body: some View {
-        VStack {
-            
-            HStack(alignment: .center) {
-                
-                Button(action: {
-                    tipTask?.cancel()
+        ZStack {
+            // Main Content
+            VStack {
+                HStack(alignment: .center) {
+                    Button(action: {
+                        tipTask?.cancel()
+                        
+                        if showThingyTip {
+                            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
+                        } else {
+                            tipIndex = (tipIndex + 1) % tips.count
+                            withAnimation(.easeIn(duration: 0.15)) { showThingyTip = true }
+                            tipTask = Task {
+                                try? await Task.sleep(for: .seconds(2))
+                                guard !Task.isCancelled else { return }
+                                withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
+                            }
+                        }
+                    }) {
+                        GifWebView(gifName: ThingyState.idle.mode)
+                            .frame(width: 80, height: 80)
+                            .allowsHitTesting(false)
+                    }
+                    .frame(width: 80, height: 80)
+                    .contentShape(Rectangle())
+                    .padding(.trailing, 5)
+                    .padding(.leading, 5)
+                    .accessibilityLabel(Text("Mascot"))
+                    .accessibilityHint(Text("Tap to show a tip"))
+                    
+                    Spacer()
                     
                     if showThingyTip {
-                        withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
-                    } else {
-                        tipIndex = (tipIndex + 1) % tips.count
-                        withAnimation(.easeIn(duration: 0.15)) { showThingyTip = true }
-                        tipTask = Task {
-                            try? await Task.sleep(for: .seconds(2))
-                            guard !Task.isCancelled else { return }
-                            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
-                        }
+                        SpeechBubbleView(text: tips[tipIndex], tail: .left, isThingyTip: true)
+                            .transition(.opacity)
                     }
-                }) {
-                    GifWebView(gifName: ThingyState.idle.mode)
-                        .frame(width: 80, height: 80)
-                        .allowsHitTesting(false)
+                    
+                    NavigationLink {
+                        ProfileView()
+                    } label: {
+                        Image(systemName: "person")
+                            .font(.system(size: 20))
+                            .foregroundStyle(Color.appGradientPurpleStart)
+                    }
+                    .frame(width: 50, height: 50)
+                    .buttonBorderShape(.circle)
+                    .buttonStyle(.glass)
+                    .controlSize(ControlSize.large)
+                    .padding(.leading, 15)
+                    .accessibilityLabel(Text("User Profile"))
                 }
-                .frame(width: 80, height: 80)
-                .contentShape(Rectangle())
-                .padding(.trailing, 5)
-                .padding(.leading, 5)
-                .accessibilityLabel(Text("Mascot"))
-                .accessibilityHint(Text("Tap to show a tip"))
+                .padding(.top, 35)
                 
                 Spacer()
                 
-                if showThingyTip {
-                    SpeechBubbleView(text: tips[tipIndex], tail: .left, isThingyTip: true)
-                        .transition(.opacity)
+                VStack(spacing: 20) {
+                    if let affirmation = selectedAffirmation {
+                        Text(render(affirmation))
+                            .font(.custom("Canela-Regular", size: 34))
+                    }
                 }
                 
-                NavigationLink {
-                    ProfileView()
-                } label: {
-                    Image(systemName: "person")
-                        .font(.system(size: 20))
-                        .foregroundStyle(Color.appGradientPurpleStart)
-                }
-                .frame(width: 50, height: 50)
-                .buttonBorderShape(.circle)
-                .buttonStyle(.glass)
-                .controlSize(ControlSize.large)
-                .padding(.leading, 15)
-                
-                .accessibilityLabel(Text("User Profile"))
+                Spacer()
             }
-            .padding(.top, 35)
-            
-            
-            Spacer()
-            
-            VStack(spacing: 20) {
-                if let affirmation = selectedAffirmation {
-                    Text(render(affirmation))
-                        .font(.custom("Canela-Regular", size: 34))
+            .padding(25)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .contentShape(Rectangle()) // Ensures the empty space registers the double tap
+            .onTapGesture(count: 2) {
+                // Triggers the heart animation in, then schedules it to animate out
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.6, blendDuration: 0)) {
+                    showHeartAnimation = true
+                }
+                
+                Task {
+                    try? await Task.sleep(for: .milliseconds(800))
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        showHeartAnimation = false
+                    }
                 }
             }
             
-            Spacer()
+            // NEW: The transient heart overlay
+            if showHeartAnimation {
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 150))
+                    .foregroundStyle(Color.appGradientPurpleStart) // Adjust color as needed
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                    .transition(.asymmetric(
+                        insertion: .scale(scale: 0.5).combined(with: .opacity),
+                        removal: .scale(scale: 1.2).combined(with: .opacity)
+                    ))
+                // Ignore touches so it doesn't interrupt ongoing interactions while fading
+                    .allowsHitTesting(false)
+            }
         }
-        .padding(25)
         .background(Color.appBackground)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)

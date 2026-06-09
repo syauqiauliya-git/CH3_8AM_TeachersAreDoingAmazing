@@ -13,7 +13,7 @@ struct ReasonInputView: View {
         
     @State private var finishOnboarding = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
-    @State private var currentState: RecordingState = .ready
+    @State private var currentState: RecordingState = .readyOnboarding
     @State private var showConfirmation = false
     
     
