@@ -79,6 +79,8 @@ struct IntervalInputView: View {
                     .onTapGesture {
                         selectedInterval = interval
                     }
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityLabel(Text("\(interval.rawValue)"))
                     .opacity(selectedInterval == interval ? 1  : 0.6 )
                 }
             }

@@ -80,6 +80,8 @@ struct GradeInputView: View {
                     .onTapGesture {
                         selectedGrade = grade
                     }
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityLabel(Text("\(grade.rawValue)"))
                     .opacity(selectedGrade == grade ? 1  : 0.6 )
                 }
             }

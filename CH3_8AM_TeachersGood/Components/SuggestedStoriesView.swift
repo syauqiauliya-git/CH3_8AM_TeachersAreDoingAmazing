@@ -96,11 +96,11 @@ struct StoryCardView: View {
         .padding(4)
         .background(Color.appSpeechBubble)
         .clipShape(RoundedRectangle(cornerRadius: 20))
-        
         .onTapGesture {
             showArticleSheet = true
         }
-        
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(Text(title))
         .sheet(isPresented: $showArticleSheet) {
             ArticleSheetView()
         }
