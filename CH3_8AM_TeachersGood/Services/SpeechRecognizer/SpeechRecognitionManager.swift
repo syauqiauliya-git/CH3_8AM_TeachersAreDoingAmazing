@@ -20,6 +20,11 @@ public class SpeechRecognitionManager {
         return combined
     }
     
+    // NEW: Add this property to extract plain text for the AI inference
+    public var recognizedText: String {
+        return String(transcript.characters)
+    }
+    
     private var finalizedTranscript: AttributedString = ""
     private var volatileTranscript: AttributedString = ""
     
