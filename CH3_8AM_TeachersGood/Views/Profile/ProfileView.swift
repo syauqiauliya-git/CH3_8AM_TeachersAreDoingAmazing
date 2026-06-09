@@ -79,7 +79,8 @@ struct ProfileView: View {
                         .font(.custom("Futura", size: 18))
                     ) {
                         NavigationLink {
-                            // add later
+                            PrivacyPolicyView()
+                            
                         } label: {
                             HStack {
                                 Text("Privacy & Policy")
