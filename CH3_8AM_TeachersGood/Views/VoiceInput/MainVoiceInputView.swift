@@ -12,7 +12,7 @@ import SwiftData
 struct MainVoiceInputView: View {
     @Query var teachers: [Teacher]
     @Query var affirmations: [Affirmation]
-    @Query var stories: [Story] // Underlying database records
+    @Query var stories: [Story]
         
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
@@ -24,8 +24,10 @@ struct MainVoiceInputView: View {
     @State private var dynamicBubbleText: String? = nil
     @State private var suggestedStories: [Story] = []
     
-    // NEW: Handles full context sheet launching straight from this voice orchestrator view
     @State private var sheetSelectedStory: Story?
+    
+    // NEW: Captures manually entered transcripts to override audio results
+    @State private var manuallyTypedText: String = ""
         
     var body: some View {
         VStack {
@@ -49,9 +51,9 @@ struct MainVoiceInputView: View {
             Spacer()
             
             if currentState == .ready || currentState == .recording || currentState == .finished {
-                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
+                // Pass the binding into the child component
+                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding, typedText: $manuallyTypedText)
             } else if currentState == .next {
-                // Pass binding connection so row actions filter straight into this base view hierarchy
                 SuggestedStoriesView(stories: suggestedStories, externalSelectedStory: $sheetSelectedStory)
             }
             
@@ -66,7 +68,6 @@ struct MainVoiceInputView: View {
                 ConfirmationOverlayView(isPresented: $showConfirmation, onConfirm: {})
             }
         }
-        // Sheet handles instant lookups directly over your tracking bindings
         .sheet(item: $sheetSelectedStory) { story in
             ArticleSheetView(story: story)
         }
@@ -85,7 +86,12 @@ struct MainVoiceInputView: View {
                     await speechManager.stopTranscribing()
                     dynamicBubbleText = "Give me a second to process that..."
 
-                    let userTranscript = speechManager.recognizedText
+                    // INFERENCE SWITCH: Evaluate typed text first, utilizing the voice manager as a secondary fallback
+                    let userTranscript = manuallyTypedText.isEmpty ? speechManager.recognizedText : manuallyTypedText
+                    
+                    // Clear the buffer immediately to prevent bleeding into subsequent sessions
+                    manuallyTypedText = ""
+                    
                     let teacherName = teachers.first?.name ?? "Teacher"
                     let currentAffirmation = affirmations.randomElement()?.tokens
                         .sorted(by: { $0.order < $1.order })
@@ -96,8 +102,6 @@ struct MainVoiceInputView: View {
                         let labels = try await InferenceService.shared.extractLabels(from: userTranscript)
                         var matched = InferenceService.shared.findMatchingStories(from: stories, labels: labels)
                         
-                        // MANDATORY GUARD: If no direct matches are discovered, populate
-                        // using basic baseline elements from the database as a safe fallback
                         if matched.isEmpty {
                             matched = Array(stories.shuffled().prefix(2))
                         }
@@ -118,7 +122,6 @@ struct MainVoiceInputView: View {
                         }
                     } catch {
                         await MainActor.run {
-                            // Ensure fallback stories are loaded even on network/inference error bounds
                             if suggestedStories.isEmpty {
                                 suggestedStories = Array(stories.prefix(2))
                             }
@@ -131,6 +134,53 @@ struct MainVoiceInputView: View {
                     dynamicBubbleText = nil
                 }
             }
+            
+            if dynamicBubbleText == nil {
+                UIAccessibility.post(notification: .announcement, argument: currentState.bubbleText)
+            }
         }
     }
+}
+
+#Preview("Main Voice Input") {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    
+    // 1. Register all the models your view and its child views rely on
+    let container = try! ModelContainer(
+        for: Teacher.self, Affirmation.self, AffirmationToken.self, Story.self,
+        configurations: config
+    )
+    
+    let context = container.mainContext
+    
+    // 2. Insert a mock Teacher so the inference engine has a name to use
+    // (Adjust the properties if your Teacher model requires different initialization)
+    context.insert(Teacher(
+        name: "Coki",
+        affirmationInterval: "onetime"
+    ))
+    
+    // 3. Insert a mock Story so the SuggestedStoriesView has fallback data
+    context.insert(Story(
+        title: "A Rare Dedication to Education",
+        mdFileName: "rare-dedication",
+        image: "placeholder-article-pic",
+        summary: "The inspiring story of a veteran teacher.",
+        isBookmarked: false,
+        isFeatured: true,
+        storyDate: Date()
+    ))
+    
+    // 4. Insert a mock Affirmation so the response generator doesn't fail
+    context.insert(
+        Affirmation(tokens: [
+            AffirmationToken(text: "You", style: .normal, order: 0),
+            AffirmationToken(text: "are", style: .normal, order: 1),
+            AffirmationToken(text: "doing", style: .purple, order: 2),
+            AffirmationToken(text: "great.", style: .orange, order: 3)
+        ])
+    )
+    
+    return MainVoiceInputView()
+        .modelContainer(container)
 }
