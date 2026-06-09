@@ -164,15 +164,14 @@ struct AffirmationsView: View {
                 .accessibilityLabel(Text("Talk to thingy"))
             }
         }
-        .onAppear {
+        .task {
             seedIfNeeded(context: modelContext)
             
-            // Defer the selection and broadcasting to prevent SwiftData memory collisions
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                if let randomAffirmation = affirmations.randomElement() {
-                    selectedAffirmation = randomAffirmation
-                    broadcastToWidget(affirmation: randomAffirmation)
-                }
+//           Defer the selection and broadcasting to prevent SwiftData memory collisions
+            try? await Task.sleep(for: .milliseconds(100))
+            refreshIfNeeded()
+            if let affirmation = selectedAffirmation {
+                broadcastToWidget(affirmation: affirmation)
             }
         }
     }
@@ -210,6 +209,59 @@ struct AffirmationsView: View {
         } catch {
             print("Seeding error:", error)
         }
+    }
+    
+    func refreshIfNeeded() {
+        let interval = IntervalTime(rawValue: teacher?.affirmationInterval ?? "") ?? .onetime
+        
+        let lastShownAt = UserDefaults.standard.object(forKey: "lastShownAt") as? Date ?? Date.distantPast
+        let currentSavedID = UserDefaults.standard.string(forKey: "currentAffirmationID") ?? ""
+        
+        let shouldChange = shouldRefresh(for: interval, last: lastShownAt)
+        
+        if shouldChange || currentSavedID.isEmpty {
+            let next = affirmations.filter { $0.id.uuidString != currentSavedID }.randomElement() ?? affirmations.randomElement()
+            
+            if let next {
+                let nextID = next.id.uuidString
+                
+                UserDefaults.standard.set(Date(), forKey: "lastShownAt")
+                UserDefaults.standard.set(nextID, forKey: "currentAffirmationID")
+                
+                if let teacher {
+                    teacher.lastShownAt = Date()
+                    teacher.currentAffirmationID = nextID
+                }
+                
+                selectedAffirmation = next
+            }
+        } else {
+            selectedAffirmation = affirmations.first { $0.id.uuidString == currentSavedID } ?? affirmations.randomElement()
+        }
+    }
+    
+    func times(for interval: IntervalTime) -> [(hour: Int, minute: Int)] {
+        switch interval {
+        case .onetime:    return [(7, 30)]
+        case .twotimes:   return [(7, 30), (16, 0)]
+        case .threetimes: return [(7, 30), (12, 0), (18, 0)]
+        case .fourtimes:  return [(7, 30), (10, 0), (13, 0), (16, 0)]
+        }
+    }
+    
+    func shouldRefresh(for interval: IntervalTime, last: Date) -> Bool {
+        let now = Date()
+        let calendar = Calendar.current
+        
+        let todaySlots = times(for: interval).map { slot in
+            calendar.date(bySettingHour: slot.hour, minute: slot.minute, second: 0, of: now) ?? now
+        }
+        
+        guard let mostRecentSlot = todaySlots.filter({ $0 <= now }).max() else {
+            return false
+        }
+        
+        return last < mostRecentSlot
     }
     
     private func broadcastToWidget(affirmation: Affirmation) {

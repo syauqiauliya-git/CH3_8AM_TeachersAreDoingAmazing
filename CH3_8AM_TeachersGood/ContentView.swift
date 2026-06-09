@@ -6,13 +6,29 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    
+    @Query var teachers: [Teacher]
     
     var body: some View {
-        WelcomeView()
+        Group {
+            if hasCompletedOnboarding {
+                NavigationStack {
+                    AffirmationsView()
+                }
+            } else {
+                WelcomeView()
+            }
+        }
+        .onAppear {
+            if !teachers.isEmpty {
+                hasCompletedOnboarding = true
+            }
+        }
     }
-   
 }
 
 #Preview {

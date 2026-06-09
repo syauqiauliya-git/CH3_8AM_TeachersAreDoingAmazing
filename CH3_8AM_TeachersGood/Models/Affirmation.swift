@@ -25,7 +25,8 @@ class Affirmation {
 //        Affirmation(text: "You're doing so good")
 //    ]
     
-    init(tokens: [AffirmationToken] = [], labels: [String] = [], lastShown: Date? =  nil) {
+    init(id: UUID = UUID(), tokens: [AffirmationToken] = [], labels: [String] = [], lastShown: Date? =  nil) {
+        self.id = id
         self.tokens = tokens
         self.labels = labels
         self.lastShown = lastShown
