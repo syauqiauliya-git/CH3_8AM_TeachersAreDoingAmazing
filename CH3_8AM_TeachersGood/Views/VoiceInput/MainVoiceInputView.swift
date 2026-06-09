@@ -32,19 +32,9 @@ struct MainVoiceInputView: View {
             Spacer()
             
             GifWebView(gifName: currentState.thingyMode )
-                .frame(width: 400, height: 240)
-            
+                .frame(width: 250, height: 250)
+
             Spacer()
-            
-//            if currentState == .recording || currentState == .finished {
-//                ScrollView {
-//                    Text(speechManager.transcript)
-//                        .font(.body)
-//                        .multilineTextAlignment(.center)
-//                        .padding(.horizontal)
-//                }
-//                .frame(maxHeight: 100)
-//            }
             
             if currentState == .ready || currentState == .recording || currentState == .finished {
                 RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
@@ -72,12 +62,17 @@ struct MainVoiceInputView: View {
                     await speechManager.startTranscribing()
                 case .finished:
                     await speechManager.stopTranscribing()
+                case .finishedOnboarding:
+                    await speechManager.stopTranscribing()
                 case .ready:
+                    await speechManager.stopTranscribing()
+                case .readyOnboarding:
                     await speechManager.stopTranscribing()
                 case .next:
                     await speechManager.stopTranscribing()
                 }
             }
+            UIAccessibility.post(notification: .announcement, argument: currentState.bubbleText)
         }
     }
 }

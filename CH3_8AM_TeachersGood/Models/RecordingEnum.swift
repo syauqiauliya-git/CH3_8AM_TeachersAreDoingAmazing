@@ -8,19 +8,28 @@
 import Foundation
 
 enum RecordingState {
+    case readyOnboarding
     case ready
+    
     case recording
+    
+    case finishedOnboarding
     case finished
+    
     case next
 
     var bubbleText: String {
         switch self {
+        case .readyOnboarding:
+            return "Could you tell me why you became a teacher?"
         case .ready:
             return "Hey, have something\nto share?"
         case .recording:
             return "Go on! I’m all ears."
+        case .finishedOnboarding:
+            return "I'm always here to listen. Thank you for sharing!"
         case .finished:
-            return "Feeling any better? Or\ndo you want to try that\nagain?"
+            return "Do you want to try that again?"
         case .next:
             return "Thank you for telling\nme about your day!"
         }
@@ -28,8 +37,6 @@ enum RecordingState {
     
     var thingyMode: String {
         switch self{
-        case .ready:
-            return ThingyState.idle.mode
         case .recording:
             return ThingyState.listen.mode
         default:

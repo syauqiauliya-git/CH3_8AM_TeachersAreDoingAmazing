@@ -14,7 +14,6 @@ struct WelcomeView: View {
         NavigationStack {
             ZStack {
                 Color.appBackground.ignoresSafeArea()
-                
                 // Stage 0 logo
                 if stage == 0 {
                     VStack {
@@ -42,8 +41,8 @@ struct WelcomeView: View {
                         
                         //MascotView(size: 350)
                         GifWebView(gifName: ThingyState.idle.mode)
-                            .frame(width: 400, height: 240)
-                        
+                            .frame(width: 250, height: 250)
+                                                
                         Spacer()
                         
                         NavigationLink {
@@ -52,10 +51,10 @@ struct WelcomeView: View {
                         } label: {
                             Text("Let's get started!")
                                 .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(.appTextPrimary)
+                                .foregroundColor(.appBackground)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 20)
-                                .background(Color.appPrimaryLight)
+                                .background(Color.startSendRecord)
                                 .cornerRadius(20)
                         }
                         .padding(.horizontal, 35)
@@ -68,15 +67,18 @@ struct WelcomeView: View {
                 }
             }
             .onAppear { startSequence() }
+            .background(Color.appBackground.ignoresSafeArea())
+
         }
     }
+    
     
     var bubbleText: String {
         switch stage {
         case 1: return "\nHey!\n"
-        case 2: return "I'm Thingy. My mission is to help you lift up your mood!"
+        case 2: return "I'm Thingy. I'm going to help you lift up your mood!!"
         case 3: return "In order to help you, I want to ask you some questions"
-        case 4: return "You can be honest and sincere, I’ll keep it between us."
+        case 4: return "Be honest and sincere. I’ll keep it between us."
         default: return "Please answer based on your current conditions, okay?"
         }
     }

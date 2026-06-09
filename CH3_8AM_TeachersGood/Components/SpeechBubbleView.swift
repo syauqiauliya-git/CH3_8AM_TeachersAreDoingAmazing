@@ -14,16 +14,18 @@ enum BubbleTail {
 struct SpeechBubbleView: View {
     let text: String
     var tail: BubbleTail = .bottomLeft
+    var isThingyTip: Bool = false
     
     var body: some View {
         Text(text)
             .dynamicTypeSize(...DynamicTypeSize.accessibility1)
-            .font(.custom("Futura", size: 18))
+            .font(.custom("Futura", size: isThingyTip ? 13 : 18))
             .foregroundColor(.appTextAlt)
+            .opacity(0.75)
             .multilineTextAlignment(.leading)
-            .frame(maxWidth: 200, alignment: .leading)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
+            .frame(maxWidth: isThingyTip ? 150 : 200, alignment: .leading)
+            .padding(.horizontal, isThingyTip ? 10 : 20)
+            .padding(.vertical, isThingyTip ? 10 : 20)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.appSpeechBubble)
@@ -35,6 +37,7 @@ struct SpeechBubbleView: View {
                     .rotationEffect(tailRotation)
                     .offset(tailOffset)
             }
+            .accessibilityLabel(Text("Thingy says, \(text)"))
     }
     
     private var tailAlignment: Alignment {
@@ -83,5 +86,9 @@ struct TriangleTip: Shape {
 }
 
 #Preview {
-    SpeechBubbleView(text: "Hey how's it going guys!", tail: .right)
+    SpeechBubbleView(text: "Hey how's it going guys!", tail: .left, isThingyTip: false)
+}
+
+#Preview {
+    SpeechBubbleView(text: "Hey how's it going guys!", tail: .left, isThingyTip: true)
 }

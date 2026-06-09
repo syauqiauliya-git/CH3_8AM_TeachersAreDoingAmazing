@@ -35,13 +35,15 @@ struct IntervalInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 40)
             
+            Spacer()
+            
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
                 //MascotView(size: 120)
                 GifWebView(gifName: ThingyState.lookright.mode)
-                    .frame(width: 160, height: 80)
+                    .frame(width: 100, height: 100)
                 SpeechBubbleView(
                     text: "How often do you want to receive affirmations?",
                     tail: .left
@@ -77,6 +79,8 @@ struct IntervalInputView: View {
                     .onTapGesture {
                         selectedInterval = interval
                     }
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityLabel(Text("\(interval.rawValue)"))
                     .opacity(selectedInterval == interval ? 1  : 0.6 )
                 }
             }
@@ -109,10 +113,10 @@ struct IntervalInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedInterval == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(selectedInterval == nil ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
@@ -124,7 +128,7 @@ struct IntervalInputView: View {
             }
             
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
             if let saved = teacher?.affirmationInterval {
                 selectedInterval = IntervalTime(rawValue: saved)

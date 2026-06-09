@@ -36,6 +36,8 @@ struct SuggestedStoriesView: View {
                     )
                     .font(.title2)
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isHeader)
             
             HStack(spacing: 8) {
                 StoryCardView(title: "Inspirational\nteachers", imageName: "teacher_image")
@@ -47,10 +49,10 @@ struct SuggestedStoriesView: View {
             }) {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
-                    .background(Color.appPrimaryLight)
+                    .background(Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 24)
@@ -65,15 +67,18 @@ struct StoryCardView: View {
     let title: String
     let imageName: String
     
+    @State private var showArticleSheet: Bool = false
+    
     var body: some View {
         HStack(spacing: 6) {
             
-            if let uiImage = UIImage(named: imageName) {
+            if let uiImage = UIImage(named: "placeholder-article-pic") {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 75, height: 75)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .accessibilityHidden(true)
             } else {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.gray.opacity(0.3))
@@ -82,6 +87,7 @@ struct StoryCardView: View {
                         Image(systemName: "photo")
                             .foregroundColor(.gray)
                     )
+                    .accessibilityHidden(true)
             }
             
             Text(title)
@@ -94,6 +100,14 @@ struct StoryCardView: View {
         .padding(4)
         .background(Color.appSpeechBubble)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .onTapGesture {
+            showArticleSheet = true
+        }
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(Text(title))
+        .sheet(isPresented: $showArticleSheet) {
+            ArticleSheetView()
+        }
     }
 }
 

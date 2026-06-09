@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PrepareVoiceView: View {
-    
-    
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         
         VStack {
@@ -23,8 +23,8 @@ struct PrepareVoiceView: View {
             .padding(.bottom, 40)
             //MascotView(size: 350)
             GifWebView(gifName: "ThingyIdle")
-                .frame(width: 400, height: 240)
-            
+                .frame(width: 250, height: 250)
+
             Spacer()
             
             NavigationLink {
@@ -32,10 +32,10 @@ struct PrepareVoiceView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(Color.appPrimaryLight)
+                    .background(Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
@@ -44,8 +44,10 @@ struct PrepareVoiceView: View {
             
             
         }
-        .background(Color.appBackground)
-        
+        .background(Color.appBackground.ignoresSafeArea())
+        .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
+
+
     }
     
 }

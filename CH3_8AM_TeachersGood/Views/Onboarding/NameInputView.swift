@@ -40,7 +40,7 @@ struct NameInputView: View {
             Spacer()
 
             GifWebView(gifName: "ThingyIdle")
-                .frame(width: 400, height: 240)
+                .frame(width: 250, height: 250)
             // MascotView(size: 350)
 
             Spacer()
@@ -50,13 +50,13 @@ struct NameInputView: View {
 
             TextField("", text: $teacherName, prompt:
                         Text("Insert your name")
-                .foregroundColor(.appTextBnW)
+                .foregroundColor(.appTextAlt)
             )
             .font(.custom("Nunito-Medium", size: 16))
             .opacity(0.6)
             .padding(.horizontal, 16)
             .padding(.vertical, 15)
-            .background(Color.appGradeNotSelected)
+            .background(Color.appSpeechBubble)
             .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
@@ -73,10 +73,10 @@ struct NameInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(teacherName == "" ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(teacherName == "" ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
@@ -89,8 +89,10 @@ struct NameInputView: View {
                     modelContext.insert(Teacher(name: teacherName))
                 }
             })
+            .disabled(teacherName == "")
+
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
             teacherName = teacher?.name ?? ""
         }

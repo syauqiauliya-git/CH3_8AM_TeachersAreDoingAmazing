@@ -39,7 +39,8 @@ struct GradeInputView: View {
             HStack(alignment: .center, spacing: 12) {
                 //  MascotView(size: 130)
                 GifWebView(gifName: ThingyState.lookright.mode)
-                    .frame(width: 160, height: 80)
+                    .frame(width: 100, height: 100)
+                    .padding(.trailing, 10)
                 SpeechBubbleView(
                     text: "What grade do you usually teach?",
                     tail: .left
@@ -71,7 +72,7 @@ struct GradeInputView: View {
                     .cornerRadius(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 18)
-                            .stroke(Color(hex: "#4723B5").opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
+                            .stroke(Color.appGradeBorder.opacity(selectedGrade == grade ? 1 : 0.2), lineWidth: selectedGrade == grade ? 2 : 1)
                     )
                     .padding(.horizontal, 24)
                     .scaleEffect(x: selectedGrade == grade ? 1.1 : 1.0, y: selectedGrade == grade ? 1.2 : 1.0)
@@ -79,6 +80,8 @@ struct GradeInputView: View {
                     .onTapGesture {
                         selectedGrade = grade
                     }
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityLabel(Text("\(grade.rawValue)"))
                     .opacity(selectedGrade == grade ? 1  : 0.6 )
                 }
             }
@@ -94,10 +97,10 @@ struct GradeInputView: View {
             } label: {
                 Text("Continue")
                     .font(.custom("Futura", size: 20))
-                    .foregroundColor(.appTextPrimary)
+                    .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(selectedGrade == nil ? Color.appPrimaryLight.opacity(0.6) : Color.appPrimaryLight)
+                    .background(selectedGrade == nil ? Color.startSendRecord.opacity(0.6) : Color.startSendRecord)
             }
             .cornerRadius(20)
             .padding(.horizontal, 35)
@@ -113,8 +116,8 @@ struct GradeInputView: View {
                 selectedGrade = GradeLevel(rawValue: teacher?.grade ?? "")
             }
         }
-        .background(Color.appBackground)
-        
+        .background(Color.appBackground.ignoresSafeArea())
+
     }
 }
 

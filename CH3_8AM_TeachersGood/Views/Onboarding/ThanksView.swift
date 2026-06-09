@@ -28,8 +28,8 @@ struct ThanksView: View {
                 
                 //   MascotView(size: 300, currentMode: stage >= 1 ? .normal : .blink)
                 GifWebView(gifName: ThingyState.smile.mode)
-                    .frame(width: 400, height: 240)
-                 
+                    .frame(width: 250, height: 250)
+
                 
                 Spacer()
 
@@ -38,10 +38,10 @@ struct ThanksView: View {
                 } label: {
                     Text("Continue")
                         .font(.custom("Futura", size: 20))
-                        .foregroundColor(.appTextPrimary)
+                        .foregroundColor(.appBackground)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 15)
-                        .background(Color.appPrimaryLight)
+                        .background(Color.startSendRecord)
                         .opacity(stage == 1 ? 1.0 : 0.0)
                 }
                 .cornerRadius(20)
@@ -54,7 +54,7 @@ struct ThanksView: View {
                         
             
         }
-        .background(Color.appBackground)
+        .background(Color.appBackground.ignoresSafeArea())
         .onAppear { startSequence() }
         
         
