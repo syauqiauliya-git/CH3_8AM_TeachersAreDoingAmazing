@@ -41,7 +41,7 @@
 		003CD67C2FD124A400A029FF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		003CD67E2FD124A400A029FF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		003CD7432FD164BF00A029FF /* SolaceWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SolaceWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		0044B05C2FC3F56200385DFC /* CH3_8AM_TeachersGood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CH3_8AM_TeachersGood.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0044B05C2FC3F56200385DFC /* Solaced.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solaced.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00FCD4732FD8075700356EFE /* SolaceWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolaceWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,28 +57,27 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				"CreativeAssets/Fonts/Canela-Regular-Trial.ttf",
-				"CreativeAssets/Fonts/Canela-Regular.ttf",
-				"CreativeAssets/Fonts/FontsFree-Net-Canela-Regular.ttf",
-				"CreativeAssets/Fonts/Nunito-Bold.ttf",
-				"CreativeAssets/Fonts/Nunito-Medium.ttf",
-				"CreativeAssets/Fonts/Nunito-SemiBold.ttf",
-				"CreativeAssets/Fonts/ShareTech-Regular.ttf",
-				"CreativeAssets/Icon/thingy-icon.icon",
-				CreativeAssets/ThingyGIF/ThingyIdle.gif,
-				CreativeAssets/ThingyGIF/ThingyListen.gif,
-				CreativeAssets/ThingyGIF/ThingyLookRight.gif,
-				CreativeAssets/ThingyGIF/ThingySmile.gif,
+				"SharedData/Fonts/Canela-Regular-Trial.ttf",
+				"SharedData/Fonts/Canela-Regular.ttf",
+				"SharedData/Fonts/FontsFree-Net-Canela-Regular.ttf",
+				"SharedData/Fonts/Nunito-Bold.ttf",
+				"SharedData/Fonts/Nunito-Medium.ttf",
+				"SharedData/Fonts/Nunito-SemiBold.ttf",
+				"SharedData/Fonts/ShareTech-Regular.ttf",
+				"SharedData/Icon/thingy-icon.icon",
+				SharedData/ThingyGIF/ThingyIdle.gif,
+				SharedData/ThingyGIF/ThingyListen.gif,
+				SharedData/ThingyGIF/ThingyLookRight.gif,
+				SharedData/ThingyGIF/ThingySmile.gif,
 			);
 			target = 003CD7422FD164BF00A029FF /* SolaceWidgetExtension */;
 		};
-		00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "CH3_8AM_TeachersGood" target */ = {
+		00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "Solaced" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"CH3-8AM-TeachersGood-Info.plist",
-				CreativeAssets/Fonts/ThingySmile.gif,
 			);
-			target = 0044B05B2FC3F56200385DFC /* CH3_8AM_TeachersGood */;
+			target = 0044B05B2FC3F56200385DFC /* Solaced */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -94,7 +93,7 @@
 		0044B05E2FC3F56200385DFC /* CH3_8AM_TeachersGood */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "CH3_8AM_TeachersGood" target */,
+				00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "Solaced" target */,
 				00BE7D652FD180E500465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "SolaceWidgetExtension" target */,
 			);
 			path = CH3_8AM_TeachersGood;
@@ -152,7 +151,7 @@
 		0044B05D2FC3F56200385DFC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0044B05C2FC3F56200385DFC /* CH3_8AM_TeachersGood.app */,
+				0044B05C2FC3F56200385DFC /* Solaced.app */,
 				003CD7432FD164BF00A029FF /* SolaceWidgetExtension.appex */,
 			);
 			name = Products;
@@ -183,9 +182,9 @@
 			productReference = 003CD7432FD164BF00A029FF /* SolaceWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		0044B05B2FC3F56200385DFC /* CH3_8AM_TeachersGood */ = {
+		0044B05B2FC3F56200385DFC /* Solaced */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0044B0672FC3F56300385DFC /* Build configuration list for PBXNativeTarget "CH3_8AM_TeachersGood" */;
+			buildConfigurationList = 0044B0672FC3F56300385DFC /* Build configuration list for PBXNativeTarget "Solaced" */;
 			buildPhases = (
 				0044B0582FC3F56200385DFC /* Sources */,
 				0044B0592FC3F56200385DFC /* Frameworks */,
@@ -201,12 +200,12 @@
 				0044B05E2FC3F56200385DFC /* CH3_8AM_TeachersGood */,
 				0044B07C2FC524AE00385DFC /* TestingExperiments */,
 			);
-			name = CH3_8AM_TeachersGood;
+			name = Solaced;
 			packageProductDependencies = (
 				61D08A612FD1D3720045532F /* MarkdownUI */,
 			);
 			productName = CH3_8AM_TeachersGood;
-			productReference = 0044B05C2FC3F56200385DFC /* CH3_8AM_TeachersGood.app */;
+			productReference = 0044B05C2FC3F56200385DFC /* Solaced.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -227,7 +226,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0044B0572FC3F56200385DFC /* Build configuration list for PBXProject "CH3_8AM_TeachersGood" */;
+			buildConfigurationList = 0044B0572FC3F56200385DFC /* Build configuration list for PBXProject "Solaced" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -244,7 +243,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0044B05B2FC3F56200385DFC /* CH3_8AM_TeachersGood */,
+				0044B05B2FC3F56200385DFC /* Solaced */,
 				003CD7422FD164BF00A029FF /* SolaceWidgetExtension */,
 			);
 		};
@@ -491,6 +490,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CH3-8AM-TeachersGood-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Solaced;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to capture your voice for transcription.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need speech recognition permission to convert your spoken words into text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -528,6 +528,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CH3-8AM-TeachersGood-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Solaced;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to capture your voice for transcription.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need speech recognition permission to convert your spoken words into text.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -564,7 +565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0044B0572FC3F56200385DFC /* Build configuration list for PBXProject "CH3_8AM_TeachersGood" */ = {
+		0044B0572FC3F56200385DFC /* Build configuration list for PBXProject "Solaced" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0044B0652FC3F56300385DFC /* Debug */,
@@ -573,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0044B0672FC3F56300385DFC /* Build configuration list for PBXNativeTarget "CH3_8AM_TeachersGood" */ = {
+		0044B0672FC3F56300385DFC /* Build configuration list for PBXNativeTarget "Solaced" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0044B0682FC3F56300385DFC /* Debug */,
