@@ -11,6 +11,8 @@ internal import Combine
 
 
 struct FinishView: View {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    
     @State private var stage = 1
     @State private var navigateToHome = false
     @State private var progress: CGFloat = 0.0
@@ -35,10 +37,10 @@ struct FinishView: View {
                         ) // forces transition to re-trigger on text change
                         .transition(.opacity)
                     
-                   // MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
+                    // MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
                     GifWebView(gifName: "ThingySmile")
                         .frame(width: 250, height: 250)
-
+                    
                     // FILLER FOR LAYOUTING
                     if stage < 2 {
                         ZStack(alignment: .leading) {
@@ -92,10 +94,10 @@ struct FinishView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .navigationDestination(isPresented: $navigateToHome) {
-            AffirmationsView()
-                .navigationBarBackButtonHidden(true)
-        }
+//        .navigationDestination(isPresented: $navigateToHome) {
+//            AffirmationsView()
+//                .navigationBarBackButtonHidden(true)
+//        }
         .onAppear { startSequence() }
     }
     
@@ -106,14 +108,28 @@ struct FinishView: View {
         }
     }
     
+    //    func startSequence() {
+    //        Task {
+    //            //Later put actual async loading thing here for the app
+    //            try? await Task.sleep(for: .seconds(1.5))
+    //            withAnimation { stage = 2 }
+    //            withAnimation(.linear(duration: 1.5)) { progress = 1.0 }
+    //            try? await Task.sleep(for: .seconds(1.5))
+    //            navigateToHome = true
+    //        }
+    //    }
+    
     func startSequence() {
         Task {
-            //Later put actual async loading thing here for the app
             try? await Task.sleep(for: .seconds(1.5))
+            
             withAnimation { stage = 2 }
             withAnimation(.linear(duration: 1.5)) { progress = 1.0 }
             try? await Task.sleep(for: .seconds(1.5))
-            navigateToHome = true
+            
+            withAnimation(.easeInOut(duration: 0.5)) {
+                hasCompletedOnboarding = true
+            }
         }
     }
 }
