@@ -1,4 +1,4 @@
-//
+
 //  InferenceService.swift
 //  CH3_8AM_TeachersGood
 //
@@ -64,7 +64,7 @@ class InferenceService {
             Do NOT use therapy phrases like "I understand how you feel", "it's okay to", "you've got this", or "you are not alone".
             Do NOT give advice or suggestions.
             Just acknowledge what they went through in 1-2 sentences, then naturally close with the affirmation — don't quote it word for word, make it feel like your own thought.
-            Keep the whole response under 3 sentences.
+            Keep the whole response under 3 sentences, around 50 words. Be mindful of unnecessary spacings and white space.
             """)
 
         let result = try await session.respond(to: """
@@ -100,5 +100,12 @@ class InferenceService {
             """)
 
         return result.content
+    }
+    
+    func findMatchingStories(from stories: [Story], labels: [AffirmationLabel]) -> [Story] {
+        let labelStrings = labels.map(\.rawValue)
+        return stories.filter { story in
+            story.labels.contains(where: { labelStrings.contains($0) })
+        }
     }
 }

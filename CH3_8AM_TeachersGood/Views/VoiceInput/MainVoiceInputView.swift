@@ -12,6 +12,7 @@ import SwiftData
 struct MainVoiceInputView: View {
     @Query var teachers: [Teacher]
     @Query var affirmations: [Affirmation]
+    @Query var stories: [Story] // Underlying database records
         
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
@@ -21,24 +22,24 @@ struct MainVoiceInputView: View {
     @State private var isOnboarding: Bool = false
     
     @State private var dynamicBubbleText: String? = nil
+    @State private var suggestedStories: [Story] = []
+    
+    // NEW: Handles full context sheet launching straight from this voice orchestrator view
+    @State private var sheetSelectedStory: Story?
         
     var body: some View {
         VStack {
-            
-            // 1. Dynamic Top Spacer: Collapses from 80 to 20 during the AI response
-            // to allow the speech bubble to safely expand upwards.
             Spacer()
                 .frame(height: currentState == .next ? 20 : 80)
             
             SpeechBubbleView(
                 text: dynamicBubbleText ?? currentState.bubbleText,
-                tail: .bottomRight
+                tail: .bottomRight,
+                customMaxWidth: 250
             )
             
             Spacer()
             
-            // 2. Dynamic Mascot: Shrinks from 250x250 down to 150x150
-            // exclusively when moving into the .next state.
             GifWebView(gifName: currentState.thingyMode )
                 .frame(
                     width: currentState == .next ? 150 : 250,
@@ -50,7 +51,8 @@ struct MainVoiceInputView: View {
             if currentState == .ready || currentState == .recording || currentState == .finished {
                 RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
             } else if currentState == .next {
-                SuggestedStoriesView()
+                // Pass binding connection so row actions filter straight into this base view hierarchy
+                SuggestedStoriesView(stories: suggestedStories, externalSelectedStory: $sheetSelectedStory)
             }
             
         }
@@ -63,6 +65,10 @@ struct MainVoiceInputView: View {
             if showConfirmation {
                 ConfirmationOverlayView(isPresented: $showConfirmation, onConfirm: {})
             }
+        }
+        // Sheet handles instant lookups directly over your tracking bindings
+        .sheet(item: $sheetSelectedStory) { story in
+            ArticleSheetView(story: story)
         }
         .onChange(of: currentState) {
             Task {
@@ -77,29 +83,46 @@ struct MainVoiceInputView: View {
                     
                 case .next:
                     await speechManager.stopTranscribing()
-                    
                     dynamicBubbleText = "Give me a second to process that..."
-                    
+
                     let userTranscript = speechManager.recognizedText
-                    
                     let teacherName = teachers.first?.name ?? "Teacher"
-                    let currentAffirmation = affirmations.randomElement()?.tokens.map { $0.text }.joined(separator: " ") ?? "You are doing great."
-                    
+                    let currentAffirmation = affirmations.randomElement()?.tokens
+                        .sorted(by: { $0.order < $1.order })
+                        .map(\.text)
+                        .joined(separator: " ") ?? "You are doing great."
+
                     do {
+                        let labels = try await InferenceService.shared.extractLabels(from: userTranscript)
+                        var matched = InferenceService.shared.findMatchingStories(from: stories, labels: labels)
+                        
+                        // MANDATORY GUARD: If no direct matches are discovered, populate
+                        // using basic baseline elements from the database as a safe fallback
+                        if matched.isEmpty {
+                            matched = Array(stories.shuffled().prefix(2))
+                        }
+                        
+                        let finalSelection = Array(matched.prefix(2))
+                        
+                        await MainActor.run {
+                            suggestedStories = finalSelection
+                        }
+
                         let response = try await InferenceService.shared.generateThingyResponse(
                             transcript: userTranscript,
                             affirmation: currentAffirmation,
                             teacherName: teacherName
                         )
-                        
                         await MainActor.run {
                             dynamicBubbleText = response
-                            UIAccessibility.post(notification: .announcement, argument: response)
                         }
                     } catch {
                         await MainActor.run {
-                            dynamicBubbleText = "I heard you, but my brain is a little foggy right now. Thank you for sharing!"
-                            UIAccessibility.post(notification: .announcement, argument: dynamicBubbleText)
+                            // Ensure fallback stories are loaded even on network/inference error bounds
+                            if suggestedStories.isEmpty {
+                                suggestedStories = Array(stories.prefix(2))
+                            }
+                            dynamicBubbleText = "I heard you, but my brain is a little foggy right now. Here are some comforting stories for you!"
                         }
                     }
                     
@@ -107,10 +130,6 @@ struct MainVoiceInputView: View {
                     await speechManager.stopTranscribing()
                     dynamicBubbleText = nil
                 }
-            }
-            
-            if dynamicBubbleText == nil {
-                UIAccessibility.post(notification: .announcement, argument: currentState.bubbleText)
             }
         }
     }

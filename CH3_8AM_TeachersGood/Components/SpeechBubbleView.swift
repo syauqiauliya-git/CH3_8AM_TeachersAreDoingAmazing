@@ -16,6 +16,9 @@ struct SpeechBubbleView: View {
     var tail: BubbleTail = .bottomLeft
     var isThingyTip: Bool = false
     
+    // NEW: Optional variable to override the default width constraints
+    var customMaxWidth: CGFloat? = nil
+    
     var body: some View {
         Text(text)
             .dynamicTypeSize(...DynamicTypeSize.accessibility1)
@@ -23,7 +26,8 @@ struct SpeechBubbleView: View {
             .foregroundColor(.appTextAlt)
             .opacity(0.75)
             .multilineTextAlignment(.leading)
-            .frame(maxWidth: isThingyTip ? 150 : 200, alignment: .leading)
+            // Evaluates the custom width first; if nil, executes the default conditional sizing
+            .frame(maxWidth: customMaxWidth ?? (isThingyTip ? 150 : 200), alignment: .leading)
             .padding(.horizontal, isThingyTip ? 10 : 20)
             .padding(.vertical, isThingyTip ? 10 : 20)
             .background(
@@ -85,10 +89,14 @@ struct TriangleTip: Shape {
     }
 }
 
-#Preview {
+#Preview("Standard Width") {
     SpeechBubbleView(text: "Hey how's it going guys!", tail: .left, isThingyTip: false)
 }
 
-#Preview {
+#Preview("Tip Width") {
     SpeechBubbleView(text: "Hey how's it going guys!", tail: .left, isThingyTip: true)
+}
+
+#Preview("Custom Override Width") {
+    SpeechBubbleView(text: "This bubble ignores the default constraints entirely because a custom width was provided.", tail: .bottomLeft, customMaxWidth: 300)
 }
