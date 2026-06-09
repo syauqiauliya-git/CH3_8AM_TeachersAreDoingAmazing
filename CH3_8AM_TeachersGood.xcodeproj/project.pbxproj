@@ -42,6 +42,7 @@
 		003CD67E2FD124A400A029FF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		003CD7432FD164BF00A029FF /* SolaceWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SolaceWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0044B05C2FC3F56200385DFC /* CH3_8AM_TeachersGood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CH3_8AM_TeachersGood.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00FCD4732FD8075700356EFE /* SolaceWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolaceWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -151,6 +152,7 @@
 		0044B0532FC3F56200385DFC = {
 			isa = PBXGroup;
 			children = (
+				00FCD4732FD8075700356EFE /* SolaceWidgetExtension.entitlements */,
 				0044B05E2FC3F56200385DFC /* CH3_8AM_TeachersGood */,
 				003CD7462FD164BF00A029FF /* SolaceWidget */,
 				003CD67B2FD124A400A029FF /* Frameworks */,
@@ -308,9 +310,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SolaceWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7K9RU4HS2D;
+				DEVELOPMENT_TEAM = DQK6W7R7J7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SolaceWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SolaceWidget;
@@ -321,7 +324,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.CH3-8AM-TeachersGood.SolaceWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.CH3-8AM-TeachersGood.SolacedWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -338,9 +341,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SolaceWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7K9RU4HS2D;
+				DEVELOPMENT_TEAM = DQK6W7R7J7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SolaceWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SolaceWidget;
@@ -351,7 +355,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.CH3-8AM-TeachersGood.SolaceWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.CH3-8AM-TeachersGood.SolacedWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -492,9 +496,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "thingy-icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = CH3_8AM_TeachersGood/CH3_8AM_TeachersGood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7K9RU4HS2D;
+				DEVELOPMENT_TEAM = DQK6W7R7J7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CH3-8AM-TeachersGood-Info.plist";
@@ -528,9 +533,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "thingy-icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = CH3_8AM_TeachersGood/CH3_8AM_TeachersGood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7K9RU4HS2D;
+				DEVELOPMENT_TEAM = DQK6W7R7J7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "CH3-8AM-TeachersGood-Info.plist";

@@ -20,7 +20,6 @@ struct GradeInputView: View {
     var body: some View {
         
         VStack{
-            
             // PAGE NUMBER
             
             HStack {
@@ -33,13 +32,15 @@ struct GradeInputView: View {
             .padding(.horizontal, 24)
             .padding(.top, 40)
             
+            Spacer()
+            
             
             // MASCOT QUESTION
             
             HStack(alignment: .center, spacing: 12) {
                 //  MascotView(size: 130)
                 GifWebView(gifName: ThingyState.lookright.mode)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 80, height: 80)
                     .padding(.trailing, 10)
                 SpeechBubbleView(
                     text: "What grade do you usually teach?",

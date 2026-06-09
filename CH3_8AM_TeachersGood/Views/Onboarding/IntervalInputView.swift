@@ -43,7 +43,7 @@ struct IntervalInputView: View {
             HStack(alignment: .center, spacing: 12) {
                 //MascotView(size: 120)
                 GifWebView(gifName: ThingyState.lookright.mode)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 80, height: 80)
                 SpeechBubbleView(
                     text: "How often do you want to receive affirmations?",
                     tail: .left

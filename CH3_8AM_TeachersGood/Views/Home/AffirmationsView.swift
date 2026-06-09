@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit // Necessary for timeline invalidation
 
 struct AffirmationsView: View {
     @Environment(\.modelContext) var modelContext
@@ -22,6 +23,7 @@ struct AffirmationsView: View {
     @State private var tipIndex: Int = 0
     
     @State private var showHeartAnimation: Bool = false
+    
     
     private let tips = [
         "Double tap to like!",
@@ -164,7 +166,14 @@ struct AffirmationsView: View {
         }
         .onAppear {
             seedIfNeeded(context: modelContext)
-            selectedAffirmation = affirmations.randomElement()
+            
+            // Defer the selection and broadcasting to prevent SwiftData memory collisions
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                if let randomAffirmation = affirmations.randomElement() {
+                    selectedAffirmation = randomAffirmation
+                    broadcastToWidget(affirmation: randomAffirmation)
+                }
+            }
         }
     }
     
@@ -200,6 +209,25 @@ struct AffirmationsView: View {
             
         } catch {
             print("Seeding error:", error)
+        }
+    }
+    
+    private func broadcastToWidget(affirmation: Affirmation) {
+        guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else { return }
+        
+        // Extracting SwiftData relationships (like .tokens) must be handled carefully.
+        let plainText = affirmation.tokens
+            .sorted(by: { $0.order < $1.order })
+            .map { $0.text }
+            .joined(separator: " ")
+        
+        // Push the App Group and Widget update to a background task so it
+        // doesn't block or crash the main UI thread during navigation.
+        Task.detached {
+            if let sharedDefaults = UserDefaults(suiteName: "group.com.Solaced") {
+                sharedDefaults.set(plainText, forKey: "activeAffirmation")
+                WidgetCenter.shared.reloadTimelines(ofKind: "SolaceWidget")
+            }
         }
     }
 }
