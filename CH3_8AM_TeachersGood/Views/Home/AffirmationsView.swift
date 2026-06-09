@@ -56,6 +56,8 @@ struct AffirmationsView: View {
                 .contentShape(Rectangle())
                 .padding(.trailing, 5)
                 .padding(.leading, 5)
+                .accessibilityLabel(Text("Mascot"))
+                .accessibilityHint(Text("Tap to show a tip"))
                 
                 Spacer()
                 
@@ -77,6 +79,7 @@ struct AffirmationsView: View {
                 .controlSize(ControlSize.large)
                 .padding(.leading, 15)
                 
+                .accessibilityLabel(Text("User Profile"))
             }
             .padding(.top, 35)
             
@@ -109,6 +112,7 @@ struct AffirmationsView: View {
                         .foregroundStyle(Color.appGradientPurpleStart)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(Text("Articles"))
             }
             ToolbarItem(placement: .bottomBar) { Spacer() }
             ToolbarItem(placement: .bottomBar) {
@@ -125,6 +129,7 @@ struct AffirmationsView: View {
                         )
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(Text("Talk to thingy"))
             }
         }
         .onAppear {
