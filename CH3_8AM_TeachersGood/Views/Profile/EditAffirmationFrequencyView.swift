@@ -28,11 +28,13 @@ struct EditAffirmationFrequencyView: View {
                         Spacer()
                         if selectedInterval == interval {
                             Image(systemName: "checkmark")
-                                .foregroundStyle(Color.appGradientPurpleStart)
+                                .foregroundColor(.appPrimaryLight)
+                                .font(.body.bold())
                         }
                     }
                 }
                 .foregroundStyle(.primary)
+                .listRowBackground(Color.appBackground)
             }
         }
         .scrollContentBackground(.hidden)

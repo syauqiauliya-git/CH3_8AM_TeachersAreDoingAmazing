@@ -51,7 +51,7 @@ struct EditNameView: View {
                     .transition(.scale)
                 }
             }
-            .background(Color.white)
+            .background(Color.appBackground)
             .cornerRadius(25)
             .compositingGroup()
             .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)

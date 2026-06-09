@@ -75,7 +75,8 @@ struct AffirmationsView: View {
                     } label: {
                         Image(systemName: "person")
                             .font(.system(size: 20))
-                            .foregroundStyle(Color.appGradientPurpleStart)
+//                            .foregroundStyle(Color.appGradientPurpleStart)
+                            .foregroundStyle(Color.appGradeBorder)
                     }
                     .frame(width: 50, height: 50)
                     .buttonBorderShape(.circle)
@@ -141,7 +142,9 @@ struct AffirmationsView: View {
                 } label: {
                     Image(systemName: "book.pages")
                         .font(.system(size: 20))
-                        .foregroundStyle(Color.appGradientPurpleStart)
+//                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .foregroundStyle(Color.appGradeBorder)
+                        .frame(width: 50, height: 50)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text("Articles"))
@@ -152,7 +155,8 @@ struct AffirmationsView: View {
                     MainVoiceInputView()
                 } label: {
                     Circle()
-                        .fill(Color.appGradientPurpleStart)
+//                        .fill(Color.appGradientPurpleStart)
+                        .fill(Color.appGradeBorder)
                         .frame(width: 50, height: 50)
                         .overlay(
                             Image(systemName: "ellipsis.message.fill")

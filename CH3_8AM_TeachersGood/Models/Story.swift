@@ -17,15 +17,17 @@ class Story {
     var image: String
     var summary: String
     var isBookmarked: Bool
+    var isFeatured: Bool
     var storyDate: Date
     
-    init(labels: [String] = [], title: String = "", mdFileName: String = "", image: String = "", summary: String = "", isBookmarked: Bool = false, storyDate: Date = Date()) {
+    init(labels: [String] = [], title: String = "", mdFileName: String = "", image: String = "", summary: String = "", isBookmarked: Bool = false, isFeatured: Bool = false, storyDate: Date = Date()) {
         self.labels = labels
         self.title = title
         self.mdFileName = mdFileName
         self.image = image
         self.summary = summary
         self.isBookmarked = isBookmarked
+        self.isFeatured = isFeatured
         self.storyDate = storyDate
     }
 }
