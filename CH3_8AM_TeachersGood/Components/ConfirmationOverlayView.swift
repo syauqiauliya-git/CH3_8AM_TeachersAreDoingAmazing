@@ -33,6 +33,7 @@ struct ConfirmationOverlayView: View {
                             .foregroundColor(.white)
                     }
                     .padding(.top, 10)
+                    .accessibilityHidden(true)
                     
                     Text("Your voice entry has been sent")
                         .font(.subheadline)
@@ -45,6 +46,7 @@ struct ConfirmationOverlayView: View {
                 .background(Color.appBackground)
                 .cornerRadius(24)
                 .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+                .accessibilityElement(children: .combine)
             }
         }
         .onAppear {

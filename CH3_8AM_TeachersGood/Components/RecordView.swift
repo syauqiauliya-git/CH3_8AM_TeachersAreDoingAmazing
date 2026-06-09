@@ -65,6 +65,7 @@ extension RecordView {
                         )
                         .clipShape(Circle())
                 }
+                .accessibilityLabel(Text("Send text message to thingy"))
             }
             .padding(.horizontal, 20)
             
@@ -120,6 +121,7 @@ extension RecordView {
                     colors: .startSendRecord
                 )
             }
+            .accessibilityLabel(Text("Start talking to thingy"))
             
             Button(action: {
                 withAnimation {
@@ -133,6 +135,7 @@ extension RecordView {
                     .foregroundStyle(Color.appTextAlt)
             }
             .opacity(0.5)
+            .accessibilityLabel(Text("Type a message instead"))
         }
     }
     
@@ -162,7 +165,7 @@ extension RecordView {
                     offset: CGSize(width: -2, height: 2)
                 )
             }
-            
+            .accessibilityLabel(Text("Send to thingy"))
             reRecordButton
         }
     }
@@ -178,7 +181,7 @@ extension RecordView {
                     offset: CGSize(width: -2, height: 2)
                 )
             }
-            
+            .accessibilityLabel(Text("Confirm and send to thingy"))
             reRecordButton
         }
     }
@@ -192,6 +195,7 @@ extension RecordView {
                 .underline()
                 .foregroundColor(.appTextAlt)
         }
+        .accessibilityLabel(Text("Discard and re-record"))
     }
 }
 

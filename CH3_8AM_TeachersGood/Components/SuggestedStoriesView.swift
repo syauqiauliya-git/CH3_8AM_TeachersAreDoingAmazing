@@ -36,6 +36,8 @@ struct SuggestedStoriesView: View {
                     )
                     .font(.title2)
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isHeader)
             
             HStack(spacing: 8) {
                 StoryCardView(title: "Inspirational\nteachers", imageName: "teacher_image")
@@ -76,6 +78,7 @@ struct StoryCardView: View {
                     .scaledToFill()
                     .frame(width: 75, height: 75)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .accessibilityHidden(true)
             } else {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.gray.opacity(0.3))
@@ -84,6 +87,7 @@ struct StoryCardView: View {
                         Image(systemName: "photo")
                             .foregroundColor(.gray)
                     )
+                    .accessibilityHidden(true)
             }
             
             Text(title)
