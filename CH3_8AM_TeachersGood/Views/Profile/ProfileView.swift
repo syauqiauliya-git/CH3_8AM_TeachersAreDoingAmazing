@@ -102,5 +102,4 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
-        .preferredColorScheme(ColorScheme.dark)
 }

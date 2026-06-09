@@ -40,6 +40,7 @@ struct EditGradeView: View {
                     }
                 }
                 .foregroundStyle(.primary)
+                .listRowBackground(Color.appBackground)
             }
         }
         .scrollContentBackground(.hidden)
