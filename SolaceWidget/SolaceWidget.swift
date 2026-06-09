@@ -14,26 +14,31 @@ struct AffirmationEntry: TimelineEntry {
     let affirmation: String
 }
 
-struct AffirmationProvider: TimelineProvider{
+struct AffirmationProvider: TimelineProvider {
+    
+    // Helper function to extract the shared text, keeping provider methods clean
+    private func fetchSharedAffirmation() -> String {
+        let sharedDefaults = UserDefaults(suiteName: "group.com.Solaced")
+        return sharedDefaults?.string(forKey: "activeAffirmation") ?? "You are capable of amazing things."
+    }
+
     func placeholder(in context: Context) -> AffirmationEntry {
-        AffirmationEntry(date: Date(), affirmation: "You are becoming a better educator every day.")
+        AffirmationEntry(date: Date(), affirmation: fetchSharedAffirmation())
     }
     
     func getSnapshot(in context: Context, completion: @escaping (AffirmationEntry) -> ()) {
-        completion(AffirmationEntry(date: Date(), affirmation: "You are becoming a better educator every day."))
+        completion(AffirmationEntry(date: Date(), affirmation: fetchSharedAffirmation()))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<AffirmationEntry>) -> ()) {
-        let entry = AffirmationEntry(date: Date(), affirmation: "You are becoming a better educator every day.")
+        let currentAffirmation = fetchSharedAffirmation()
+        let entry = AffirmationEntry(date: Date(), affirmation: currentAffirmation)
         
-        // Refresh at next midnight
-        let midnight = Calendar.current.startOfDay(
-            for: Calendar.current.date(byAdding: .day, value: 1, to: Date())!
-        )
-        let timeline = Timeline(entries: [entry], policy: .after(midnight))
+        // We set the policy to .never because the main app dictates when the text changes.
+        // Whenever AffirmationsView loads a new quote, WidgetCenter forces this timeline to rebuild anyway.
+        let timeline = Timeline(entries: [entry], policy: .never)
         completion(timeline)
     }
-    
 }
 
 struct SolaceWidgetEntryView: View {
