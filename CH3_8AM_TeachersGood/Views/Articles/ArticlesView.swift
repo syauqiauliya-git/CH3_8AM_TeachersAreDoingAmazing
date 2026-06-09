@@ -10,22 +10,21 @@ import SwiftData
 import MarkdownUI
 
 struct ArticleSheetView: View {
-    @State private var isBookmarked: Bool = false
-    
     @Environment(\.dismiss) var dismiss
     
-    let markdown = MarkdownLoader.load("rare-dedication")
+    let story: Story
     
     var body: some View {
+        let markdown = MarkdownLoader.load(story.mdFileName)
+        
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    Image("placeholder-article-pic")
+                    Image(story.image)
                         .resizable()
                         .scaledToFill()
-                        .frame(height: 250)
+                        .frame(maxWidth: .infinity, minHeight: 250, maxHeight: 250)
                         .clipped()
-                    
                     Markdown(markdown)
                         .markdownTextStyle(\.text) {
                             FontFamily(.custom("Nunito"))
@@ -34,20 +33,19 @@ struct ArticleSheetView: View {
                         .padding(30)
                 }
             }
+            .ignoresSafeArea(edges: .top)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
+                    Button { dismiss() } label: {
                         Label("Close", systemImage: "xmark")
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        isBookmarked.toggle()
+                        story.isBookmarked.toggle()
                     } label: {
-                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                        Image(systemName: story.isBookmarked ? "bookmark.fill" : "bookmark")
                             .foregroundStyle(Color.appPrimaryLight)
                     }
                 }
@@ -56,56 +54,78 @@ struct ArticleSheetView: View {
     }
 }
 
+enum SortOption {
+    case recent, alphabetical
+}
+
 struct ArticlesView: View {
     @Environment(\.modelContext) var modelContext
     
     @Query var stories: [Story]
     
     @State private var currentIndex = 0
-    @State private var isArticleDetailOpen = false
+    @State private var selectedStory: Story?
     @State private var selectedStoryTab = "All Stories"
+    @State private var sortOption: SortOption = .recent
     
-    let filterStoryOptions: [String] = [
-        "All Stories", "Favourites"
-    ]
+    let filterStoryOptions: [String] = ["All Stories", "Favourites"]
     
-    let columns = [
-        GridItem(.flexible())
-    ]
+    var filteredStories: [Story] {
+        let filtered: [Story]
+        switch selectedStoryTab {
+        case "Favourites": filtered = stories.filter { $0.isBookmarked }
+        default: filtered = stories
+        }
+        
+        switch sortOption {
+        case .recent:       return filtered.sorted { $0.storyDate > $1.storyDate }
+        case .alphabetical: return filtered.sorted { $0.title < $1.title }
+        }
+    }
+    
+    let columns = [GridItem(.flexible())]
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
                 TabView(selection: $currentIndex) {
-                    ForEach(0..<3, id: \.self) { index in
-                        VStack(alignment: .leading) {
-                            Text("Inspirational teachers")
-                                .font(.title.bold())
-                            Text("Teaching Award winners share who made an impact on them.")
-                                .font(.body)
-                        }
-                        .foregroundStyle(Color.white)
-                        .padding(20)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                        .background {
-                            ZStack {
-                                Image("placeholder-article-pic")
-                                    .resizable()
-                                    .scaledToFill()
-                                LinearGradient(
-                                    colors: [.clear, .black.opacity(1.5)],
-                                    startPoint: .center,
-                                    endPoint: .bottom
-                                )
+                    ForEach(0..<min(3, stories.count), id: \.self) { index in
+                        let story = stories[index]
+                        Button {
+                            selectedStory = story
+                        } label: {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(story.title)
+                                    .font(.title.bold())
+                                Text(story.summary)
+                                    .font(.subheadline)
+                                    .lineLimit(2)
+                                    .opacity(0.8)
+                            }
+                            .foregroundStyle(Color.white)
+                            .padding(20)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                            .background {
+                                ZStack {
+                                    Image(story.image)
+                                        .resizable()
+                                        .scaledToFill()
+                                    LinearGradient(
+                                        colors: [.clear, .black.opacity(1.5)],
+                                        startPoint: .center,
+                                        endPoint: .bottom
+                                    )
+                                }
                             }
                         }
-                        .tag(index) // this is the key part
+                        .buttonStyle(.plain)
+                        .tag(index)
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .frame(height: 400)
                 HStack(spacing: 8) {
-                    ForEach(0..<3, id: \.self) { index in
+                    ForEach(0..<min(3, stories.count), id: \.self) { index in
                         Circle()
                             .fill(currentIndex == index ? Color.appGradeBorder : Color.appGradeBorder.opacity(0.3))
                             .frame(width: 8, height: 8)
@@ -113,60 +133,71 @@ struct ArticlesView: View {
                 }
                 .padding(.top, 6)
                 Picker("HomePicker", selection: $selectedStoryTab) {
-                    ForEach(filterStoryOptions, id: \.self) { index in
-                        Text(index).tag(index)
+                    ForEach(filterStoryOptions, id: \.self) { option in
+                        Text(option).tag(option)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal, 25)
                 .padding(.vertical, 10)
+                .onAppear {
+                    UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.appSpeechBubble)
+                    UISegmentedControl.appearance().backgroundColor = UIColor(Color(uiColor: .systemBackground))
+                    UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .selected)
+                    UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .normal)
+                }
+//                }
                 VStack {
                     HStack(spacing: 10) {
-                        Text("Recents")
+                        Text(sortOption == .recent ? "Recents" : "A–Z")
                             .font(.headline.bold())
                         Spacer()
-                        Image(systemName: "line.3.horizontal.decrease")
-                            .font(.body)
+                        Menu {
+                            Button {
+                                sortOption = .recent
+                            } label: {
+                                Label("Recent", systemImage: sortOption == .recent ? "checkmark" : "")
+                            }
+                            Button {
+                                sortOption = .alphabetical
+                            } label: {
+                                Label("Alphabetical", systemImage: sortOption == .alphabetical ? "checkmark" : "")
+                            }
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease")
+                                .font(.body)
+                        }
+                        .buttonStyle(.plain)
                     }
                     LazyVGrid(columns: columns, spacing: 15) {
-                        ForEach(1...10, id: \.self) { index in
-                            Button {
-                                isArticleDetailOpen = true
-                            } label: {
-                                RoundedRectangle(cornerRadius: 25)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 250)
-                                    .overlay {
-                                        ZStack {
-                                            Image("placeholder-article-pic")
-                                                .resizable()
-                                                .scaledToFill()
-                                            LinearGradient(
-                                                colors: [
-                                                    .clear,
-                                                    .black.opacity(0.9)
-                                                ],
-                                                startPoint: .center,
-                                                endPoint: .bottom
-                                            )
-                                            VStack(alignment: .leading) {
-                                                Text("Inspirational teachers")
-                                                    .font(.title2.bold())
-                                                Text("Teaching Award winners share who made an impact on them.")
-                                                    .font(.subheadline)
-                                            }
-                                            .foregroundStyle(.white)
-                                            .padding(20)
-                                            .frame(
-                                                maxWidth: .infinity,
-                                                maxHeight: .infinity,
-                                                alignment: .bottomLeading
-                                            )
-                                            .multilineTextAlignment(.leading)
+                        ForEach(filteredStories) { story in
+                            GeometryReader { proxy in
+                                Button {
+                                    selectedStory = story
+                                } label: {
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Image(story.image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: proxy.size.width, height: 200)
+                                            .clipped()
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            Text(story.title)
+                                                .font(.title2.bold())
+                                                .foregroundStyle(.primary)
+                                            Text(story.summary)
+                                                .font(.subheadline)
+                                                .foregroundStyle(.secondary)
+                                                .lineLimit(2)
                                         }
-                                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                                        .padding(16)
                                     }
+                                    .background(Color(uiColor: .systemBackground))
+                                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                                }
+                                .buttonStyle(.plain)
                             }
+                            .frame(height: 320)
                         }
                     }
                 }
@@ -174,13 +205,43 @@ struct ArticlesView: View {
             }
         }
         .background(Color.appBackground)
-        .sheet(isPresented: $isArticleDetailOpen) {
-            ArticleSheetView()
+        .sheet(item: $selectedStory) { story in
+            ArticleSheetView(story: story)
         }
         .ignoresSafeArea(edges: .top)
+        .onAppear {
+            seedStoriesIfNeeded(context: modelContext)
+        }
+    }
+    
+    func seedStoriesIfNeeded(context: ModelContext) {
+        do {
+            let existing = try context.fetch(FetchDescriptor<Story>())
+            guard existing.isEmpty else { return }
+            for story in StorySeedData.all {
+                context.insert(story)
+            }
+            try context.save()
+        } catch {
+            print("Story seeding error:", error)
+        }
     }
 }
 
 #Preview {
-    ArticlesView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Story.self, configurations: config)
+    let context = container.mainContext
+    
+    context.insert(Story(
+        title: "A Rare Dedication to Education",
+        mdFileName: "rare-dedication",
+        image: "placeholder-article-pic",
+        summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        isBookmarked: false,
+        storyDate: Date()
+    ))
+    
+    return ArticlesView()
+        .modelContainer(container)
 }
