@@ -23,15 +23,21 @@ struct RecordView: View {
     let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        VStack(spacing: 25) {
-            if isTypingMode {
-                typingModeView
-            } else {
-                if currentState == .ready || currentState == .recording {
-                    audioVisualizer
-                }
+        ZStack {
+            // Typing Mode View occupies the exact same footprint as the voice controls
+            typingModeView
+                .opacity(isTypingMode ? 1.0 : 0.0)
+                .allowsHitTesting(isTypingMode)
+            
+            // Audio & Recording Mode Stack
+            VStack(spacing: 25) {
+                audioVisualizer
+                    .opacity(currentState == .ready || currentState == .recording ? 1.0 : 0.0)
+                
                 recordingControls
             }
+            .opacity(isTypingMode ? 0.0 : 1.0)
+            .allowsHitTesting(!isTypingMode)
         }
         .padding(.bottom, 60)
         .onReceive(timer, perform: updateAudioLevels)
@@ -90,24 +96,31 @@ extension RecordView {
     }
     
     private var recordingControls: some View {
-        VStack(spacing: 15) {
-            switch currentState {
-            case .ready:
-                readyControls
-            case .recording:
-                recordingActiveControls
-            case .finished:
-                finishedControls
-            case .next:
-                if isOnboarding {
-                    nextControls
-                }
-            }
+        // Utilizing top alignment ensures that single-button states (like active recording)
+        // don't visually drop down into the space left by missing secondary buttons.
+        ZStack(alignment: .top) {
+            readyControls
+                .opacity(currentState == .ready || currentState == .readyOnboarding ? 1.0 : 0.0)
+                .allowsHitTesting(currentState == .ready || currentState == .readyOnboarding)
+            
+            recordingActiveControls
+                .opacity(currentState == .recording ? 1.0 : 0.0)
+                .allowsHitTesting(currentState == .recording)
+            
+            finishedControls
+                .opacity(currentState == .finished || currentState == .finishedOnboarding ? 1.0 : 0.0)
+                .allowsHitTesting(currentState == .finished || currentState == .finishedOnboarding)
+            
+            nextControls
+                .opacity(currentState == .next && isOnboarding ? 1.0 : 0.0)
+                .allowsHitTesting(currentState == .next && isOnboarding)
         }
     }
     
+    // Converted from Group to VStack to ensure internal layout remains consistent
+    // when embedded inside the encompassing ZStack.
     private var readyControls: some View {
-        Group {
+        VStack(spacing: 15) {
             Button(action: {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     currentState = .recording
@@ -137,22 +150,24 @@ extension RecordView {
     }
     
     private var recordingActiveControls: some View {
-        Button(action: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                currentState = .finished
+        VStack(spacing: 15) {
+            Button(action: {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                    currentState = .finished
+                }
+            }) {
+                gradientButton(
+                    imageName: "square.fill",
+                    imageSize: 28,
+                    fontWeight: .black,
+                    colors: .stopRecord
+                )
             }
-        }) {
-            gradientButton(
-                imageName: "square.fill",
-                imageSize: 28,
-                fontWeight: .black,
-                colors: .stopRecord
-            )
         }
     }
     
     private var finishedControls: some View {
-        Group {
+        VStack(spacing: 15) {
             Button(action: handleConfirmation) {
                 gradientButton(
                     imageName: "paperplane.fill",
@@ -168,7 +183,7 @@ extension RecordView {
     }
     
     private var nextControls: some View {
-        Group {
+        VStack(spacing: 15) {
             Button(action: handleConfirmation) {
                 gradientButton(
                     imageName: "paperplane.fill",
