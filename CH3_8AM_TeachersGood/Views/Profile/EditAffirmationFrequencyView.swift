@@ -52,5 +52,4 @@ struct EditAffirmationFrequencyView: View {
 
 #Preview {
     EditAffirmationFrequencyView()
-        .preferredColorScheme(ColorScheme.dark)
 }

@@ -83,14 +83,51 @@ struct ArticlesView: View {
         }
     }
     
+    var featuredStories: [Story] {
+        Array(stories.filter { $0.isFeatured }.prefix(3))
+    }
+    
     let columns = [GridItem(.flexible())]
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
+//                TabView(selection: $currentIndex) {
+//                    ForEach(0..<min(3, stories.count), id: \.self) { index in
+//                        let story = stories[index]
+//                        Button {
+//                            selectedStory = story
+//                        } label: {
+//                            VStack(alignment: .leading, spacing: 6) {
+//                                Text(story.title)
+//                                    .font(.title.bold())
+//                                Text(story.summary)
+//                                    .font(.subheadline)
+//                                    .lineLimit(2)
+//                                    .opacity(0.8)
+//                            }
+//                            .foregroundStyle(Color.white)
+//                            .padding(20)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+//                            .background {
+//                                ZStack {
+//                                    Image(story.image)
+//                                        .resizable()
+//                                        .scaledToFill()
+//                                    LinearGradient(
+//                                        colors: [.clear, .black.opacity(1.5)],
+//                                        startPoint: .center,
+//                                        endPoint: .bottom
+//                                    )
+//                                }
+//                            }
+//                        }
+//                        .buttonStyle(.plain)
+//                        .tag(index)
+//                    }
+//                }
                 TabView(selection: $currentIndex) {
-                    ForEach(0..<min(3, stories.count), id: \.self) { index in
-                        let story = stories[index]
+                    ForEach(Array(featuredStories.enumerated()), id: \.element.id) { index, story in
                         Button {
                             selectedStory = story
                         } label: {
@@ -111,7 +148,7 @@ struct ArticlesView: View {
                                         .resizable()
                                         .scaledToFill()
                                     LinearGradient(
-                                        colors: [.clear, .black.opacity(1.5)],
+                                        colors: [.clear, .black.opacity(0.85)],
                                         startPoint: .center,
                                         endPoint: .bottom
                                     )
@@ -142,7 +179,7 @@ struct ArticlesView: View {
                 .padding(.vertical, 10)
                 .onAppear {
                     UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.appSpeechBubble)
-                    UISegmentedControl.appearance().backgroundColor = UIColor(Color(uiColor: .systemBackground))
+                    UISegmentedControl.appearance().backgroundColor = UIColor(Color.appBackground)
                     UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .selected)
                     UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .normal)
                 }
@@ -168,7 +205,7 @@ struct ArticlesView: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    LazyVGrid(columns: columns, spacing: 15) {
+                    LazyVGrid(columns: columns) {
                         ForEach(filteredStories) { story in
                             GeometryReader { proxy in
                                 Button {
@@ -193,6 +230,7 @@ struct ArticlesView: View {
                                     }
                                     .background(Color(uiColor: .systemBackground))
                                     .clipShape(RoundedRectangle(cornerRadius: 25))
+                                    .shadow(color: Color.appTextBnW.opacity(0.3), radius: 6, x: 0, y: 1)
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -238,6 +276,17 @@ struct ArticlesView: View {
         image: "placeholder-article-pic",
         summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         isBookmarked: false,
+        isFeatured: true,
+        storyDate: Date()
+    ))
+    
+    context.insert(Story(
+        title: "A Rare Dedication to Education",
+        mdFileName: "rare-dedication",
+        image: "placeholder-article-pic",
+        summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        isBookmarked: false,
+        isFeatured: true,
         storyDate: Date()
     ))
     

@@ -26,6 +26,7 @@ enum StorySeedData {
             image: "inspirational-teachers-teaching",
             summary: "In 2020, several recipients of the Lifetime Achievement Silver Teaching...",
             isBookmarked: false,
+            isFeatured: true,
             storyDate: makeDate(2020, 10, 06)
         ),
         
@@ -36,6 +37,7 @@ enum StorySeedData {
             image: "a-rare-dedication",
             summary: "In Barangay Tabangao Ambulong, Batangas, one teacher's story demonstrates the...",
             isBookmarked: false,
+            isFeatured: true,
             storyDate: makeDate(2023, 09, 12)
         ),
         
@@ -46,6 +48,7 @@ enum StorySeedData {
             image: "beyond-chalk",
             summary: "For Elgie Radaza, education is more than teaching lessons in a...",
             isBookmarked: false,
+            isFeatured: false,
             storyDate: makeDate(2023, 10, 05)
         ),
         
@@ -56,6 +59,7 @@ enum StorySeedData {
             image: "inspired-by-grandfather",
             summary: "Growing up in a family of educators, one teacher found her...",
             isBookmarked: false,
+            isFeatured: true,
             storyDate: makeDate(2021, 08, 31)
         ),
         
@@ -66,6 +70,7 @@ enum StorySeedData {
             image: "story-placeholder",
             summary: "When schools across the Philippines were forced to adapt to new...",
             isBookmarked: false,
+            isFeatured: false,
             storyDate: makeDate(2020, 07,14)
         ),
         
@@ -76,6 +81,7 @@ enum StorySeedData {
             image: "story-placeholder",
             summary: "Although she began her professional life as an architect, one...",
             isBookmarked: false,
+            isFeatured: false,
             storyDate: makeDate(2021, 08, 31)
         ),
         
@@ -86,6 +92,7 @@ enum StorySeedData {
             image: "story-placeholder",
             summary: "As a child, she dreamed of becoming either a doctor or...",
             isBookmarked: false,
+            isFeatured: false,
             storyDate: makeDate(2021, 08, 31)
         )
     ]
