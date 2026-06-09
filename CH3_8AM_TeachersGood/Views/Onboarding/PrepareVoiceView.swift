@@ -23,7 +23,7 @@ struct PrepareVoiceView: View {
             .padding(.bottom, 40)
             //MascotView(size: 350)
             GifWebView(gifName: "ThingyIdle")
-                .frame(width: 300, height: 300)
+                .frame(width: 250, height: 250)
 
             Spacer()
             

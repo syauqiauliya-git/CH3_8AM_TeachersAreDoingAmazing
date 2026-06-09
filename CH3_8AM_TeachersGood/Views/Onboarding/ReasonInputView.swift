@@ -46,7 +46,7 @@ struct ReasonInputView: View {
             
           //  MascotView(size: 350)
             GifWebView(gifName: currentState.thingyMode )
-                .frame(width: 300, height: 300)
+                .frame(width: 250, height: 250)
 
             Spacer()
             

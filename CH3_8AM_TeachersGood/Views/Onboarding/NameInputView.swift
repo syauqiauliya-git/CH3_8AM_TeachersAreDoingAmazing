@@ -40,7 +40,7 @@ struct NameInputView: View {
             Spacer()
 
             GifWebView(gifName: "ThingyIdle")
-                .frame(width: 300, height: 300)
+                .frame(width: 250, height: 250)
             // MascotView(size: 350)
 
             Spacer()
@@ -50,13 +50,13 @@ struct NameInputView: View {
 
             TextField("", text: $teacherName, prompt:
                         Text("Insert your name")
-                .foregroundColor(.appTextBnW)
+                .foregroundColor(.appTextAlt)
             )
             .font(.custom("Nunito-Medium", size: 16))
             .opacity(0.6)
             .padding(.horizontal, 16)
             .padding(.vertical, 15)
-            .background(Color.appGradeNotSelected)
+            .background(Color.appSpeechBubble)
             .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
@@ -89,6 +89,8 @@ struct NameInputView: View {
                     modelContext.insert(Teacher(name: teacherName))
                 }
             })
+            .disabled(teacherName == "")
+
         }
         .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
