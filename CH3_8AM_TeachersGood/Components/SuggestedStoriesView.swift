@@ -105,9 +105,9 @@ struct StoryCardView: View {
         }
         .accessibilityAddTraits(.isButton)
         .accessibilityLabel(Text(title))
-        .sheet(isPresented: $showArticleSheet) {
-            ArticleSheetView()
-        }
+//        .sheet(isPresented: $showArticleSheet) {
+//            ArticleSheetView()
+//        }
     }
 }
 

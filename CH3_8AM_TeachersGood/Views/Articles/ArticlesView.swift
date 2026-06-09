@@ -48,7 +48,6 @@ struct ArticleSheetView: View {
                         Image(systemName: story.isBookmarked ? "bookmark.fill" : "bookmark")
                             .foregroundStyle(Color.appPrimaryLight)
                     }
-                    .accessibilityLabel(Text(isBookmarked ? "Remove bookmark" : "Bookmark article"))
                 }
             }
         }
@@ -161,37 +160,34 @@ struct ArticlesView: View {
                             Button {
                                 sortOption = .alphabetical
                             } label: {
-                                RoundedRectangle(cornerRadius: 25)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 250)
-                                    .overlay {
-                                        ZStack {
-                                            Image("placeholder-article-pic")
-                                                .resizable()
-                                                .scaledToFill()
-                                                .accessibilityHidden(true)
-                                            LinearGradient(
-                                                colors: [
-                                                    .clear,
-                                                    .black.opacity(0.9)
-                                                ],
-                                                startPoint: .center,
-                                                endPoint: .bottom
-                                            )
-                                            VStack(alignment: .leading) {
-                                                Text("Inspirational teachers")
-                                                    .font(.title2.bold())
-                                                Text("Teaching Award winners share who made an impact on them.")
-                                                    .font(.subheadline)
-                                            }
-                                            .foregroundStyle(.white)
-                                            .padding(20)
-                                            .frame(
-                                                maxWidth: .infinity,
-                                                maxHeight: .infinity,
-                                                alignment: .bottomLeading
-                                            )
-                                            .multilineTextAlignment(.leading)
+                                Label("Alphabetical", systemImage: sortOption == .alphabetical ? "checkmark" : "")
+                            }
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease")
+                                .font(.body)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    LazyVGrid(columns: columns, spacing: 15) {
+                        ForEach(filteredStories) { story in
+                            GeometryReader { proxy in
+                                Button {
+                                    selectedStory = story
+                                } label: {
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Image(story.image)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: proxy.size.width, height: 200)
+                                            .clipped()
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            Text(story.title)
+                                                .font(.title2.bold())
+                                                .foregroundStyle(.primary)
+                                            Text(story.summary)
+                                                .font(.subheadline)
+                                                .foregroundStyle(.secondary)
+                                                .lineLimit(2)
                                         }
                                         .padding(16)
                                     }
