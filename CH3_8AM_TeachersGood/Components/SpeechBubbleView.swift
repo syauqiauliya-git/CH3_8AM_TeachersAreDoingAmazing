@@ -37,6 +37,7 @@ struct SpeechBubbleView: View {
                     .rotationEffect(tailRotation)
                     .offset(tailOffset)
             }
+            .accessibilityLabel(Text("Thingy says, \(text)"))
     }
     
     private var tailAlignment: Alignment {

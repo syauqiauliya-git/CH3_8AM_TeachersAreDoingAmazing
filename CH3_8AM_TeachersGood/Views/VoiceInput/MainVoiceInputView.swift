@@ -72,6 +72,7 @@ struct MainVoiceInputView: View {
                     await speechManager.stopTranscribing()
                 }
             }
+            UIAccessibility.post(notification: .announcement, argument: currentState.bubbleText)
         }
     }
 }

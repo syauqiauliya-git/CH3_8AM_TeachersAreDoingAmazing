@@ -26,6 +26,8 @@ struct ArticleSheetView: View {
                         .frame(height: 250)
                         .clipped()
                     
+                        .accessibilityHidden(true)
+                    
                     Markdown(markdown)
                         .markdownTextStyle(\.text) {
                             FontFamily(.custom("Nunito"))
@@ -50,6 +52,7 @@ struct ArticleSheetView: View {
                         Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
                             .foregroundStyle(Color.appPrimaryLight)
                     }
+                    .accessibilityLabel(Text(isBookmarked ? "Remove bookmark" : "Bookmark article"))
                 }
             }
         }
@@ -86,6 +89,7 @@ struct ArticlesView: View {
                                 Image("placeholder-article-pic")
                                     .resizable()
                                     .scaledToFill()
+                                    .accessibilityHidden(true)
                                 LinearGradient(
                                     colors: [
                                         .clear,
@@ -96,6 +100,7 @@ struct ArticlesView: View {
                                 )
                             }
                         }
+                        .accessibilityElement(children: .combine)
                     }
                 }
                 .tabViewStyle(.page)
@@ -106,8 +111,12 @@ struct ArticlesView: View {
                             .font(.headline.bold())
                         Image(systemName: "chevron.right")
                             .font(.body)
+                            .accessibilityHidden(true)
                         Spacer()
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityAddTraits(.isHeader)
+                    
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(1...10, id: \.self) { index in
                             Button {
@@ -121,6 +130,7 @@ struct ArticlesView: View {
                                             Image("placeholder-article-pic")
                                                 .resizable()
                                                 .scaledToFill()
+                                                .accessibilityHidden(true)
                                             LinearGradient(
                                                 colors: [
                                                     .clear,
