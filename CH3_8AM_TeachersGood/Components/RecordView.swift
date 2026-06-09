@@ -15,6 +15,9 @@ struct RecordView: View {
     @Binding var audioLevels: [CGFloat]
     @Binding var showConfirmation: Bool
     @Binding var isOnboarding: Bool
+    
+    // NEW: Data conduit to pass typed responses up to the AI inference engine
+    @Binding var typedText: String
         
     @State private var isTypingMode = false
     @State private var inputText = ""
@@ -24,12 +27,10 @@ struct RecordView: View {
     
     var body: some View {
         ZStack {
-            // Typing Mode View occupies the exact same footprint as the voice controls
             typingModeView
                 .opacity(isTypingMode ? 1.0 : 0.0)
                 .allowsHitTesting(isTypingMode)
             
-            // Audio & Recording Mode Stack
             VStack(spacing: 25) {
                 audioVisualizer
                     .opacity(currentState == .ready || currentState == .recording ? 1.0 : 0.0)
@@ -97,8 +98,6 @@ extension RecordView {
     }
     
     private var recordingControls: some View {
-        // Utilizing top alignment ensures that single-button states (like active recording)
-        // don't visually drop down into the space left by missing secondary buttons.
         ZStack(alignment: .top) {
             readyControls
                 .opacity(currentState == .ready || currentState == .readyOnboarding ? 1.0 : 0.0)
@@ -118,8 +117,6 @@ extension RecordView {
         }
     }
     
-    // Converted from Group to VStack to ensure internal layout remains consistent
-    // when embedded inside the encompassing ZStack.
     private var readyControls: some View {
         VStack(spacing: 15) {
             Button(action: {
@@ -233,6 +230,10 @@ extension RecordView {
     
     private func handleSendText() {
         print("Sent: \(inputText)")
+        
+        // Capture the value globally before resetting the UI state
+        typedText = inputText
+        
         withAnimation(.spring()) {
             isTextFieldFocused = false
             isTypingMode = false
@@ -243,7 +244,7 @@ extension RecordView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             withAnimation {
                 showConfirmation = false
-                currentState = .ready
+                currentState = .next // CORRECTED: Advancing to the final evaluation phase
             }
         }
     }
@@ -286,5 +287,5 @@ extension RecordView {
 }
 
 #Preview {
-    RecordView(currentState: .constant(.ready), audioLevels: .constant(Array(repeating: 10.0, count: 7)), showConfirmation: .constant(false), isOnboarding: .constant(true))
+    RecordView(currentState: .constant(.ready), audioLevels: .constant(Array(repeating: 10.0, count: 7)), showConfirmation: .constant(false), isOnboarding: .constant(true), typedText: .constant(""))
 }

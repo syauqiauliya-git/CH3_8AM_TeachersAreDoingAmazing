@@ -29,7 +29,7 @@ enum RecordingState {
         case .finishedOnboarding:
             return "I'm always here to listen. Thank you for sharing!"
         case .finished:
-            return "Do you want to try that again?"
+            return "Are you finished?"
         case .next:
             return "Thank you for telling\nme about your day!"
         }

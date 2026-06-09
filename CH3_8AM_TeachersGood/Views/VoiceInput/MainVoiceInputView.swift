@@ -12,6 +12,7 @@ import SwiftData
 struct MainVoiceInputView: View {
     @Query var teachers: [Teacher]
     @Query var affirmations: [Affirmation]
+    @Query var stories: [Story]
         
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
@@ -21,24 +22,26 @@ struct MainVoiceInputView: View {
     @State private var isOnboarding: Bool = false
     
     @State private var dynamicBubbleText: String? = nil
+    @State private var suggestedStories: [Story] = []
+    
+    @State private var sheetSelectedStory: Story?
+    
+    // NEW: Captures manually entered transcripts to override audio results
+    @State private var manuallyTypedText: String = ""
         
     var body: some View {
         VStack {
-            
-            // 1. Dynamic Top Spacer: Collapses from 80 to 20 during the AI response
-            // to allow the speech bubble to safely expand upwards.
             Spacer()
                 .frame(height: currentState == .next ? 20 : 80)
             
             SpeechBubbleView(
                 text: dynamicBubbleText ?? currentState.bubbleText,
-                tail: .bottomRight
+                tail: .bottomRight,
+                customMaxWidth: 250
             )
             
             Spacer()
             
-            // 2. Dynamic Mascot: Shrinks from 250x250 down to 150x150
-            // exclusively when moving into the .next state.
             GifWebView(gifName: currentState.thingyMode )
                 .frame(
                     width: currentState == .next ? 150 : 250,
@@ -48,9 +51,10 @@ struct MainVoiceInputView: View {
             Spacer()
             
             if currentState == .ready || currentState == .recording || currentState == .finished {
-                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
+                // Pass the binding into the child component
+                RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding, typedText: $manuallyTypedText)
             } else if currentState == .next {
-                SuggestedStoriesView()
+                SuggestedStoriesView(stories: suggestedStories, externalSelectedStory: $sheetSelectedStory)
             }
             
         }
@@ -63,6 +67,9 @@ struct MainVoiceInputView: View {
             if showConfirmation {
                 ConfirmationOverlayView(isPresented: $showConfirmation, onConfirm: {})
             }
+        }
+        .sheet(item: $sheetSelectedStory) { story in
+            ArticleSheetView(story: story)
         }
         .onChange(of: currentState) {
             Task {
@@ -77,29 +84,48 @@ struct MainVoiceInputView: View {
                     
                 case .next:
                     await speechManager.stopTranscribing()
-                    
                     dynamicBubbleText = "Give me a second to process that..."
+
+                    // INFERENCE SWITCH: Evaluate typed text first, utilizing the voice manager as a secondary fallback
+                    let userTranscript = manuallyTypedText.isEmpty ? speechManager.recognizedText : manuallyTypedText
                     
-                    let userTranscript = speechManager.recognizedText
+                    // Clear the buffer immediately to prevent bleeding into subsequent sessions
+                    manuallyTypedText = ""
                     
                     let teacherName = teachers.first?.name ?? "Teacher"
-                    let currentAffirmation = affirmations.randomElement()?.tokens.map { $0.text }.joined(separator: " ") ?? "You are doing great."
-                    
+                    let currentAffirmation = affirmations.randomElement()?.tokens
+                        .sorted(by: { $0.order < $1.order })
+                        .map(\.text)
+                        .joined(separator: " ") ?? "You are doing great."
+
                     do {
+                        let labels = try await InferenceService.shared.extractLabels(from: userTranscript)
+                        var matched = InferenceService.shared.findMatchingStories(from: stories, labels: labels)
+                        
+                        if matched.isEmpty {
+                            matched = Array(stories.shuffled().prefix(2))
+                        }
+                        
+                        let finalSelection = Array(matched.prefix(2))
+                        
+                        await MainActor.run {
+                            suggestedStories = finalSelection
+                        }
+
                         let response = try await InferenceService.shared.generateThingyResponse(
                             transcript: userTranscript,
                             affirmation: currentAffirmation,
                             teacherName: teacherName
                         )
-                        
                         await MainActor.run {
                             dynamicBubbleText = response
-                            UIAccessibility.post(notification: .announcement, argument: response)
                         }
                     } catch {
                         await MainActor.run {
-                            dynamicBubbleText = "I heard you, but my brain is a little foggy right now. Thank you for sharing!"
-                            UIAccessibility.post(notification: .announcement, argument: dynamicBubbleText)
+                            if suggestedStories.isEmpty {
+                                suggestedStories = Array(stories.prefix(2))
+                            }
+                            dynamicBubbleText = "I heard you, but my brain is a little foggy right now. Here are some comforting stories for you!"
                         }
                     }
                     
@@ -114,4 +140,47 @@ struct MainVoiceInputView: View {
             }
         }
     }
+}
+
+#Preview("Main Voice Input") {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    
+    // 1. Register all the models your view and its child views rely on
+    let container = try! ModelContainer(
+        for: Teacher.self, Affirmation.self, AffirmationToken.self, Story.self,
+        configurations: config
+    )
+    
+    let context = container.mainContext
+    
+    // 2. Insert a mock Teacher so the inference engine has a name to use
+    // (Adjust the properties if your Teacher model requires different initialization)
+    context.insert(Teacher(
+        name: "Coki",
+        affirmationInterval: "onetime"
+    ))
+    
+    // 3. Insert a mock Story so the SuggestedStoriesView has fallback data
+    context.insert(Story(
+        title: "A Rare Dedication to Education",
+        mdFileName: "rare-dedication",
+        image: "placeholder-article-pic",
+        summary: "The inspiring story of a veteran teacher.",
+        isBookmarked: false,
+        isFeatured: true,
+        storyDate: Date()
+    ))
+    
+    // 4. Insert a mock Affirmation so the response generator doesn't fail
+    context.insert(
+        Affirmation(tokens: [
+            AffirmationToken(text: "You", style: .normal, order: 0),
+            AffirmationToken(text: "are", style: .normal, order: 1),
+            AffirmationToken(text: "doing", style: .purple, order: 2),
+            AffirmationToken(text: "great.", style: .orange, order: 3)
+        ])
+    )
+    
+    return MainVoiceInputView()
+        .modelContainer(container)
 }

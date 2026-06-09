@@ -10,20 +10,17 @@ import SwiftUI
 struct ReasonInputView: View {
     @Environment(\.colorScheme) var colorScheme
 
-        
     @State private var finishOnboarding = false
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var currentState: RecordingState = .readyOnboarding
     @State private var showConfirmation = false
-    
-    
     @State private var isOnboarding = true
     
+    // NEW: Dummy state solely designed to appease the RecordView parameter requirements
+    @State private var manuallyTypedText: String = ""
     
     var body: some View {
         VStack{
-            // PAGE NUMBER
-            
             HStack {
                 Spacer()
                 Text("3 of 4")
@@ -36,23 +33,18 @@ struct ReasonInputView: View {
             
             Spacer()
             
-            // SPEECH BUBBLESlider
             SpeechBubbleView(
                 text: currentState.bubbleText,
                 tail: .bottomRight
             )
 
-            //MASCOT
-            
-          //  MascotView(size: 350)
             GifWebView(gifName: currentState.thingyMode )
                 .frame(width: 250, height: 250)
 
             Spacer()
             
-            //RECORD
-            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding)
-            
+            // Pass the dummy variable into the constructor
+            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding, typedText: $manuallyTypedText)
                         
         }
         .background(Color.appBackground.ignoresSafeArea())

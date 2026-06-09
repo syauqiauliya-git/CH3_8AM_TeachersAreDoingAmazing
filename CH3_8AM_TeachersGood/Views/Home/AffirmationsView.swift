@@ -38,19 +38,7 @@ struct AffirmationsView: View {
             VStack {
                 HStack(alignment: .center) {
                     Button(action: {
-                        tipTask?.cancel()
-                        
-                        if showThingyTip {
-                            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
-                        } else {
-                            tipIndex = (tipIndex + 1) % tips.count
-                            withAnimation(.easeIn(duration: 0.15)) { showThingyTip = true }
-                            tipTask = Task {
-                                try? await Task.sleep(for: .seconds(2))
-                                guard !Task.isCancelled else { return }
-                                withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
-                            }
-                        }
+                        toggleTip()
                     }) {
                         GifWebView(gifName: ThingyState.idle.mode)
                             .frame(width: 80, height: 80)
@@ -75,7 +63,6 @@ struct AffirmationsView: View {
                     } label: {
                         Image(systemName: "person")
                             .font(.system(size: 20))
-//                            .foregroundStyle(Color.appGradientPurpleStart)
                             .foregroundStyle(Color.appGradeBorder)
                     }
                     .frame(width: 50, height: 50)
@@ -89,10 +76,28 @@ struct AffirmationsView: View {
                 
                 Spacer()
                 
-                VStack(spacing: 20) {
-                    if let affirmation = selectedAffirmation {
-                        Text(render(affirmation))
-                            .font(.custom("Canela-Regular", size: 34))
+                // ARCHITECTURAL CHANGE: Localized ZStack tightly binds the heart to the text frame
+                ZStack {
+                    VStack(spacing: 20) {
+                        if let affirmation = selectedAffirmation {
+                            Text(render(affirmation))
+                                .font(.custom("Canela-Regular", size: 34))
+                                .multilineTextAlignment(.center)
+                        }
+                    }
+                    
+                    // NEW PLACEMENT: The transient heart overlay
+                    if showHeartAnimation {
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 150))
+                            .foregroundStyle(Color.appGradientPurpleStart) // Adjust color as needed
+                            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                            .transition(.asymmetric(
+                                insertion: .scale(scale: 0.5).combined(with: .opacity),
+                                removal: .scale(scale: 1.2).combined(with: .opacity)
+                            ))
+                        // Ignore touches so it doesn't interrupt ongoing interactions while fading
+                            .allowsHitTesting(false)
                     }
                 }
                 
@@ -114,20 +119,6 @@ struct AffirmationsView: View {
                     }
                 }
             }
-            
-            // NEW: The transient heart overlay
-            if showHeartAnimation {
-                Image(systemName: "heart.fill")
-                    .font(.system(size: 150))
-                    .foregroundStyle(Color.appGradientPurpleStart) // Adjust color as needed
-                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
-                    .transition(.asymmetric(
-                        insertion: .scale(scale: 0.5).combined(with: .opacity),
-                        removal: .scale(scale: 1.2).combined(with: .opacity)
-                    ))
-                // Ignore touches so it doesn't interrupt ongoing interactions while fading
-                    .allowsHitTesting(false)
-            }
         }
         .background(Color.appBackground)
         .navigationBarBackButtonHidden(true)
@@ -142,7 +133,6 @@ struct AffirmationsView: View {
                 } label: {
                     Image(systemName: "book.pages")
                         .font(.system(size: 20))
-//                        .foregroundStyle(Color.appGradientPurpleStart)
                         .foregroundStyle(Color.appGradeBorder)
                         .frame(width: 50, height: 50)
                 }
@@ -155,7 +145,6 @@ struct AffirmationsView: View {
                     MainVoiceInputView()
                 } label: {
                     Circle()
-//                        .fill(Color.appGradientPurpleStart)
                         .fill(Color.appGradeBorder)
                         .frame(width: 50, height: 50)
                         .overlay(
@@ -171,12 +160,38 @@ struct AffirmationsView: View {
         .task {
             seedIfNeeded(context: modelContext)
             
-//           Defer the selection and broadcasting to prevent SwiftData memory collisions
             try? await Task.sleep(for: .milliseconds(100))
             refreshIfNeeded()
+            
             if let affirmation = selectedAffirmation {
-                broadcastToWidget(affirmation: affirmation)
+                broadcastStateUpdates(affirmation: affirmation)
             }
+            
+            // Wait 0.5 seconds and trigger the tip automatically
+            try? await Task.sleep(for: .milliseconds(1000))
+            if !showThingyTip {
+                showNextTip()
+            }
+        }
+    }
+    
+    private func toggleTip() {
+        tipTask?.cancel()
+        if showThingyTip {
+            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
+        } else {
+            showNextTip()
+        }
+    }
+    
+    private func showNextTip() {
+        tipTask?.cancel()
+        tipIndex = (tipIndex + 1) % tips.count
+        withAnimation(.easeIn(duration: 0.15)) { showThingyTip = true }
+        tipTask = Task {
+            try? await Task.sleep(for: .seconds(2))
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
         }
     }
     
@@ -268,21 +283,55 @@ struct AffirmationsView: View {
         return last < mostRecentSlot
     }
     
-    private func broadcastToWidget(affirmation: Affirmation) {
+    /// Coordinates the dissemination of the current affirmation across all external system interfaces.
+    private func broadcastStateUpdates(affirmation: Affirmation) {
         guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" else { return }
         
-        // Extracting SwiftData relationships (like .tokens) must be handled carefully.
+        // 1. Create a lightweight, codable representation of the tokens for the widget
+        // You'll need to define this small struct inside your main app target as well
+        struct ExportableToken: Codable {
+            let text: String
+            let styleRawValue: String
+            let order: Int
+        }
+        
+        let exportableTokens = affirmation.tokens.map { token in
+            // Assuming token.style is an enum, convert it to a string representation
+            // Adjust "purple" / "orange" / "normal" based on how your enum is actually defined
+            let styleString: String
+            switch token.style {
+            case .purple: styleString = "purple"
+            case .orange: styleString = "orange"
+            default: styleString = "normal"
+            }
+            
+            return ExportableToken(text: token.text, styleRawValue: styleString, order: token.order)
+        }
+        
+        // 2. Still extract the plain text for the Notification Service
         let plainText = affirmation.tokens
             .sorted(by: { $0.order < $1.order })
             .map { $0.text }
             .joined(separator: " ")
         
-        // Push the App Group and Widget update to a background task so it
-        // doesn't block or crash the main UI thread during navigation.
+        // 3. Refresh Widget Context via App Group Data (Using JSON now)
         Task.detached {
-            if let sharedDefaults = UserDefaults(suiteName: "group.com.Solaced") {
-                sharedDefaults.set(plainText, forKey: "activeAffirmation")
+            if let sharedDefaults = UserDefaults(suiteName: "group.com.Solaced"),
+               let encodedData = try? JSONEncoder().encode(exportableTokens) {
+                
+                // Save the raw JSON data instead of the plain string
+                sharedDefaults.set(encodedData, forKey: "activeAffirmationTokens")
+                
                 WidgetCenter.shared.reloadTimelines(ofKind: "SolaceWidget")
+            }
+        }
+        
+        // 4. Synchronize Local Push Notifications (Requires plain text)
+        Task {
+            let hasPermission = await NotificationService.shared.requestPermission()
+            if hasPermission {
+                let interval = IntervalTime(rawValue: teacher?.affirmationInterval ?? "") ?? .onetime
+                NotificationService.shared.schedule(for: interval, affirmation: plainText)
             }
         }
     }
