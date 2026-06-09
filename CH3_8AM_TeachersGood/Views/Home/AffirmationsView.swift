@@ -329,5 +329,4 @@ struct AffirmationsView: View {
     
     return AffirmationsView()
         .modelContainer(container)
-        .preferredColorScheme(ColorScheme.dark)
 }

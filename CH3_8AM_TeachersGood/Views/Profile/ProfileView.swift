@@ -20,7 +20,8 @@ struct ProfileView: View {
             VStack {
                 List {
                     Section(header: Text("Personal")
-                        .foregroundStyle(Color.appGradientPurpleStart)
+                            //                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .foregroundStyle(Color.appGradeBorder)
                         .font(.custom("Futura", size: 18))
                     ) {
                         NavigationLink {
@@ -44,8 +45,10 @@ struct ProfileView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color.appBackground)
                     Section(header: Text("Preferences")
-                        .foregroundStyle(Color.appGradientPurpleStart)
+                            //                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .foregroundStyle(Color.appGradeBorder)
                         .font(.custom("Futura", size: 18))
                     ) {
                         NavigationLink {
@@ -69,8 +72,10 @@ struct ProfileView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color.appBackground)
                     Section(header: Text("Privacy")
-                        .foregroundStyle(Color.appGradientPurpleStart)
+                            //                        .foregroundStyle(Color.appGradientPurpleStart)
+                        .foregroundStyle(Color.appGradeBorder)
                         .font(.custom("Futura", size: 18))
                     ) {
                         NavigationLink {
@@ -83,6 +88,7 @@ struct ProfileView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color.appBackground)
                 }
                 .scrollContentBackground(.hidden)
                 .shadow(color: Color.appProfileShadow.opacity(0.4), radius: 10, x: 0, y: 4)
@@ -96,4 +102,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .preferredColorScheme(ColorScheme.dark)
 }
