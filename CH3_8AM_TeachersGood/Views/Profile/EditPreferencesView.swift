@@ -36,11 +36,14 @@ struct EditPreferencesView: View {
                                 Spacer()
                                 if appearanceMode == mode.rawValue {
                                     Image(systemName: "checkmark")
-                                        .foregroundStyle(Color.appGradientPurpleStart)
+                                    //                                        .foregroundStyle(Color.appGradientPurpleStart)
+                                        .foregroundColor(.appPrimaryLight)
+                                        .font(.body.bold())
                                 }
                             }
                         }
                         .foregroundStyle(.primary)
+                        .listRowBackground(Color.appBackground)
                     }
                 }
                 .scrollContentBackground(.hidden)
