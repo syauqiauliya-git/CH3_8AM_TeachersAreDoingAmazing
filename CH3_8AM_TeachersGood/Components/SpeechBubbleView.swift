@@ -23,7 +23,7 @@ struct SpeechBubbleView: View {
             .foregroundColor(.appTextAlt)
             .opacity(0.75)
             .multilineTextAlignment(.leading)
-            .frame(maxWidth: isThingyTip ? 180 : 200, alignment: .leading)
+            .frame(maxWidth: isThingyTip ? 150 : 200, alignment: .leading)
             .padding(.horizontal, isThingyTip ? 10 : 20)
             .padding(.vertical, isThingyTip ? 10 : 20)
             .background(

@@ -18,6 +18,15 @@ struct AffirmationsView: View {
     
     @State private var selectedAffirmation: Affirmation?
     @State private var showThingyTip: Bool = false
+    @State private var tipTask: Task<Void, Never>? = nil
+    @State private var tipIndex: Int = 0
+
+    private let tips = [
+        "Double tap to like!",
+        "Connect your action button to Thingy through settings!",
+        "You can add widgets!",
+        "Thingy can suggest relevant articles!"
+    ]
     
     var body: some View {
         VStack {
@@ -25,19 +34,33 @@ struct AffirmationsView: View {
             HStack(alignment: .center) {
                 
                 Button(action: {
-                    showThingyTip.toggle()
+                    tipTask?.cancel()
                     
+                    if showThingyTip {
+                        withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
+                    } else {
+                        tipIndex = (tipIndex + 1) % tips.count
+                        withAnimation(.easeIn(duration: 0.15)) { showThingyTip = true }
+                        tipTask = Task {
+                            try? await Task.sleep(for: .seconds(2))
+                            guard !Task.isCancelled else { return }
+                            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
+                        }
+                    }
                 }) {
                     GifWebView(gifName: ThingyState.idle.mode)
                         .frame(width: 80, height: 80)
-                        .padding(.trailing, 20)
-                        .padding(.leading, 5)
+                        .allowsHitTesting(false)
                 }
+                .frame(width: 80, height: 80)
+                .contentShape(Rectangle())
+                .padding(.trailing, 5)
+                .padding(.leading, 5)
                 
                 Spacer()
                 
                 if showThingyTip {
-                    SpeechBubbleView(text: "Double tap to like!", tail: .left, isThingyTip: true)
+                    SpeechBubbleView(text: tips[tipIndex], tail: .left, isThingyTip: true)
                         .transition(.opacity)
                 }
                 
@@ -46,13 +69,14 @@ struct AffirmationsView: View {
                 } label: {
                     Image(systemName: "person")
                         .font(.system(size: 20))
-                        .foregroundStyle(Color.appPrimaryLight)
+                        .foregroundStyle(Color.appGradientPurpleStart)
                 }
                 .frame(width: 50, height: 50)
-                .frame(maxWidth: .infinity, alignment: .topTrailing)
                 .buttonBorderShape(.circle)
                 .buttonStyle(.glass)
                 .controlSize(ControlSize.large)
+                .padding(.leading, 15)
+                
             }
             .padding(.top, 35)
             
@@ -71,14 +95,8 @@ struct AffirmationsView: View {
         .padding(25)
         .background(Color.appBackground)
         .navigationBarBackButtonHidden(true)
-        
-        // 1. Explicitly hide the system navigation bar so it stops reserving invisible space
         .toolbar(.hidden, for: .navigationBar)
-        
-        // 2. Push the entire VStack up into the top physical boundary of the device
         .ignoresSafeArea(edges: .top)
-        
-        // You can remove the top toolbar background modifiers since the bar is now hidden
         .toolbarBackground(.visible, for: .bottomBar)
         .toolbarBackground(Color.appBackground, for: .bottomBar)
         .toolbar {
