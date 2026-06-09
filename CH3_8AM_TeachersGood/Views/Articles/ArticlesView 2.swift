@@ -146,6 +146,10 @@ struct ArticlesView: View {
                     UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .selected)
                     UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .normal)
                 }
+<<<<<<< HEAD
+//                }
+=======
+>>>>>>> novia
                 VStack {
                     HStack(spacing: 10) {
                         Text(sortOption == .recent ? "Recents" : "A–Z")
