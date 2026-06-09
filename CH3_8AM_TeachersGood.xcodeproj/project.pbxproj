@@ -76,21 +76,10 @@
 			membershipExceptions = (
 				"CH3-8AM-TeachersGood-Info.plist",
 				CreativeAssets/Fonts/ThingySmile.gif,
-				"Markdown/a-rare-dedication-to-education.md",
 			);
 			target = 0044B05B2FC3F56200385DFC /* CH3_8AM_TeachersGood */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		FDC9BEA72FD6429C00E1E6E6 /* Exceptions for "CH3_8AM_TeachersGood" folder in "Compile Sources" phase from "CH3_8AM_TeachersGood" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 0044B0582FC3F56200385DFC /* Sources */;
-			membershipExceptions = (
-				"Markdown/a-rare-dedication-to-education.md",
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		003CD7462FD164BF00A029FF /* SolaceWidget */ = {
@@ -105,7 +94,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				00BE7D672FD2502100465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "CH3_8AM_TeachersGood" target */,
-				FDC9BEA72FD6429C00E1E6E6 /* Exceptions for "CH3_8AM_TeachersGood" folder in "Compile Sources" phase from "CH3_8AM_TeachersGood" target */,
 				00BE7D652FD180E500465DB1 /* Exceptions for "CH3_8AM_TeachersGood" folder in "SolaceWidgetExtension" target */,
 			);
 			path = CH3_8AM_TeachersGood;

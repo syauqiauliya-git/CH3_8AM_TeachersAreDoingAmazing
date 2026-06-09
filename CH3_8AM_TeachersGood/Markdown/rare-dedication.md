@@ -67,3 +67,4 @@ Ma'am Teng's experience highlights the often unseen sacrifices teachers make in 
 ## Conclusion
 
 Ma'am Teng's journey is both inspiring and cautionary. Her commitment transformed the lives of countless students, but it also taught her the importance of being present for the people closest to her. Through her story, we gain a deeper appreciation for educators and the balancing act they perform every day in shaping the future while caring for their own families. (Pilipinas Shell Foundation, Inc. -)
+
