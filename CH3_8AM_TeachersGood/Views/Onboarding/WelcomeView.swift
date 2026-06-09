@@ -12,7 +12,8 @@ struct WelcomeView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {                
+            ZStack {
+                Color.appBackground.ignoresSafeArea()
                 // Stage 0 logo
                 if stage == 0 {
                     VStack {
@@ -40,7 +41,7 @@ struct WelcomeView: View {
                         
                         //MascotView(size: 350)
                         GifWebView(gifName: ThingyState.idle.mode)
-                            .frame(width: 300, height: 300)
+                            .frame(width: 250, height: 250)
                                                 
                         Spacer()
                         

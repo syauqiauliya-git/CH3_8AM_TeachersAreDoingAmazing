@@ -32,7 +32,7 @@ struct MainVoiceInputView: View {
             Spacer()
             
             GifWebView(gifName: currentState.thingyMode )
-                .frame(width: 300, height: 300)
+                .frame(width: 250, height: 250)
 
             Spacer()
             
