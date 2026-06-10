@@ -35,19 +35,32 @@ struct SuggestedStoriesView: View {
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(.isHeader)
 
-            // Horizontal layout wrapped inside a scroll container to gracefully manage size bounds
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(stories, id: \.id) { story in
-                        Button(action: {
-                            externalSelectedStory = story
-                        }) {
-                            StoryCardView(title: story.title, imageName: story.image)
-                        }
-                        .buttonStyle(.plain)
-                    }
+            // A single story can't fill the width, so center it instead of
+            // letting the horizontal scroll view pin it to the leading edge.
+            if stories.count == 1, let story = stories.first {
+                Button(action: {
+                    externalSelectedStory = story
+                }) {
+                    StoryCardView(title: story.title, imageName: story.image)
                 }
+                .buttonStyle(.plain)
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, 24)
+            } else {
+                // Horizontal layout wrapped inside a scroll container to gracefully manage size bounds
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(stories, id: \.id) { story in
+                            Button(action: {
+                                externalSelectedStory = story
+                            }) {
+                                StoryCardView(title: story.title, imageName: story.image)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal, 24)
+                }
             }
 
             Button(action: { dismiss() }) {
@@ -104,4 +117,24 @@ struct StoryCardView: View {
         .background(Color.appSpeechBubble)
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
+}
+
+#Preview("Single story") {
+    SuggestedStoriesView(
+        stories: [
+            Story(title: "Caring for Little Hearts", image: "placeholder-article-pic")
+        ],
+        externalSelectedStory: .constant(nil)
+    )
+}
+
+#Preview("Multiple stories") {
+    SuggestedStoriesView(
+        stories: [
+            Story(title: "Caring for Little Hearts", image: "placeholder-article-pic"),
+            Story(title: "A Hope in Every Click", image: "placeholder-article-pic"),
+            Story(title: "Rare Dedication", image: "placeholder-article-pic")
+        ],
+        externalSelectedStory: .constant(nil)
+    )
 }
