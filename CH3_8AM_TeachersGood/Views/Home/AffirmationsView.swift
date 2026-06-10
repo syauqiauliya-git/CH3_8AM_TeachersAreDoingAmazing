@@ -207,6 +207,8 @@ struct AffirmationsView: View {
                 part.foregroundColor = .appTextBnW
             case .purple:
                 part.foregroundColor = .purpleHighlight
+                part.font = .custom("Canela-Bold", size: 34).weight(.bold)
+            case .orange:
                 part.foregroundColor = .orangeHighlight
                 part.font = .custom("Canela-Bold", size: 34).weight(.bold)
             }
