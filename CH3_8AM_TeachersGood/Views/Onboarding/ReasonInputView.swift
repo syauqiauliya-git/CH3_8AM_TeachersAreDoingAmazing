@@ -16,8 +16,11 @@ struct ReasonInputView: View {
     @State private var showConfirmation = false
     @State private var isOnboarding = true
     
+    @State private var speechManager = SpeechRecognitionManager()
+    
     // NEW: Dummy state solely designed to appease the RecordView parameter requirements
     @State private var manuallyTypedText: String = ""
+    @State private var finalTranscript: String = ""
     
     var body: some View {
         VStack{
@@ -43,8 +46,13 @@ struct ReasonInputView: View {
 
             Spacer()
             
-            // Pass the dummy variable into the constructor
-            RecordView(currentState: $currentState, audioLevels: $audioLevels, showConfirmation: $showConfirmation, isOnboarding: $isOnboarding, typedText: $manuallyTypedText)
+            RecordView(
+                currentState: $currentState,
+                audioLevels: $audioLevels,
+                showConfirmation: $showConfirmation,
+                isOnboarding: $isOnboarding,
+                typedText: $manuallyTypedText
+            )
                         
         }
         .background(Color.appBackground.ignoresSafeArea())
@@ -58,7 +66,34 @@ struct ReasonInputView: View {
             }
         }
         .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
-
+        
+        .onChange(of: currentState) {
+            Task {
+                switch currentState {
+                case .recording:
+                    await speechManager.startTranscribing()
+                    
+                case .finishedOnboarding:
+                    await speechManager.stopTranscribing()
+                    
+                    // Logic untuk memprioritaskan teks manual dibandingkan suara
+                    let userTranscript = manuallyTypedText.isEmpty ? speechManager.recognizedText : manuallyTypedText
+                    
+                    // Simpan hasil untuk dikirim ke view selanjutnya (opsional)
+                    finalTranscript = userTranscript
+                    
+                    // Bersihkan buffer agar tidak bocor ke sesi berikutnya
+                    manuallyTypedText = ""
+                    
+                case .readyOnboarding:
+                    await speechManager.stopTranscribing()
+                    
+                default:
+                    // Handle state lain jika diperlukan (misal: .ready, .finished, .next)
+                    break
+                }
+            }
+        }
     }
 }
 
