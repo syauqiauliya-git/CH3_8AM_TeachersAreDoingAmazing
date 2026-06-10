@@ -90,7 +90,7 @@ struct AffirmationsView: View {
                     if showHeartAnimation {
                         Image(systemName: "heart.fill")
                             .font(.system(size: 150))
-                            .foregroundStyle(Color.appGradientPurpleStart) // Adjust color as needed
+                            .foregroundStyle(Color.startSendRecord) // Adjust color as needed
                             .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                             .transition(.asymmetric(
                                 insertion: .scale(scale: 0.5).combined(with: .opacity),
