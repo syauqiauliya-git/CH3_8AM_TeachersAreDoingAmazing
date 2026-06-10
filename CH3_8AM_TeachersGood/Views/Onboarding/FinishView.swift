@@ -17,6 +17,8 @@ struct FinishView: View {
     @State private var navigateToHome = false
     @State private var progress: CGFloat = 0.0
     
+    @Environment(\.accessibilityVoiceOverEnabled) var isVoiceOverEnabled
+    
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     
@@ -58,6 +60,7 @@ struct FinishView: View {
                                     height: 5
                                 )
                         }
+                        .accessibilityHidden(true)
                     }
                     
                     //REAL PROGRESS BAR
@@ -82,7 +85,7 @@ struct FinishView: View {
                     .padding(.horizontal, 60)
                     .padding(.bottom, 100)
                     .transition(.opacity)
-                    
+                    .accessibilityHidden(true)
                     
                     Spacer()
                     
@@ -121,11 +124,19 @@ struct FinishView: View {
     
     func startSequence() {
         Task {
-            try? await Task.sleep(for: .seconds(1.5))
+            let initialDelay = isVoiceOverEnabled ? 5.0 : 3
+            let loadingDelay = isVoiceOverEnabled ? 3.5 : 2
+            
+            try? await Task.sleep(for: .seconds(initialDelay))
             
             withAnimation { stage = 2 }
-            withAnimation(.linear(duration: 1.5)) { progress = 1.0 }
-            try? await Task.sleep(for: .seconds(1.5))
+            
+            if isVoiceOverEnabled {
+                UIAccessibility.post(notification: .announcement, argument: "Thingy says, \(bubbleText)")
+            }
+            
+            withAnimation(.linear(duration: loadingDelay)) { progress = 1.0 }
+            try? await Task.sleep(for: .seconds(loadingDelay))
             
             withAnimation(.easeInOut(duration: 0.5)) {
                 hasCompletedOnboarding = true

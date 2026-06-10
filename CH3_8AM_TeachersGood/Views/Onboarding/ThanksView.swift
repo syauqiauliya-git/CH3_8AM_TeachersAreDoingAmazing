@@ -12,6 +12,8 @@ struct ThanksView: View {
     
     @State private var stage = 0
     
+    @Environment(\.accessibilityVoiceOverEnabled) var isVoiceOverEnabled
+    
     var body: some View {
         
         VStack {
@@ -55,12 +57,22 @@ struct ThanksView: View {
             
         }
         .background(Color.appBackground.ignoresSafeArea())
-        .onAppear { startSequence() }
-        
+        .onAppear {
+            if isVoiceOverEnabled {
+                stage = 1
+            } else {
+                startSequence()
+            }
+        }
+
         
     }
     
     var bubbleText: String {
+        if isVoiceOverEnabled {
+            return "I'm always here to listen. Thank you for sharing. I'll be checking up on you every now and then."
+        }
+        
         switch stage {
         case 1: return "I'll be checking up on you every now and then"
         default: return "I'm always here to listen. Thank you for sharing"
