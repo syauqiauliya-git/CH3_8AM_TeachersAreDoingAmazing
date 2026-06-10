@@ -17,8 +17,10 @@ class Teacher {
     var likedAffirmations: [Affirmation]
     var currentAffirmationID: String
     var lastShownAt: Date
+    var reasonVoiceTranscript: String
+    var latestVoiceEntryTranscript: String?
     
-    init(name: String = "", grade: String = "", affirmationInterval: String = "", savedStories: [Story] = [], likedAffirmations: [Affirmation] = [], currentAffirmationID: String = "", lastShownAt: Date = .distantPast) {
+    init(name: String = "", grade: String = "", affirmationInterval: String = "", savedStories: [Story] = [], likedAffirmations: [Affirmation] = [], currentAffirmationID: String = "", lastShownAt: Date = .distantPast, reasonVoiceTranscript: String = "", latestVoiceEntryTranscript: String? = nil) {
         self.name = name
         self.grade = grade
         self.affirmationInterval = affirmationInterval
@@ -26,5 +28,7 @@ class Teacher {
         self.likedAffirmations = likedAffirmations
         self.currentAffirmationID = currentAffirmationID
         self.lastShownAt = lastShownAt
+        self.reasonVoiceTranscript = reasonVoiceTranscript
+        self.latestVoiceEntryTranscript = latestVoiceEntryTranscript
     }
 }
