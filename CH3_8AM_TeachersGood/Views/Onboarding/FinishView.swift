@@ -35,50 +35,93 @@ struct FinishView: View {
                     
                     GifWebView(gifName: "ThingySmile")
                         .frame(width: 250, height: 250)
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel("Thingy is smiling")
-                        .accessibilityAddTraits(.isImage)
-                    
-                    // REAL PROGRESS BAR
-                    GeometryReader { proxy in
-                        ZStack(alignment: .leading) {
-                            // Track
-                            Capsule()
-                                .fill(Color.appPrimaryLight)
-                                .opacity(stage >= 2 ? 0.15 : 0)
-                                .frame(height: 5)
-                            // Fill
-                            Capsule()
-                                .fill(Color.appPrimaryLight)
-                                .opacity(stage >= 2 ? 1 : 0)
-                                .frame(
-                                    width: proxy.size.width * progress,
-                                    height: 5
-                                )
-                        }
-                    }
-                    .frame(height: 5)
-                    .padding(.horizontal, 60)
-                    // Pushed bottom padding down to align with upstream's filler layout intention
-                    .padding(.bottom, 20)
-                    .transition(.opacity)
-                    .accessibilityHidden(true)
-                    
+
                     Spacer()
                     
-                    Text("Tap to continue")
-                        .font(.system(size: 14))
-                        .foregroundColor(.appTextSecondary)
-                        .opacity(stage == 1 ? 1 : 0)
+                    // ZStack to cleanly swap the bottom layout elements based on the current stage
+                    ZStack(alignment: .bottom) {
+                        
+                        // STAGE 3: REAL PROGRESS BAR
+                        GeometryReader { proxy in
+                            ZStack(alignment: .leading) {
+                                Capsule()
+                                    .fill(Color.appPrimaryLight)
+                                    .opacity(stage >= 3 ? 0.15 : 0)
+                                    .frame(height: 5)
+                                Capsule()
+                                    .fill(Color.appPrimaryLight)
+                                    .opacity(stage >= 3 ? 1 : 0)
+                                    .frame(
+                                        width: proxy.size.width * progress,
+                                        height: 5
+                                    )
+                            }
+                        }
+                        .frame(height: 5)
+                        .padding(.horizontal, 60)
+                        .padding(.bottom, 150)
+                        .opacity(stage == 3 ? 1 : 0)
                         .animation(.easeInOut, value: stage)
-                        .padding(.bottom, 40)
+                        .accessibilityHidden(true)
+                    
+                                                
+                        // STAGE 2: APPLE INTELLIGENCE PROMPT
+                        if stage == 2 {
+                            VStack(spacing: 16) {
+                                HStack(alignment: .top, spacing: 4) {
+                                    Image(systemName: "info.circle")
+                                    Text("Apple Intelligence is supported on iPhone 15 Pro models and all iPhone 16 models or later.")
+                                }
+                                .font(.custom("Nunito-Medium", size: 13))
+                                .foregroundColor(.appPrimaryLight)
+                                .opacity(0.6)
+                                .padding(.horizontal, 20)
+                                
+                                Button(action: {
+                                    // Deep link directly to the iOS Settings app
+                                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                                        UIApplication.shared.open(url)
+                                    }
+                                    startLoading()
+                                }) {
+                                    Text("Go to Settings")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .foregroundColor(.appBackground)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 16)
+                                        .background(Color.startSendRecord)
+                                        .cornerRadius(20)
+                                }
+                                
+                                Button(action: {
+                                    startLoading()
+                                }) {
+                                    Text("Skip")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .foregroundColor(.startSendRecord)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.vertical, 16)
+                                        .background(Color.clear)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(Color.startSendRecord, lineWidth: 1)
+                                        )
+                                }
+                            }
+                            .padding(.horizontal, 35)
+                            .padding(.bottom, 32)
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+                        }
+                    }
+                    
                 }
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
+            // Only allow standard screen taps to progress Stage 1
             guard stage == 1 else { return }
-            startLoading()
+            withAnimation { stage = 2 }
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $navigateToHome) {
@@ -90,19 +133,17 @@ struct FinishView: View {
     var bubbleText: String {
         switch stage {
         case 1: return "We will meet again later. Feel free to reach out whenever you need."
+        case 2: return "For a better experience, please turn on Apple Intelligence, if available on your device."
         default: return "Adjusting the experience just for you..."
         }
     }
 
     func startLoading() {
+        // Immediately progress to the final loading state
+        withAnimation { stage = 3 }
+        
         Task {
-            // Determine delays dynamically based on current accessibility requirements
-            let initialDelay = isVoiceOverEnabled ? 5.0 : 3.0
             let loadingDelay = isVoiceOverEnabled ? 3.5 : 2.0
-            
-            try? await Task.sleep(for: .seconds(initialDelay))
-            
-            withAnimation { stage = 2 }
             
             if isVoiceOverEnabled {
                 UIAccessibility.post(notification: .announcement, argument: "Thingy says, \(bubbleText)")
@@ -115,7 +156,6 @@ struct FinishView: View {
                 hasCompletedOnboarding = true
             }
             
-            // Trigger the stashed navigation routing after onboarding concludes
             navigateToHome = true
         }
     }

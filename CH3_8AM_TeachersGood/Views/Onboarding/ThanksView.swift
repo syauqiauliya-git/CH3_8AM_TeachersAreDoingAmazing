@@ -27,8 +27,7 @@ struct ThanksView: View {
                         stage
                     ) // forces transition to re-trigger on text change
                     .transition(.opacity)
-                
-                //   MascotView(size: 300, currentMode: stage >= 1 ? .normal : .blink)
+
                 GifWebView(gifName: ThingyState.smile.mode)
                     .frame(width: 250, height: 250)
                     .accessibilityElement(children: .ignore)
@@ -77,7 +76,7 @@ struct ThanksView: View {
         }
         
         switch stage {
-        case 1: return "I'll be checking up on you every now and then"
+        case 1: return "I'll check you up every now and then"
         default: return "I'm always here to listen. Thank you for sharing"
         }
     }

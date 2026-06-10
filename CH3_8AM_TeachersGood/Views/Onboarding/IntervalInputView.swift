@@ -38,7 +38,7 @@ struct IntervalInputView: View {
                     .accessibilityLabel("Thingy is looking to the text bubble on the right")
                     .accessibilityAddTraits(.isImage)
                 SpeechBubbleView(
-                    text: "How often do you want to receive affirmations?",
+                    text: "How often do you want me to check up on you?",
                     tail: .left
                 )
                 Spacer()
