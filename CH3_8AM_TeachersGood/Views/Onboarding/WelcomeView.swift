@@ -10,6 +10,8 @@ import SwiftUI
 struct WelcomeView: View {
     @State private var stage = 0
     
+    @Environment(\.accessibilityVoiceOverEnabled) var isVoiceOverEnabled
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -66,7 +68,13 @@ struct WelcomeView: View {
                     }
                 }
             }
-            .onAppear { startSequence() }
+            .onAppear {
+                if isVoiceOverEnabled {
+                    stage = 5
+                } else {
+                    startSequence()
+                }
+            }
             .background(Color.appBackground.ignoresSafeArea())
 
         }
@@ -74,6 +82,10 @@ struct WelcomeView: View {
     
     
     var bubbleText: String {
+        if isVoiceOverEnabled {
+            return "Hey! I'm Thingy, an orange blob who will accompany you on your journey to better days. I'm going to help you lift up your mood!! In order to help you, I want to ask you some questions. Be honest and sincere. I’ll keep it between us. Please answer based on your current conditions, okay?"
+        }
+        
         switch stage {
         case 1: return "\nHey!\n"
         case 2: return "I'm Thingy. I'm going to help you lift up your mood!!"

@@ -62,16 +62,19 @@ extension RecordView {
                             .stroke(Color.appSpeechBubble, lineWidth: 2.0)
                     )
                     .focused($isTextFieldFocused)
-                    
+                
                 Button(action: handleSendText) {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
                         .padding(13)
                         .background(
-                            Color.startSendRecord
+                            inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                            ? Color.startSendRecord.opacity(0.6)
+                            : Color.startSendRecord
                         )
                         .clipShape(Circle())
                 }
+                .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .accessibilityLabel(Text("Send text message to thingy"))
             }
             .padding(.horizontal, 20)
@@ -229,6 +232,9 @@ extension RecordView {
     }
     
     private func handleSendText() {
+        
+        guard !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        
         print("Sent: \(inputText)")
         
         // Capture the value globally before resetting the UI state

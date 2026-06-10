@@ -76,20 +76,16 @@ struct ReasonInputView: View {
                 case .finishedOnboarding:
                     await speechManager.stopTranscribing()
                     
-                    // Logic untuk memprioritaskan teks manual dibandingkan suara
                     let userTranscript = manuallyTypedText.isEmpty ? speechManager.recognizedText : manuallyTypedText
                     
-                    // Simpan hasil untuk dikirim ke view selanjutnya (opsional)
                     finalTranscript = userTranscript
                     
-                    // Bersihkan buffer agar tidak bocor ke sesi berikutnya
                     manuallyTypedText = ""
                     
                 case .readyOnboarding:
                     await speechManager.stopTranscribing()
                     
                 default:
-                    // Handle state lain jika diperlukan (misal: .ready, .finished, .next)
                     break
                 }
             }

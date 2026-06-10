@@ -25,4 +25,17 @@ enum ThingyState {
             return "ThingySmile"
         }
     }
+    
+    var accessibilityText: String {
+        switch self {
+        case .idle:
+            return "Thingy is idling"
+        case .listen:
+            return "Thingy is listening"
+        case .lookright:
+            return "Thingy is looking to the right"
+        case .smile:
+            return "Thingy is smiling"
+        }
+    }
 }

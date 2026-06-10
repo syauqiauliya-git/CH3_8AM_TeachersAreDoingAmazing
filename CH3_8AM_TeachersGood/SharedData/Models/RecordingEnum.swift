@@ -10,9 +10,7 @@ import Foundation
 enum RecordingState {
     case readyOnboarding
     case ready
-    
     case recording
-    
     case finishedOnboarding
     case finished
     
@@ -43,5 +41,13 @@ enum RecordingState {
             return ThingyState.idle.mode
         }
     }
-
+    
+    var thingyAccessibility: String {
+        switch self {
+        case .recording:
+            return ThingyState.listen.accessibilityText
+        default:
+            return ThingyState.idle.accessibilityText
+        }
+    }
 }
