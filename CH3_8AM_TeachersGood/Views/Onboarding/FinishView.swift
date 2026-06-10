@@ -35,6 +35,9 @@ struct FinishView: View {
                     
                     GifWebView(gifName: "ThingySmile")
                         .frame(width: 250, height: 250)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("Thingy is smiling")
+                        .accessibilityAddTraits(.isImage)
                     
                     // REAL PROGRESS BAR
                     GeometryReader { proxy in

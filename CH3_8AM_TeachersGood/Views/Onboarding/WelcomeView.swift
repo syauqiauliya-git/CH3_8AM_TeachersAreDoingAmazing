@@ -39,6 +39,9 @@ struct WelcomeView: View {
 
                         GifWebView(gifName: ThingyState.idle.mode)
                             .frame(width: 250, height: 250)
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel("Thingy is idling")
+                            .accessibilityAddTraits(.isImage)
 
                         Spacer()
 

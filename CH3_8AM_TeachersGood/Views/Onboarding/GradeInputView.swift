@@ -32,6 +32,9 @@ struct GradeInputView: View {
                 GifWebView(gifName: ThingyState.lookright.mode)
                     .frame(width: 80, height: 80)
                     .padding(.trailing, 10)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Thingy is looking to the text bubble on the right")
+                    .accessibilityAddTraits(.isImage)
                 SpeechBubbleView(
                     text: "What grade do you usually teach?",
                     tail: .left

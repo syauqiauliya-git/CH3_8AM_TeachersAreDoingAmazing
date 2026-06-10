@@ -57,8 +57,16 @@ struct SpeechBubbleView: View {
         displayedText = ""
         
         for character in text {
+            if Task.isCancelled { return }
+            
             displayedText.append(character)
-            try? await Task.sleep(nanoseconds: 30_000_000)
+            
+            do {
+                try await Task.sleep(nanoseconds: 30_000_000)
+            } catch {
+
+                return
+            }
         }
     }
     
