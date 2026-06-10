@@ -34,6 +34,9 @@ struct IntervalInputView: View {
                 //MascotView(size: 120)
                 GifWebView(gifName: ThingyState.lookright.mode)
                     .frame(width: 80, height: 80)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Thingy is looking to the text bubble on the right")
+                    .accessibilityAddTraits(.isImage)
                 SpeechBubbleView(
                     text: "How often do you want to receive affirmations?",
                     tail: .left

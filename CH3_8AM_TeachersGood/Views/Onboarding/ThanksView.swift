@@ -31,6 +31,9 @@ struct ThanksView: View {
                 //   MascotView(size: 300, currentMode: stage >= 1 ? .normal : .blink)
                 GifWebView(gifName: ThingyState.smile.mode)
                     .frame(width: 250, height: 250)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Thingy is smiling")
+                    .accessibilityAddTraits(.isImage)
 
                 
                 Spacer()

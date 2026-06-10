@@ -31,6 +31,9 @@ struct NameInputView: View {
             
             GifWebView(gifName: "ThingyIdle")
                 .frame(width: 250, height: 250)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Thingy is idling, waiting for your answer")
+                .accessibilityAddTraits(.isImage)
             // MascotView(size: 350)
             
             Spacer()
