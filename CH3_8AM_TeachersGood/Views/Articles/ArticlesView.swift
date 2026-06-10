@@ -33,7 +33,7 @@ struct ArticleSheetView: View {
                         .padding(30)
                 }
             }
-            .ignoresSafeArea(edges: .top)
+            .navigationTitle(story.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -41,14 +41,24 @@ struct ArticleSheetView: View {
                         Label("Close", systemImage: "xmark")
                     }
                 }
+                //                ToolbarItem(placement: .topBarTrailing) {
+                //                    Button {
+                //                        story.isBookmarked.toggle()
+                //                    } label: {
+                //                        Image(systemName: story.isBookmarked ? "bookmark.fill" : "bookmark")
+                //                            .foregroundStyle(Color.startSendRecord)
+                //                    }
+                //                }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
+                    Button(action: {
                         story.isBookmarked.toggle()
-                    } label: {
+                    }) {
                         Image(systemName: story.isBookmarked ? "bookmark.fill" : "bookmark")
-                            .foregroundStyle(Color.appPrimaryLight)
+                            .font(.system(size: 20))
+                            .foregroundStyle(Color.startSendRecord)
                     }
                 }
+                .sharedBackgroundVisibility(.hidden)
             }
         }
     }
@@ -92,40 +102,40 @@ struct ArticlesView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack {
-//                TabView(selection: $currentIndex) {
-//                    ForEach(0..<min(3, stories.count), id: \.self) { index in
-//                        let story = stories[index]
-//                        Button {
-//                            selectedStory = story
-//                        } label: {
-//                            VStack(alignment: .leading, spacing: 6) {
-//                                Text(story.title)
-//                                    .font(.title.bold())
-//                                Text(story.summary)
-//                                    .font(.subheadline)
-//                                    .lineLimit(2)
-//                                    .opacity(0.8)
-//                            }
-//                            .foregroundStyle(Color.white)
-//                            .padding(20)
-//                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-//                            .background {
-//                                ZStack {
-//                                    Image(story.image)
-//                                        .resizable()
-//                                        .scaledToFill()
-//                                    LinearGradient(
-//                                        colors: [.clear, .black.opacity(1.5)],
-//                                        startPoint: .center,
-//                                        endPoint: .bottom
-//                                    )
-//                                }
-//                            }
-//                        }
-//                        .buttonStyle(.plain)
-//                        .tag(index)
-//                    }
-//                }
+                //                TabView(selection: $currentIndex) {
+                //                    ForEach(0..<min(3, stories.count), id: \.self) { index in
+                //                        let story = stories[index]
+                //                        Button {
+                //                            selectedStory = story
+                //                        } label: {
+                //                            VStack(alignment: .leading, spacing: 6) {
+                //                                Text(story.title)
+                //                                    .font(.title.bold())
+                //                                Text(story.summary)
+                //                                    .font(.subheadline)
+                //                                    .lineLimit(2)
+                //                                    .opacity(0.8)
+                //                            }
+                //                            .foregroundStyle(Color.white)
+                //                            .padding(20)
+                //                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                //                            .background {
+                //                                ZStack {
+                //                                    Image(story.image)
+                //                                        .resizable()
+                //                                        .scaledToFill()
+                //                                    LinearGradient(
+                //                                        colors: [.clear, .black.opacity(1.5)],
+                //                                        startPoint: .center,
+                //                                        endPoint: .bottom
+                //                                    )
+                //                                }
+                //                            }
+                //                        }
+                //                        .buttonStyle(.plain)
+                //                        .tag(index)
+                //                    }
+                //                }
                 TabView(selection: $currentIndex) {
                     ForEach(Array(featuredStories.enumerated()), id: \.element.id) { index, story in
                         Button {
@@ -271,9 +281,9 @@ struct ArticlesView: View {
     let context = container.mainContext
     
     context.insert(Story(
-        title: "A Rare Dedication to Education",
-        mdFileName: "rare-dedication",
-        image: "placeholder-article-pic",
+        title: "Inspirational Teachers: Teaching Award Winners Share Who Made an Impact on Them",
+        mdFileName: "inspirational-teachers-teaching-award",
+        image: "inspirational-teachers-teaching",
         summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         isBookmarked: false,
         isFeatured: true,
@@ -283,7 +293,7 @@ struct ArticlesView: View {
     context.insert(Story(
         title: "A Rare Dedication to Education",
         mdFileName: "rare-dedication",
-        image: "placeholder-article-pic",
+        image: "a-rare-dedication",
         summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         isBookmarked: false,
         isFeatured: true,
