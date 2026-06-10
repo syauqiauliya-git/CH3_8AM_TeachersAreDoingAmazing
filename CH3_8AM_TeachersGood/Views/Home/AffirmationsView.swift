@@ -145,16 +145,15 @@ struct AffirmationsView: View {
                 NavigationLink {
                     MainVoiceInputView()
                 } label: {
-                    Circle()
-                        .fill(Color.appGradeBorder)
-                        .frame(width: 50, height: 50)
-                        .overlay(
-                            Image(systemName: "ellipsis.message.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(.white)
-                        )
+                    Image(systemName: "ellipsis.message.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
                 }
-                .buttonStyle(.plain)
+                .frame(width: 50, height: 50)
+                .buttonBorderShape(.circle)
+                .buttonStyle(.glassProminent)
+                .controlSize(.large)
+                .tint(Color.appGradeBorder)
                 .accessibilityLabel(Text("Talk to thingy"))
             }
         }
