@@ -25,16 +25,6 @@ struct IntervalInputView: View {
             
             // PAGE NUMBER
             
-            HStack {
-                Spacer()
-                Text("4 of 4")
-                    .font(.custom("Futura", size: 14))
-                    .foregroundColor(.appPrimaryLight)
-                    .opacity(0.4)
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 40)
-            
             Spacer()
             
             
@@ -133,6 +123,16 @@ struct IntervalInputView: View {
             if let saved = teacher?.affirmationInterval {
                 selectedInterval = IntervalTime(rawValue: saved)
             }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("4 of 4")
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
+            }
+            .sharedBackgroundVisibility(.hidden)
+
         }
     }
 }

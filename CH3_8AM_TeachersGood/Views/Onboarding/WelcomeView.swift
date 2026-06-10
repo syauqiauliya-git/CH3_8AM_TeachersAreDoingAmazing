@@ -16,39 +16,40 @@ struct WelcomeView: View {
         NavigationStack {
             ZStack {
                 Color.appBackground.ignoresSafeArea()
-                // Stage 0 logo
+
                 if stage == 0 {
                     VStack {
                         Spacer()
                         MascotView(size: 250)
-                        //  GifWebView(gifName: "ThingyIdle")
                         Text("SolacEd")
                             .font(.custom("Futura", size: 30))
                             .foregroundColor(.appTextAlt)
-                        
                         Spacer()
-                        
                     }
                 }
-                
-                // Stages 1+ mascot saying things
+
                 if stage >= 1 {
                     VStack(spacing: 24) {
                         Spacer()
-                        
+
                         SpeechBubbleView(text: bubbleText, tail: .bottomRight)
                             .padding(.horizontal, 40)
                             .id(stage)
                             .transition(.opacity)
-                        
-                        //MascotView(size: 350)
+
                         GifWebView(gifName: ThingyState.idle.mode)
                             .frame(width: 250, height: 250)
-                                                
+
                         Spacer()
-                        
+
+                        // Only shown at stage 1 to teach the mechanic
+                        Text("Tap to continue")
+                            .font(.custom("Futura", size: 13))
+                            .foregroundColor(.appTextAlt)
+                            .opacity(stage == 1 ? 0.5 : 0)
+                            .animation(.easeInOut, value: stage)
+
                         NavigationLink {
-                            //                            NameInputView(teacherName: .constant("")) {}
                             NameInputView()
                         } label: {
                             Text("Let's get started!")
@@ -60,7 +61,6 @@ struct WelcomeView: View {
                                 .cornerRadius(20)
                         }
                         .padding(.horizontal, 35)
-                        .padding(.top, 16)
                         .padding(.bottom, 32)
                         .opacity(stage >= 5 ? 1 : 0)
                         .disabled(stage < 5)
@@ -68,18 +68,23 @@ struct WelcomeView: View {
                     }
                 }
             }
+            // Captures taps across the entire screen real estate
+            .contentShape(Rectangle())
+            .onTapGesture {
+                guard stage < 5 else { return }
+                withAnimation { stage += 1 }
+            }
+            .background(Color.appBackground.ignoresSafeArea())
             .onAppear {
+                // Determines initialization trajectory based on accessibility status
                 if isVoiceOverEnabled {
                     stage = 5
                 } else {
                     startSequence()
                 }
             }
-            .background(Color.appBackground.ignoresSafeArea())
-
         }
     }
-    
     
     var bubbleText: String {
         if isVoiceOverEnabled {
@@ -99,14 +104,6 @@ struct WelcomeView: View {
         Task {
             try? await Task.sleep(for: .seconds(1.5))
             withAnimation { stage = 1 }
-            try? await Task.sleep(for: .seconds(2))
-            withAnimation { stage = 2 }
-            try? await Task.sleep(for: .seconds(2))
-            withAnimation { stage = 3 }
-            try? await Task.sleep(for: .seconds(2))
-            withAnimation { stage = 4 }
-            try? await Task.sleep(for: .seconds(2))
-            withAnimation { stage = 5 }
         }
     }
 }
