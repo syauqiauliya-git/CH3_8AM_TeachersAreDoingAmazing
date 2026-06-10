@@ -68,7 +68,7 @@ struct SuggestedStoriesView: View {
                     .font(.custom("Futura", size: 20))
                     .foregroundColor(.appBackground)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
+                    .frame(height: 57)
                     .background(Color.startSendRecord)
             }
             .cornerRadius(20)
