@@ -83,6 +83,7 @@ struct AffirmationsView: View {
                         if let affirmation = selectedAffirmation {
                             Text(render(affirmation))
                                 .font(.custom("Canela-Regular", size: 34))
+                                .lineSpacing(16)
                                 .multilineTextAlignment(.center)
                         }
                     }
@@ -202,9 +203,12 @@ struct AffirmationsView: View {
             var part = AttributedString(token.text + " ")
             
             switch token.style {
-            case .normal: part.foregroundColor = .appTextBnW
-            case .purple: part.foregroundColor = .purpleHighlight
-            case .orange: part.foregroundColor = .orangeHighlight
+            case .normal:
+                part.foregroundColor = .appTextBnW
+            case .purple:
+                part.foregroundColor = .purpleHighlight
+                part.foregroundColor = .orangeHighlight
+                part.font = .custom("Canela-Bold", size: 34).weight(.bold)
             }
             
             result += part
