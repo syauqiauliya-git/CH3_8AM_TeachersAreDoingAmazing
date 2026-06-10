@@ -47,7 +47,9 @@ struct MainVoiceInputView: View {
                     width: currentState == .next ? 150 : 250,
                     height: currentState == .next ? 150 : 250
                 )
-
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(currentState.thingyAccessibility)
+                .accessibilityAddTraits(.isImage)
             Spacer()
             
             if currentState == .ready || currentState == .recording || currentState == .finished {

@@ -48,8 +48,8 @@ struct AffirmationsView: View {
                     .contentShape(Rectangle())
                     .padding(.trailing, 5)
                     .padding(.leading, 5)
-                    .accessibilityLabel(Text("Mascot"))
-                    .accessibilityHint(Text("Tap to show a tip"))
+                    .accessibilityLabel(Text("I am Thingy"))
+                    .accessibilityHint(Text("Tap me to get a tip"))
                     
                     Spacer()
                     
