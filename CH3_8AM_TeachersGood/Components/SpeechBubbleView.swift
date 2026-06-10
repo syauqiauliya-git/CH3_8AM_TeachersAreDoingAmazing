@@ -19,8 +19,11 @@ struct SpeechBubbleView: View {
     // NEW: Optional variable to override the default width constraints
     var customMaxWidth: CGFloat? = nil
     
+    // var to contain typing animation
+    @State private var displayedText: String = ""
+    
     var body: some View {
-        Text(text)
+        Text(displayedText) // typing animation, originally Text(text)
             .dynamicTypeSize(...DynamicTypeSize.accessibility1)
             .font(.custom("Futura", size: isThingyTip ? 13 : 18))
             .foregroundColor(.appTextAlt)
@@ -42,6 +45,21 @@ struct SpeechBubbleView: View {
                     .offset(tailOffset)
             }
             .accessibilityLabel(Text("Thingy says, \(text)"))
+        
+            // added for typing animation
+            .task(id: text) {
+                await typeOutText()
+            }
+    }
+    
+    // added for typing animation
+    private func typeOutText() async {
+        displayedText = ""
+        
+        for character in text {
+            displayedText.append(character)
+            try? await Task.sleep(nanoseconds: 30_000_000)
+        }
     }
     
     private var tailAlignment: Alignment {
