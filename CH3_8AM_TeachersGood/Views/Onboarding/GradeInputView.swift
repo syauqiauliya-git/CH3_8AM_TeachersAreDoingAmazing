@@ -22,16 +22,6 @@ struct GradeInputView: View {
         VStack{
             // PAGE NUMBER
             
-            HStack {
-                Spacer()
-                Text("2 of 4")
-                    .font(.custom("Futura", size: 14))
-                    .foregroundColor(.appPrimaryLight)
-                    .opacity(0.4)
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 40)
-            
             Spacer()
             
             
@@ -118,8 +108,18 @@ struct GradeInputView: View {
             }
         }
         .background(Color.appBackground.ignoresSafeArea())
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("2 of 4")
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
+            }
+            .sharedBackgroundVisibility(.hidden)
 
+        }
     }
+    
 }
 
 #Preview {

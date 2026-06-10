@@ -24,16 +24,6 @@ struct ReasonInputView: View {
     
     var body: some View {
         VStack{
-            HStack {
-                Spacer()
-                Text("3 of 4")
-                    .font(.custom("Futura", size: 14))
-                    .foregroundColor(.appPrimaryLight)
-                    .opacity(0.4)
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 40)
-            
             Spacer()
             
             SpeechBubbleView(
@@ -56,13 +46,27 @@ struct ReasonInputView: View {
                         
         }
         .background(Color.appBackground.ignoresSafeArea())
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("3 of 4")
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
+            }
+            .sharedBackgroundVisibility(.hidden)
+
+        }
         .navigationDestination(isPresented: $finishOnboarding) {
             ThanksView()
         }
         .overlay {
             if showConfirmation {
-                ConfirmationOverlayView(isPresented: $showConfirmation,
-                onConfirm: { finishOnboarding = true }  )
+                ConfirmationOverlayView(
+                    isPresented: $showConfirmation,
+                    isProcessing: .constant(false),
+                    showProgress: false,
+                    onConfirm: { finishOnboarding = true }
+                )
             }
         }
         .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)

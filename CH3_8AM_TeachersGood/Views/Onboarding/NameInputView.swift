@@ -18,36 +18,26 @@ struct NameInputView: View {
     @State private var teacherName: String = ""
     
     var body: some View {
-
+        
         VStack {
-            HStack {
-                Spacer()
-                Text("1 of 4")
-                    .font(.custom("Futura", size: 14))
-                    .foregroundColor(.appPrimaryLight)
-                    .opacity(0.4)
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 20)
-            .padding(.bottom, 70)
-
-
+            
             SpeechBubbleView(
                 text: "How would you like to be called?",
                 tail: .bottomRight
             )
-
+            .padding(.top, 20)
+            
             Spacer()
-
+            
             GifWebView(gifName: "ThingyIdle")
                 .frame(width: 250, height: 250)
             // MascotView(size: 350)
-
+            
             Spacer()
-
+            
             // INSERT NAME
-
-
+            
+            
             TextField("", text: $teacherName, prompt:
                         Text("Insert your name")
                 .foregroundColor(.appTextAlt)
@@ -64,10 +54,10 @@ struct NameInputView: View {
             )
             .padding(.horizontal, 35)
             .padding(.top, 70)
-
-
+            
+            
             //CONTINUE BUTTON
-
+            
             NavigationLink {
                 GradeInputView()
             } label: {
@@ -90,11 +80,21 @@ struct NameInputView: View {
                 }
             })
             .disabled(teacherName == "")
-
+            
         }
         .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
             teacherName = teacher?.name ?? ""
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("1 of 4")
+                    .font(.custom("Futura", size: 14))
+                    .foregroundColor(.appPrimaryLight)
+                    .opacity(0.4)
+            }
+            .sharedBackgroundVisibility(.hidden) 
+
         }
     }
 }

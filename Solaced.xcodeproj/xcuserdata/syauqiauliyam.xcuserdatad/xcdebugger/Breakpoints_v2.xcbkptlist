@@ -7,63 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "83E63305-462F-4F1E-B12A-8103D5E9CBB8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CH3_8AM_TeachersGood/Services/Inference/InferenceService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "labels"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "1BBBB6E4-F4EE-4A29-A2EB-2D1C3B2A6067"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CH3_8AM_TeachersGood/Views/Home/AffirmationsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "body"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "1BBBB6E4-F4EE-4A29-A2EB-2D1C3B2A6067 - 6f18c9e70aa4bb88"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #3 () async -&gt; () in Solaced.AffirmationsView.body.getter : some"
-                  moduleName = "Solaced.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/syauqiauliyam/Documents/Challenge/CH3/CH3_8AM_TeachersGood/CH3_8AM_TeachersGood/Views/Home/AffirmationsView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164">
-               </Location>
-               <Location
-                  uuid = "1BBBB6E4-F4EE-4A29-A2EB-2D1C3B2A6067 - a47e4a9629e7dd8d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(6) suspend resume partial function for closure #3 () async -&gt; () in Solaced.AffirmationsView.body.getter : some"
-                  moduleName = "Solaced.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/syauqiauliyam/Documents/Challenge/CH3/CH3_8AM_TeachersGood/CH3_8AM_TeachersGood/Views/Home/AffirmationsView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

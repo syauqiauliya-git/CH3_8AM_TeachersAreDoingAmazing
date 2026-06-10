@@ -5,14 +5,12 @@
 //  Created by Syauqi Auliya M on 02/06/26.
 //
 
-
 import SwiftUI
 internal import Combine
 
-
 struct FinishView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
-    
+
     @State private var stage = 1
     @State private var navigateToHome = false
     @State private var progress: CGFloat = 0.0
@@ -21,60 +19,35 @@ struct FinishView: View {
     
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
-    
     var body: some View {
         ZStack {
             Color.appBackground.ignoresSafeArea()
             
-            
-            //
             if stage >= 1 {
                 VStack(spacing: 24) {
                     Spacer()
+                    
                     SpeechBubbleView(text: bubbleText, tail: .bottomRight)
                         .padding(.horizontal, 40)
                         .padding(.top, 50)
-                        .id(
-                            stage
-                        ) // forces transition to re-trigger on text change
+                        .id(stage) // Forces transition to re-trigger on text change
                         .transition(.opacity)
                     
-                    // MascotView(size: 300, currentMode: stage >= 2 ? .normal : .blink)
                     GifWebView(gifName: "ThingySmile")
                         .frame(width: 250, height: 250)
                     
-                    // FILLER FOR LAYOUTING
-                    if stage < 2 {
-                        ZStack(alignment: .leading) {
-                            // Track
-                            Capsule()
-                                .fill(Color.appPrimaryLight)
-                                .opacity(0)
-                                .frame(height: 5)
-                            // Fill
-                            Capsule()
-                                .fill(Color.appPrimaryLight)
-                                .opacity(0)
-                                .frame(
-                                    width: 4,
-                                    height: 5
-                                )
-                        }
-                        .accessibilityHidden(true)
-                    }
-                    
-                    //REAL PROGRESS BAR
-                    
+                    // REAL PROGRESS BAR
                     GeometryReader { proxy in
                         ZStack(alignment: .leading) {
                             // Track
                             Capsule()
                                 .fill(Color.appPrimaryLight)
-                                .opacity(stage == 2 ? 0.15 : 0)
+                                .opacity(stage >= 2 ? 0.15 : 0)
                                 .frame(height: 5)
                             // Fill
                             Capsule()
                                 .fill(Color.appPrimaryLight)
+                                .opacity(stage >= 2 ? 1 : 0)
                                 .frame(
                                     width: proxy.size.width * progress,
                                     height: 5
@@ -83,49 +56,46 @@ struct FinishView: View {
                     }
                     .frame(height: 5)
                     .padding(.horizontal, 60)
-                    .padding(.bottom, 100)
+                    // Pushed bottom padding down to align with upstream's filler layout intention
+                    .padding(.bottom, 20)
                     .transition(.opacity)
                     .accessibilityHidden(true)
                     
                     Spacer()
                     
-                    if stage == 3 {
-                        AffirmationsView()
-                    }
+                    Text("Tap to continue")
+                        .font(.system(size: 14))
+                        .foregroundColor(.appTextSecondary)
+                        .opacity(stage == 1 ? 1 : 0)
+                        .animation(.easeInOut, value: stage)
+                        .padding(.bottom, 40)
                 }
-                .transition(.opacity)
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            guard stage == 1 else { return }
+            startLoading()
+        }
         .navigationBarBackButtonHidden(true)
-//        .navigationDestination(isPresented: $navigateToHome) {
-//            AffirmationsView()
-//                .navigationBarBackButtonHidden(true)
-//        }
-        .onAppear { startSequence() }
-    }
-    
-    var bubbleText: String {
-        switch stage {
-        case 1: return "We will meet again later. Feel free to reach out to me whenever you need"
-        default: return "Adjusting the experience just for you"
+        .navigationDestination(isPresented: $navigateToHome) {
+            AffirmationsView()
+                .navigationBarBackButtonHidden(true)
         }
     }
-    
-    //    func startSequence() {
-    //        Task {
-    //            //Later put actual async loading thing here for the app
-    //            try? await Task.sleep(for: .seconds(1.5))
-    //            withAnimation { stage = 2 }
-    //            withAnimation(.linear(duration: 1.5)) { progress = 1.0 }
-    //            try? await Task.sleep(for: .seconds(1.5))
-    //            navigateToHome = true
-    //        }
-    //    }
-    
-    func startSequence() {
+
+    var bubbleText: String {
+        switch stage {
+        case 1: return "We will meet again later. Feel free to reach out whenever you need."
+        default: return "Adjusting the experience just for you..."
+        }
+    }
+
+    func startLoading() {
         Task {
-            let initialDelay = isVoiceOverEnabled ? 5.0 : 3
-            let loadingDelay = isVoiceOverEnabled ? 3.5 : 2
+            // Determine delays dynamically based on current accessibility requirements
+            let initialDelay = isVoiceOverEnabled ? 5.0 : 3.0
+            let loadingDelay = isVoiceOverEnabled ? 3.5 : 2.0
             
             try? await Task.sleep(for: .seconds(initialDelay))
             
@@ -141,6 +111,9 @@ struct FinishView: View {
             withAnimation(.easeInOut(duration: 0.5)) {
                 hasCompletedOnboarding = true
             }
+            
+            // Trigger the stashed navigation routing after onboarding concludes
+            navigateToHome = true
         }
     }
 }

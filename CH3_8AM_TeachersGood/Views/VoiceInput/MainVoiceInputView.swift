@@ -13,7 +13,7 @@ struct MainVoiceInputView: View {
     @Query var teachers: [Teacher]
     @Query var affirmations: [Affirmation]
     @Query var stories: [Story]
-        
+    
     @State private var currentState: RecordingState = .ready
     @State private var audioLevels: [CGFloat] = Array(repeating: 10.0, count: 7)
     @State private var showConfirmation = false
@@ -28,7 +28,11 @@ struct MainVoiceInputView: View {
     
     // NEW: Captures manually entered transcripts to override audio results
     @State private var manuallyTypedText: String = ""
-        
+    
+    // Process bar for overlay
+    @State private var isProcessingJournal = false
+    
+    
     var body: some View {
         VStack {
             Spacer()
@@ -50,6 +54,7 @@ struct MainVoiceInputView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(currentState.thingyAccessibility)
                 .accessibilityAddTraits(.isImage)
+
             Spacer()
             
             if currentState == .ready || currentState == .recording || currentState == .finished {
@@ -67,7 +72,15 @@ struct MainVoiceInputView: View {
         }
         .overlay {
             if showConfirmation {
-                ConfirmationOverlayView(isPresented: $showConfirmation, onConfirm: {})
+                ConfirmationOverlayView(
+                    isPresented: $showConfirmation,
+                    isProcessing: $isProcessingJournal,
+                    showProgress: true,
+                    onConfirm: {
+                        isProcessingJournal = true
+                        Task { await processJournalEntry() }
+                    }
+                )
             }
         }
         .sheet(item: $sheetSelectedStory) { story in
@@ -85,61 +98,52 @@ struct MainVoiceInputView: View {
                     dynamicBubbleText = nil
                     
                 case .next:
+                    // DO NOT put inference logic here.
+                    // Just ensure transcription is stopped if it wasn't already.
                     await speechManager.stopTranscribing()
-                    dynamicBubbleText = "Give me a second to process that..."
-
-                    // INFERENCE SWITCH: Evaluate typed text first, utilizing the voice manager as a secondary fallback
-                    let userTranscript = manuallyTypedText.isEmpty ? speechManager.recognizedText : manuallyTypedText
-                    
-                    // Clear the buffer immediately to prevent bleeding into subsequent sessions
-                    manuallyTypedText = ""
-                    
-                    let teacherName = teachers.first?.name ?? "Teacher"
-                    let currentAffirmation = affirmations.randomElement()?.tokens
-                        .sorted(by: { $0.order < $1.order })
-                        .map(\.text)
-                        .joined(separator: " ") ?? "You are doing great."
-
-                    do {
-                        let labels = try await InferenceService.shared.extractLabels(from: userTranscript)
-                        var matched = InferenceService.shared.findMatchingStories(from: stories, labels: labels)
-                        
-                        if matched.isEmpty {
-                            matched = Array(stories.shuffled().prefix(2))
-                        }
-                        
-                        let finalSelection = Array(matched.prefix(2))
-                        
-                        await MainActor.run {
-                            suggestedStories = finalSelection
-                        }
-
-                        let response = try await InferenceService.shared.generateThingyResponse(
-                            transcript: userTranscript,
-                            affirmation: currentAffirmation,
-                            teacherName: teacherName
-                        )
-                        await MainActor.run {
-                            dynamicBubbleText = response
-                        }
-                    } catch {
-                        await MainActor.run {
-                            if suggestedStories.isEmpty {
-                                suggestedStories = Array(stories.prefix(2))
-                            }
-                            dynamicBubbleText = "I heard you, but my brain is a little foggy right now. Here are some comforting stories for you!"
-                        }
-                    }
                     
                 case .ready, .readyOnboarding:
                     await speechManager.stopTranscribing()
                     dynamicBubbleText = nil
                 }
             }
-            
-            if dynamicBubbleText == nil {
-                UIAccessibility.post(notification: .announcement, argument: currentState.bubbleText)
-            }
+        }
+    }
+    
+    // For progress bar
+    func processJournalEntry() async {
+        
+        await MainActor.run {
+            dynamicBubbleText = nil
+        }
+        
+        let userTranscript = manuallyTypedText.isEmpty
+        ? speechManager.recognizedText
+        : manuallyTypedText
+        manuallyTypedText = ""
+        
+        let teacherName = teachers.first?.name ?? "Teacher"
+        let currentAffirmation = affirmations.randomElement()?.tokens
+            .sorted(by: { $0.order < $1.order })
+            .map(\.text)
+            .joined(separator: " ") ?? "You are doing great."
+        
+        let labels = await InferenceService.shared.extractLabels(from: userTranscript)
+        var matched = InferenceService.shared.findMatchingStories(from: stories, labels: labels)
+        if matched.isEmpty { matched = Array(stories.shuffled().prefix(2)) }
+        
+        let response = await InferenceService.shared.generateThingyResponse(
+            transcript: userTranscript,
+            affirmation: currentAffirmation,
+            teacherName: teacherName
+        )
+        
+        // 2. Assign the response only when ready
+        await MainActor.run {
+            suggestedStories = Array(matched.prefix(2))
+            dynamicBubbleText = response
+            currentState = .next
+            isProcessingJournal = false
         }
     }
 }
