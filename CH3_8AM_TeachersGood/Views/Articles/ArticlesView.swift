@@ -185,12 +185,13 @@ struct ArticlesView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .shadow(color: Color.appPrimaryLight.opacity(0.2), radius: 2, x: 0, y: 0)
                 .padding(.horizontal, 25)
                 .padding(.vertical, 10)
                 .onAppear {
                     UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(Color.appSpeechBubble)
                     UISegmentedControl.appearance().backgroundColor = UIColor(Color.appBackground)
-                    UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .selected)
+                    UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextAlt)], for: .selected)
                     UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(Color.appTextBnW)], for: .normal)
                 }
                 VStack {
