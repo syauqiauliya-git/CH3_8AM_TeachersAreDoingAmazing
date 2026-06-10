@@ -58,9 +58,9 @@ struct NameInputView: View {
             .padding(.horizontal, 35)
             .padding(.top, 70)
             
-            
-            //CONTINUE BUTTON
-            
+        }
+        .safeAreaInset(edge: .bottom) {
+            // CONTINUE BUTTON (Extracted from VStack)
             NavigationLink {
                 GradeInputView()
             } label: {
@@ -83,7 +83,8 @@ struct NameInputView: View {
                 }
             })
             .disabled(teacherName == "")
-            
+            // Optional: Add a background to the inset if you want to prevent the TextField from showing behind the button when scrolling
+            // .background(Color.appBackground)
         }
         .background(Color.appBackground.ignoresSafeArea())
         .onAppear {
@@ -96,8 +97,8 @@ struct NameInputView: View {
                     .foregroundColor(.appPrimaryLight)
                     .opacity(0.4)
             }
-            .sharedBackgroundVisibility(.hidden) 
-
+            .sharedBackgroundVisibility(.hidden)
+            
         }
     }
 }

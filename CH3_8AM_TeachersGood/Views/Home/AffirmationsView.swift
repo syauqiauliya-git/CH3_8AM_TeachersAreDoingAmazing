@@ -49,14 +49,15 @@ struct AffirmationsView: View {
                     .padding(.trailing, 5)
                     .padding(.leading, 5)
                     .accessibilityLabel(Text("Thingy"))
-                    .accessibilityHint(Text("Hi, i'm thingy, Tap me to get a tip"))
-                    
-                    Spacer()
-                    
+                    .accessibilityHint(Text("Hi, I'm thingy, Tap me to get a tip"))
+                                        
                     if showThingyTip {
                         SpeechBubbleView(text: tips[tipIndex], tail: .left, isThingyTip: true)
                             .transition(.opacity)
+                        Spacer()
                     }
+                    
+                    Spacer()
                     
                     NavigationLink {
                         ProfileView()
@@ -189,9 +190,9 @@ struct AffirmationsView: View {
         tipIndex = (tipIndex + 1) % tips.count
         withAnimation(.easeIn(duration: 0.15)) { showThingyTip = true }
         tipTask = Task {
-            try? await Task.sleep(for: .seconds(2))
+            try? await Task.sleep(for: .seconds(4))
             guard !Task.isCancelled else { return }
-            withAnimation(.easeOut(duration: 0.3)) { showThingyTip = false }
+            withAnimation(.easeOut(duration: 0.15)) { showThingyTip = false }
         }
     }
     

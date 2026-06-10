@@ -80,9 +80,10 @@ extension RecordView {
             .padding(.horizontal, 20)
             
             Button(action: cancelTypingMode) {
-                Text("Cancel")
+                Text("I prefer to speak")
                     .font(.caption)
-                    .foregroundColor(.stopRecord)
+                    .foregroundStyle(Color.stopRecord)
+
             }
         }
         .frame(height: 155)
